@@ -1,5 +1,5 @@
 export function AboutPage() {
   return (
-    <div>This is AboutPage</div>
+    <div>We are small but proud developer company</div>
   )
 }
