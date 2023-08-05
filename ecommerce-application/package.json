@@ -9,7 +9,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "lint": "eslint . --ext .ts --ext .tsx",
-    "lint-fix": "eslint . --ext .ts --fix",
+    "lint-fix": "eslint . --ext .ts --ext .tsx --fix",
     "format": "npx prettier --write .",
     "eject": "react-scripts eject"
   },
