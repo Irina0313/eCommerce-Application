@@ -21,6 +21,14 @@
         "avoidEscape": true,
         "allowTemplateLiterals": true
       }
+    ],
+
+    "prettier/prettier": [
+      "warn",
+      {
+        "singleQuote": true,
+        "semi": true
+      }
     ]
   }
 }
