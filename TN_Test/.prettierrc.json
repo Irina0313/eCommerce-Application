@@ -5,6 +5,7 @@
   "jsxSingleQuote": true,
   "tabWidth": 2,
   "trailingComma": "es5",
-  "printWidth": 100,
-  "arrowParens": "always"
+  "printWidth": 1000,
+  "arrowParens": "avoid",
+  "jsxBracketSameLine": true
 }
