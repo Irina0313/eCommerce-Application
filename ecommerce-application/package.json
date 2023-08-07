@@ -6,7 +6,8 @@
   "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build-dev": "react-scripts build",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "test": "react-scripts test",
     "lint": "eslint . --ext .ts --ext .tsx",
     "lint-fix": "eslint . --ext .ts --ext .tsx --fix",
