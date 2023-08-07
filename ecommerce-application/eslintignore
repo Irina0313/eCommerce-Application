@@ -1,6 +1,0 @@
-package.json
-webpack.config.js
-dist
-node_modules
-fileTransformer.js
-old
