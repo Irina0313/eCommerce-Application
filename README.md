@@ -69,3 +69,10 @@ Automatically formats the code according to the rules.
 ## `npm run prepare`
 
 Sets up the hooks for the husky
+
+## To get started
+
+1. Clone the repository
+2. Install the dependencies with the npm install command
+3. Run the prepare script
+4. Run the start script
