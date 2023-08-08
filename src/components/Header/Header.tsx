@@ -7,6 +7,8 @@ export function Header() {
     <header>
       <Link to='/'>Home</Link> ::
       <Link to='/about'>About</Link> ::
+      <Link to='/login'>Login</Link> ::
+      <Link to='/registation'>Registration</Link> ::
       <Link to='/xcvsdfv'>404</Link>
     </header>
   );

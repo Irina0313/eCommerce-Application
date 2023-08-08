@@ -10,6 +10,8 @@ function App() {
         <Route path='/' element={<Layout />}>
           <Route index element={<pages.MainPage />} />
           <Route path='about' element={<pages.AboutPage />} />
+          <Route path='login' element={<pages.LoginPage />} />
+          <Route path='registation' element={<pages.RegistrationtPage />} />
           <Route path='*' element={<pages.NotFoundPage />} />
         </Route>
       </Routes>
