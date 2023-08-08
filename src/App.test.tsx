@@ -11,6 +11,6 @@ describe('App', () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText(/This is MainPage/i)).toBeInTheDocument();
+    expect(screen.getByText(/This is our Main Page/i)).toBeInTheDocument();
   });
 });
