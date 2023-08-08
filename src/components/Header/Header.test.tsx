@@ -1,16 +1,16 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import { Header } from './Header';
 
-describe('App', () => {
-  test('Renders App', () => {
+describe('Main Page', () => {
+  test('Renders main page', () => {
     render(
       <BrowserRouter>
-        <App />
+        <Header />
       </BrowserRouter>
     );
 
-    expect(screen.getByText(/This is MainPage/i)).toBeInTheDocument();
+    expect(screen.getByText(/About/i)).toBeInTheDocument();
   });
 });

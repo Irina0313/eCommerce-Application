@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import { MainPage } from './MainPage';
 
-describe('App', () => {
-  test('Renders App', () => {
+describe('Main Page', () => {
+  test('Renders main page', () => {
     render(
       <BrowserRouter>
-        <App />
+        <MainPage />
       </BrowserRouter>
     );
 
