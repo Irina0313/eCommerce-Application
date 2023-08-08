@@ -1,4 +1,12 @@
-# Getting Started with Create React App
+# eCommerce Application 🛍️🌐
+
+## This project is a study project as part of the RSSchool JS course
+
+## The goal of the project is to create an E-Commerce application, working in a team of classmates under the guidance of mentors
+
+## React, Webpack, TypeScript, ESLint, Prettier, Husky and Jest for testing are used in this projects
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -19,7 +27,14 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### `npm run build-dev`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes, mapping is preserved.\
+
+### `npm run build-prod`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -39,8 +54,25 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## `npm run lint`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Analyses code for potential errors
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## `npm run lint-fix`
+
+Automatically fix problems.
+
+## `npm run format`
+
+Automatically formats the code according to the rules.
+
+## `npm run prepare`
+
+Sets up the hooks for the husky
+
+## To get started
+
+1. Clone the repository
+2. Install the dependencies with the npm install command
+3. Run the prepare script
+4. Run the start script
