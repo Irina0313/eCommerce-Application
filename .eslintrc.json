@@ -35,6 +35,7 @@
         "semi": true
       }
     ],
-    "semi": "off"
+    "semi": "off",
+    "@typescript-eslint/no-explicit-any": "error"
   }
 }
