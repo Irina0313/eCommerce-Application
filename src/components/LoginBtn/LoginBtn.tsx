@@ -26,7 +26,7 @@ export default function LoginBtn() {
         navigate('/login');
         break;
       case 'register':
-        navigate('/login');
+        navigate('/registration');
         break;
 
       default:
@@ -37,13 +37,10 @@ export default function LoginBtn() {
 
   return (
     <React.Fragment>
-      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Tooltip title='Account settings'>
-          <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)} size='small' sx={{ ml: 2 }} aria-controls={open ? 'account-menu' : undefined} aria-haspopup='true' aria-expanded={open ? 'true' : undefined}>
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-          </IconButton>
-        </Tooltip>
-      </Box>
+      <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)} size='small' sx={{ ml: 2 }} aria-controls={open ? 'account-menu' : undefined} aria-haspopup='true' aria-expanded={open ? 'true' : undefined}>
+        <Avatar sx={{ width: 32, height: 32 }}>P</Avatar>
+      </IconButton>
+
       <Menu
         anchorEl={anchorEl}
         id='account-menu'
@@ -59,18 +56,6 @@ export default function LoginBtn() {
             height: 32,
             ml: -0.5,
             mr: 1,
-          },
-          '&:before': {
-            content: '""',
-            display: 'block',
-            position: 'absolute',
-            top: 0,
-            right: 14,
-            width: 10,
-            height: 10,
-            bgcolor: 'background.paper',
-            transform: 'translateY(-50%) rotate(45deg)',
-            zIndex: 0,
           },
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
