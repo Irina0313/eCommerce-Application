@@ -1,29 +1,101 @@
 import React from 'react';
-import { Button } from '@mui/material';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { logInOut } from '../../store/loginSlice';
 import { useNavigate } from 'react-router-dom';
+import { setId } from '../../store/userSlice';
+import { Avatar, Box, Divider, ListItemIcon, Menu, MenuItem, Tooltip, IconButton } from '@mui/material';
+import Logout from '@mui/icons-material/Logout';
 
 export default function LoginBtn() {
-  const isLogin = useAppSelector((state) => state.checkLogin.isLogged);
+  const isLogin = useAppSelector((state) => state.userReducer.id);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const handleClick = () => {
-    isLogin ? navigate('/login') : navigate('/');
-    dispatch(logInOut());
-    console.log(isLogin);
-  };
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  function handleClick(btnName: string): void {
+    switch (btnName) {
+      case 'profile':
+        navigate('/userPage');
+        break;
+      case 'logout':
+        dispatch(setId(null));
+        break;
+      case 'login':
+        dispatch(setId(1));
+        navigate('/login');
+        break;
+      case 'register':
+        navigate('/login');
+        break;
+
+      default:
+        setAnchorEl(null);
+        break;
+    }
+  }
+
   return (
-    <Button
-      sx={{
-        width: '80px',
-      }}
-      onClick={() => handleClick()}
-      variant={isLogin ? 'contained' : 'outlined'}
-      color={isLogin ? 'success' : 'error'}
-    >
-      {isLogin ? 'Login' : 'Logout'}
-    </Button>
+    <React.Fragment>
+      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+        <Tooltip title='Account settings'>
+          <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)} size='small' sx={{ ml: 2 }} aria-controls={open ? 'account-menu' : undefined} aria-haspopup='true' aria-expanded={open ? 'true' : undefined}>
+            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+          </IconButton>
+        </Tooltip>
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id='account-menu'
+        open={open}
+        onClose={() => setAnchorEl(null)}
+        onClick={() => setAnchorEl(null)}
+        sx={{
+          overflow: 'visible',
+          filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+          mt: 1.5,
+          '& .MuiAvatar-root': {
+            width: 32,
+            height: 32,
+            ml: -0.5,
+            mr: 1,
+          },
+          '&:before': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            top: 0,
+            right: 14,
+            width: 10,
+            height: 10,
+            bgcolor: 'background.paper',
+            transform: 'translateY(-50%) rotate(45deg)',
+            zIndex: 0,
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        {isLogin ? (
+          <>
+            <MenuItem onClick={() => handleClick('profile')}>
+              <Avatar /> Profile
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={() => handleClick('logout')}>
+              <ListItemIcon>
+                <Logout fontSize='small' />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
+          </>
+        ) : (
+          <>
+            <MenuItem onClick={() => handleClick('login')}>Log in</MenuItem>
+            <MenuItem onClick={() => handleClick('register')}>Register</MenuItem>
+          </>
+        )}
+      </Menu>
+    </React.Fragment>
   );
 }
