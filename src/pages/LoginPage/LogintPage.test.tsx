@@ -11,6 +11,6 @@ describe('Login Page', () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText(/Login Page/i)).toBeInTheDocument();
+    expect(screen.getByText(/E-mail/i)).toBeInTheDocument();
   });
 });
