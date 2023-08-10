@@ -9,7 +9,7 @@ const initialState: UserState = {
 };
 
 export const userSlice = createSlice({
-  name: 'login',
+  name: 'user',
   initialState,
   reducers: {
     setId: (state, action: PayloadAction<number | string | null>) => {

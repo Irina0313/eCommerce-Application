@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useNavigate } from 'react-router-dom';
 import { setId } from '../../store/userSlice';
-import { Avatar, Box, Divider, ListItemIcon, Menu, MenuItem, Tooltip, IconButton } from '@mui/material';
+import { Avatar, Divider, ListItemIcon, Menu, MenuItem, Tooltip, IconButton } from '@mui/material';
 import Logout from '@mui/icons-material/Logout';
 
 export default function LoginBtn() {
@@ -19,6 +19,7 @@ export default function LoginBtn() {
         navigate('/userPage');
         break;
       case 'logout':
+        navigate('/');
         dispatch(setId(null));
         break;
       case 'login':
