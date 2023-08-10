@@ -3,7 +3,6 @@ interface IPasswordValidationResult {
   registerPasswordParams: {
     required: boolean;
     minLength: number;
-    maxLength: number;
     pattern: RegExp;
   };
 }
@@ -12,13 +11,12 @@ export function usePasswordValidation(watchPassword: string): IPasswordValidatio
   const registerPasswordParams = {
     required: true,
     minLength: 8,
-    maxLength: 8,
     pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).*$/,
   };
 
   const passwordErrors: string[] = [];
 
-  if (watchPassword.length !== 8) {
+  if (watchPassword.length < 8) {
     passwordErrors.push('Password must be at least 8 characters long');
   }
   if (!watchPassword.match(/^(?=.*[!@#$%^&*])/)) {
