@@ -9,18 +9,16 @@ interface IEmailValidationResult {
 export function useEmailValidation(watchMail: string): IEmailValidationResult {
   const registerMailParams = {
     required: true,
-    pattern: /^\S+@\S+\.\S+$/,
+    pattern: /^(?!.*\s)^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   };
   const emailErrors: string[] = [];
   if (!watchMail) {
     emailErrors.push('This field is required');
-  } else if (!watchMail.match(/^\S+@\S+\.\S+$/)) {
-    if (watchMail.includes(' ')) {
-      emailErrors.push('Email address must not contain leading or trailing whitespace');
-    }
-    if (!watchMail.includes('@')) {
-      emailErrors.push('Email address must contain an @ symbol');
-    }
+  } else if (watchMail.trim().length < watchMail.length) {
+    emailErrors.push('Email address must not contain leading or trailing whitespace');
+  } else if (!watchMail.includes('@')) {
+    emailErrors.push('Email address must contain an @ symbol');
+  } else {
     emailErrors.push('Email address must be properly formatted');
   }
 

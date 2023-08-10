@@ -17,7 +17,16 @@ interface InputFieldProps {
   type?: string;
 }
 
-export const InputField: React.FC<InputFieldProps> = ({ label, name, registerParams, errors, register, type = 'text' }) => {
+export const InputField: React.FC<InputFieldProps> = ({ label, name, registerParams, register, type = 'text' }) => {
+  return (
+    <div>
+      <label>{label}</label>
+      <input type={type} {...register(name, registerParams)} />
+    </div>
+  );
+};
+
+export const InputPassswordField: React.FC<InputFieldProps> = ({ label, name, registerParams, register, type = 'text' }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [togglePasswordClasses, setTogglePasswordClasses] = useState(`${st.passwordHidden}`);
   const togglePasswordVisibility = () => {
@@ -28,7 +37,6 @@ export const InputField: React.FC<InputFieldProps> = ({ label, name, registerPar
       setTogglePasswordClasses(`${st.passwordVisible}`);
     }
   };
-
   return (
     <div>
       <label>{label}</label>
@@ -36,10 +44,6 @@ export const InputField: React.FC<InputFieldProps> = ({ label, name, registerPar
         <input type={showPassword ? 'text' : type} {...register(name, registerParams)} />
         {type === 'password' && <span className={`${st.passwordToggler} ${togglePasswordClasses}`} onClick={togglePasswordVisibility}></span>}
       </div>
-
-      {errors.map((error, index) => (
-        <p key={index}>{error}</p>
-      ))}
     </div>
   );
 };

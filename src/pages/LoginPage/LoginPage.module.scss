@@ -1,6 +1,9 @@
 @import '../../styles/variables.scss';
 
-body {
+.loginPageContainer {
+  padding: 40px 0;
+  width: 100%;
+  margin: 0 auto;
   background: $gray500-color;
   font-weight: 700;
   font-family: 'Lato';
@@ -80,7 +83,6 @@ label {
   font-weight: 400;
 }
 
-button[type='submit'],
 input[type='submit'] {
   background: $primary-color;
   border: none;
@@ -93,64 +95,18 @@ input[type='submit'] {
   letter-spacing: 0.5px;
 }
 
-button[type='submit']:hover,
 input[type='submit']:hover {
   background: #145c5d;
 }
 
-button[type='submit']:active,
-input[type='button']:active,
 input[type='submit']:active {
   opacity: 0.8;
 }
 
-input:disabled {
-  opacity: 0.4;
-}
-
-input[type='button']:hover {
-  transition: 0.3s all;
-}
-
-button[type='submit'],
-input[type='button'],
 input[type='submit'] {
   appearance: none;
 }
 
-.App {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-button[type='button'] {
-  display: block;
-  appearance: none;
-  background: #333;
-  color: white;
-  border: none;
-  text-transform: uppercase;
-  padding: 10px 20px;
-  border-radius: 4px;
-}
-
-hr {
-  margin-top: 30px;
-}
-
-button {
-  display: block;
-  appearance: none;
-  margin-top: 40px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  padding: 10px 20px;
-  border-radius: 4px;
-  font-weight: 700;
-  font-size: 14px;
-  color: $white-color;
-  letter-spacing: 0.5px;
-}
 .passwordContainer {
   position: relative;
   display: flex;
