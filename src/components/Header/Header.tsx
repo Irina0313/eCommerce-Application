@@ -10,7 +10,7 @@ export function Header() {
       <Link to='/'>Home</Link>
       <Link to='/about'>About</Link>
       <Link to='/login'>Login</Link>
-      <Link to='/registation'>Registration</Link>
+      <Link to='/registration'>Registration</Link>
       <Link to='/xcvsdfv'>404</Link>
       <LoginBtn></LoginBtn>
     </header>

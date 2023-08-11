@@ -16,7 +16,7 @@ export default function LoginBtn() {
   function handleClick(btnName: string): void {
     switch (btnName) {
       case 'profile':
-        navigate('/userPage');
+        navigate('/user-page');
         break;
       case 'logout':
         navigate('/');
@@ -39,9 +39,8 @@ export default function LoginBtn() {
   return (
     <React.Fragment>
       <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)} size='small' sx={{ ml: 2 }} aria-controls={open ? 'account-menu' : undefined} aria-haspopup='true' aria-expanded={open ? 'true' : undefined}>
-        <Avatar sx={{ width: 32, height: 32 }}>P</Avatar>
+        <Avatar sx={{ width: 32, height: 32, marginTop: '-6px', bgcolor: 'wheat' }}>P</Avatar>
       </IconButton>
-
       <Menu
         anchorEl={anchorEl}
         id='account-menu'
@@ -63,7 +62,7 @@ export default function LoginBtn() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         {isLogin ? (
-          <>
+          <div>
             <MenuItem onClick={() => handleClick('profile')}>
               <Avatar /> Profile
             </MenuItem>
@@ -74,12 +73,12 @@ export default function LoginBtn() {
               </ListItemIcon>
               Logout
             </MenuItem>
-          </>
+          </div>
         ) : (
-          <>
+          <div>
             <MenuItem onClick={() => handleClick('login')}>Log in</MenuItem>
             <MenuItem onClick={() => handleClick('register')}>Register</MenuItem>
-          </>
+          </div>
         )}
       </Menu>
     </React.Fragment>
