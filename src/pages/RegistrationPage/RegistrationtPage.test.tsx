@@ -1,16 +1,11 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { RegistrationtPage } from './RegistrationtPage';
 
-describe('Registrationt Page', () => {
-  test('Renders Registrationt Page', () => {
-    render(
-      <BrowserRouter>
-        <RegistrationtPage />
-      </BrowserRouter>
-    );
+describe('Login Page', () => {
+  test('Renders Login page', () => {
+    render(<RegistrationtPage />);
 
-    expect(screen.getByText(/Registrationt Page/i)).toBeInTheDocument();
+    expect(screen.getByText('Registration')).toBeInTheDocument();
   });
 });

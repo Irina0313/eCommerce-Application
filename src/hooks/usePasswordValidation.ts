@@ -11,11 +11,10 @@ export function usePasswordValidation(watchPassword: string): IPasswordValidatio
   const registerPasswordParams = {
     required: true,
     minLength: 8,
-    pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])(?!.*\s)$/,
+    pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])(?!.*\s).{8,}$/,
   };
 
   const passwordErrors: string[] = [];
-  console.log(watchPassword, watchPassword.length, watchPassword.trim().length);
   if (!watchPassword) {
     passwordErrors.push('This field is required');
   } else if (watchPassword.length < 8) {

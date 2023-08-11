@@ -1,16 +1,11 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { LoginPage } from './LoginPage';
 
 describe('Login Page', () => {
   test('Renders Login page', () => {
-    render(
-      <BrowserRouter>
-        <LoginPage />
-      </BrowserRouter>
-    );
+    render(<LoginPage />);
 
-    expect(screen.getByText(/E-mail/i)).toBeInTheDocument();
+    expect(screen.getByText('Log in')).toBeInTheDocument();
   });
 });

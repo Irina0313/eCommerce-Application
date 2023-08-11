@@ -1,45 +1,72 @@
 import React from 'react';
-import { useEmailValidation } from '../../hooks/useEmailValidation';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { usePasswordValidation } from '../../hooks/usePasswordValidation';
-import { InputField, InputPassswordField } from '../../components/UI-components/InputFields';
-import st from './LoginPage.module.scss';
+import { useEmailValidation } from '../../hooks/useEmailValidation';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import { EmailInput } from '../../components/UI-components/Inputs/EmailInput';
+import { PasswordInput } from '../../components/UI-components/Inputs/PasswordInput';
 
-export interface IFormInput {
+interface IFormInput {
   mail?: string;
   password?: string;
 }
 
+const defaultTheme = createTheme();
+
 export function LoginPage() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<IFormInput>();
+  const { watch, register, handleSubmit, control } = useForm<IFormInput>();
   const watchMail: string | undefined = watch('mail', '');
   const { emailErrors, registerMailParams } = useEmailValidation(watchMail as string);
   const watchPassword: string | undefined = watch('password', '');
   const { passwordErrors, registerPasswordParams } = usePasswordValidation(watchPassword as string);
+
   const onSubmit = (data: IFormInput) => {
     alert(JSON.stringify(data));
   };
 
   return (
-    <div className={st.loginPageContainer}>
-      <div className={st.formContainer}>
-        <h1 className={st.title}>Login</h1>
-        <h5>Login to your account using email and password provided during registration.</h5>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <InputField label='E-mail' name='mail' registerParams={registerMailParams} errors={emailErrors} register={register} />
-          {errors.mail && emailErrors.length && <p>{emailErrors}</p>}
-
-          <InputPassswordField label='Password' name='password' registerParams={registerPasswordParams} errors={passwordErrors} register={register} type='password' />
-          {errors.password && passwordErrors.length > 0 && <p>{passwordErrors}</p>}
-
-          <input type='submit' value='Login' />
-        </form>
-      </div>
-    </div>
+    <ThemeProvider theme={defaultTheme}>
+      <Container component='main' maxWidth='xs'>
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component='h1' variant='h5'>
+            Log in
+          </Typography>
+          <Box component='form' onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
+            <EmailInput control={control} registerMailParams={registerMailParams} emailErrors={emailErrors} register={register} />
+            <PasswordInput control={control} registerPasswordParams={registerPasswordParams} passwordErrors={passwordErrors} register={register} />
+            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+              Log In
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Link href='/registation' variant='body2'>
+                  {"Don't have an account? Register now"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 }
