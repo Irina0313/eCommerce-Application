@@ -3,8 +3,9 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useNavigate } from 'react-router-dom';
 import { setId } from '../../store/userSlice';
-import { Avatar, Divider, ListItemIcon, Menu, MenuItem, Tooltip, IconButton } from '@mui/material';
+import { Avatar, Divider, ListItemIcon, Menu, MenuItem, IconButton } from '@mui/material';
 import Logout from '@mui/icons-material/Logout';
+import PersonPinIcon from '@mui/icons-material/PersonPin';
 
 export default function LoginBtn() {
   const isLogin = useAppSelector((state) => state.userReducer.id);
@@ -23,7 +24,7 @@ export default function LoginBtn() {
         dispatch(setId(null));
         break;
       case 'login':
-        dispatch(setId(1));
+        dispatch(setId('id1'));
         navigate('/login');
         break;
       case 'register':
@@ -39,7 +40,7 @@ export default function LoginBtn() {
   return (
     <React.Fragment>
       <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)} size='small' sx={{ ml: 2 }} aria-controls={open ? 'account-menu' : undefined} aria-haspopup='true' aria-expanded={open ? 'true' : undefined}>
-        <Avatar sx={{ width: 32, height: 32, marginTop: '-6px', bgcolor: 'wheat' }}>P</Avatar>
+        <PersonPinIcon sx={{ width: 36, height: 36, marginTop: '-9px', color: 'wheat', borderRadius: '50%' }}></PersonPinIcon>
       </IconButton>
       <Menu
         anchorEl={anchorEl}

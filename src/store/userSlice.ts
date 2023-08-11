@@ -12,7 +12,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setId: (state, action: PayloadAction<number | string | null>) => {
+    setId: (state, action: PayloadAction<string | null>) => {
       state.id = action.payload;
     },
   },
