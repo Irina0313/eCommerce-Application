@@ -1,33 +1,22 @@
 import React from 'react';
-import { Controller, UseFormRegister, Control, FieldErrors } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
-import st from './Inputs.module.scss';
 import { useEmailValidation } from '../../../hooks/useEmailValidation';
-interface IFormInput {
-  mail?: string;
-  password?: string;
-}
+import { IInputProps } from '../../../helpers/Interfaces.ts/FormsInterfaces';
 
-interface IRegFormInput {
-  firstName: string;
-  lastName: string;
-  mail?: string;
-  password?: string;
-}
-interface IEmailInputProps {
-  control: Control<IFormInput>;
-
-  register: UseFormRegister<IFormInput>;
-  errors: FieldErrors<IFormInput>;
-  valueToValidate: string;
-}
-
-export function EmailInput({ control, register, errors, valueToValidate }: IEmailInputProps) {
+export function EmailInput({ control, register, errors, valueToValidate, inputName }: IInputProps) {
   const { errorsArr, registerParams } = useEmailValidation(valueToValidate);
+  const hasError = errors[inputName] && errorsArr.length > 0;
   return (
     <>
-      <Controller name='mail' control={control} defaultValue='' render={({ field }) => <TextField {...register('mail', registerParams)} {...field} margin='normal' fullWidth id='email' label='Email' name='email' autoComplete='email' autoFocus />} />
-      {errors.mail && errorsArr.length > 0 && <p className={`${st.errorMessage}`}>{errorsArr}</p>}
+      <Controller
+        name={inputName}
+        control={control}
+        defaultValue=''
+        render={({ field }) => (
+          <TextField {...register(inputName, registerParams)} {...field} margin='normal' fullWidth id='email' label='Email' name='email' autoComplete='email' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} required sx={{ marginTop: 0, marginBottom: 0 }} />
+        )}
+      />
     </>
   );
 }
