@@ -7,8 +7,16 @@ interface IFormInput {
   mail?: string;
   password?: string;
 }
+
+interface IRegFormInput {
+  firstName: string;
+  lastName: string;
+  mail?: string;
+  password?: string;
+}
 interface IEmailInputProps {
   control: Control<IFormInput>;
+
   register: UseFormRegister<IFormInput>;
   errors: FieldErrors<IFormInput>;
   valueToValidate: string;
