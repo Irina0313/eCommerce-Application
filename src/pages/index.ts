@@ -3,3 +3,4 @@ export * from './AboutPage';
 export * from './NotFoundPage';
 export * from './LoginPage';
 export * from './RegistrationPage';
+export * from './ProfilePage';
