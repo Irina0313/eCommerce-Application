@@ -65,6 +65,7 @@ export function PasswordInput({ control, registerPasswordParams, passwordErrors,
               </InputAdornment>
             }
             label='Password'
+            autoComplete='current-password'
           />
         )}
       />
