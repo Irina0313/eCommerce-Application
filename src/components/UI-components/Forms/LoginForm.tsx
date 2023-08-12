@@ -8,8 +8,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
-import { usePasswordValidation } from '../../../hooks/usePasswordValidation';
-import { useEmailValidation } from '../../../hooks/useEmailValidation';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import { EmailInput } from '../Inputs/EmailInput';
@@ -36,9 +34,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
   } = useForm<IFormInput>();
 
   const watchMail: string | undefined = watch('mail', '');
-  const { emailErrors, registerMailParams } = useEmailValidation(watchMail as string);
   const watchPassword: string | undefined = watch('password', '');
-  const { passwordErrors, registerPasswordParams } = usePasswordValidation(watchPassword as string);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -59,8 +55,8 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
             Log in
           </Typography>
           <Box component='form' onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
-            <EmailInput control={control} registerMailParams={registerMailParams} emailErrors={emailErrors} register={register} errors={errors} />
-            <PasswordInput control={control} registerPasswordParams={registerPasswordParams} passwordErrors={passwordErrors} register={register} errors={errors} />
+            <EmailInput control={control} register={register} errors={errors} valueToValidate={watchMail as string} />
+            <PasswordInput control={control} register={register} errors={errors} valueToValidate={watchPassword as string} />
             <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }} disabled={Object.keys(errors).length > 0}>
               Log In
             </Button>

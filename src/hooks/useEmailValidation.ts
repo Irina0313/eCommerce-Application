@@ -1,25 +1,25 @@
 interface IEmailValidationResult {
-  emailErrors: string[];
-  registerMailParams: {
+  errorsArr: string[];
+  registerParams: {
     required: boolean;
     pattern: RegExp;
   };
 }
 
-export function useEmailValidation(watchMail: string): IEmailValidationResult {
-  const registerMailParams = {
+export function useEmailValidation(watcher: string): IEmailValidationResult {
+  const registerParams = {
     required: true,
     pattern: /^(?!.*\s)^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   };
-  const emailErrors: string[] = [];
-  if (!watchMail) {
-    emailErrors.push('This field is required');
-  } else if (watchMail.trim().length < watchMail.length) {
-    emailErrors.push('Email address must not contain leading or trailing whitespace');
-  } else if (!watchMail.includes('@')) {
-    emailErrors.push('Email address must contain an @ symbol');
-  } else if (!watchMail.match(/^(?!.*\s)^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
-    emailErrors.push('Email address must be properly formatted');
+  const errorsArr: string[] = [];
+  if (!watcher) {
+    errorsArr.push('This field is required');
+  } else if (watcher.trim().length < watcher.length) {
+    errorsArr.push('Email address must not contain leading or trailing whitespace');
+  } else if (!watcher.includes('@')) {
+    errorsArr.push('Email address must contain an @ symbol');
+  } else if (!watcher.match(registerParams.pattern)) {
+    errorsArr.push('Email address must be properly formatted');
   }
-  return { emailErrors, registerMailParams };
+  return { errorsArr, registerParams };
 }
