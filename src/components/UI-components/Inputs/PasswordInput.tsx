@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Controller, UseFormRegister, RegisterOptions, Control } from 'react-hook-form';
+import { Controller, UseFormRegister, RegisterOptions, Control, FieldErrors } from 'react-hook-form';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -17,9 +17,10 @@ interface PasswordFieldProps {
   registerPasswordParams: RegisterOptions;
   passwordErrors: string[];
   register: UseFormRegister<IFormInput>;
+  errors: FieldErrors<IFormInput>;
 }
 
-export function PasswordInput({ control, registerPasswordParams, passwordErrors, register }: PasswordFieldProps) {
+export function PasswordInput({ control, registerPasswordParams, passwordErrors, register, errors }: PasswordFieldProps) {
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -67,7 +68,7 @@ export function PasswordInput({ control, registerPasswordParams, passwordErrors,
           />
         )}
       />
-      {passwordErrors.length > 0 && <p className={`${st.errorMessage}`}>{passwordErrors}</p>}
+      {errors.password && passwordErrors.length > 0 && <p className={`${st.errorMessage}`}>{passwordErrors}</p>}
     </FormControl>
   );
 }

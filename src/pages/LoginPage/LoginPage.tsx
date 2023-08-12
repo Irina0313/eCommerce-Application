@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -23,14 +23,23 @@ interface IFormInput {
 const defaultTheme = createTheme();
 
 export function LoginPage() {
-  const { watch, register, handleSubmit, control } = useForm<IFormInput>();
+  const {
+    watch,
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<IFormInput>();
+
   const watchMail: string | undefined = watch('mail', '');
   const { emailErrors, registerMailParams } = useEmailValidation(watchMail as string);
   const watchPassword: string | undefined = watch('password', '');
   const { passwordErrors, registerPasswordParams } = usePasswordValidation(watchPassword as string);
 
   const onSubmit = (data: IFormInput) => {
-    alert(JSON.stringify(data));
+    if (Object.keys(errors).length === 0) {
+      alert(JSON.stringify(data));
+    }
   };
 
   return (
@@ -52,9 +61,9 @@ export function LoginPage() {
             Log in
           </Typography>
           <Box component='form' onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
-            <EmailInput control={control} registerMailParams={registerMailParams} emailErrors={emailErrors} register={register} />
-            <PasswordInput control={control} registerPasswordParams={registerPasswordParams} passwordErrors={passwordErrors} register={register} />
-            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+            <EmailInput control={control} registerMailParams={registerMailParams} emailErrors={emailErrors} register={register} errors={errors} />
+            <PasswordInput control={control} registerPasswordParams={registerPasswordParams} passwordErrors={passwordErrors} register={register} errors={errors} />
+            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }} disabled={Object.keys(errors).length > 0}>
               Log In
             </Button>
             <Grid container>
