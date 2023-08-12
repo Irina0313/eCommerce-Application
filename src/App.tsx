@@ -11,7 +11,7 @@ function App() {
           <Route index element={<pages.MainPage />} />
           <Route path='about' element={<pages.AboutPage />} />
           <Route path='login' element={<pages.LoginPage />} />
-          <Route path='registration' element={<pages.RegistrationtPage />} />
+          <Route path='profile' element={<pages.ProfilePage />} />
           <Route path='*' element={<pages.NotFoundPage />} />
         </Route>
       </Routes>
