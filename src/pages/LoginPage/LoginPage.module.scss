@@ -1,13 +1,1 @@
 @import '../../styles/variables.scss';
-
-.errorMessage {
-  margin: 15px 0;
-  color: $danger-color;
-  font-size: 13px;
-  font-weight: 400;
-}
-
-.errorMessage::before {
-  display: inline;
-  content: '⚠ ';
-}
