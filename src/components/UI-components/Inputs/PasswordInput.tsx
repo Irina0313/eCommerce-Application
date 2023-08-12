@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Controller, UseFormRegister, RegisterOptions, Control, FieldErrors } from 'react-hook-form';
+import { Controller, UseFormRegister, Control, FieldErrors } from 'react-hook-form';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -8,19 +8,21 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import st from './Inputs.module.scss';
+import { usePasswordValidation } from '../../../hooks/usePasswordValidation';
 interface IFormInput {
   mail?: string;
   password?: string;
 }
-interface PasswordFieldProps {
+interface IPasswordFieldProps {
   control: Control<IFormInput>;
-  registerPasswordParams: RegisterOptions;
-  passwordErrors: string[];
   register: UseFormRegister<IFormInput>;
   errors: FieldErrors<IFormInput>;
+  valueToValidate: string;
 }
 
-export function PasswordInput({ control, registerPasswordParams, passwordErrors, register, errors }: PasswordFieldProps) {
+export function PasswordInput({ control, register, errors, valueToValidate }: IPasswordFieldProps) {
+  const { errorsArr, registerParams } = usePasswordValidation(valueToValidate);
+
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -51,7 +53,7 @@ export function PasswordInput({ control, registerPasswordParams, passwordErrors,
         render={({ field }) => (
           <OutlinedInput
             {...field}
-            {...register('password', registerPasswordParams)}
+            {...register('password', registerParams)}
             id='outlined-adornment-password'
             type={showPassword ? 'text' : 'password'}
             inputRef={(ref: HTMLInputElement | null) => {
@@ -69,7 +71,7 @@ export function PasswordInput({ control, registerPasswordParams, passwordErrors,
           />
         )}
       />
-      {errors.password && passwordErrors.length > 0 && <p className={`${st.errorMessage}`}>{passwordErrors}</p>}
+      {errors.password && errorsArr.length > 0 && <p className={`${st.errorMessage}`}>{errorsArr}</p>}
     </FormControl>
   );
 }
