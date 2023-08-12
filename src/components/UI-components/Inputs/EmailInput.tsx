@@ -18,7 +18,7 @@ interface EmailInputProps {
 export function EmailInput({ control, registerMailParams, emailErrors, register, errors }: EmailInputProps) {
   return (
     <>
-      <Controller name='mail' control={control} defaultValue='' render={({ field }) => <TextField {...register('mail', registerMailParams)} {...field} margin='normal' required fullWidth id='email' label='Email Address' name='email' autoComplete='email' autoFocus />} />
+      <Controller name='mail' control={control} defaultValue='' render={({ field }) => <TextField {...register('mail', registerMailParams)} {...field} margin='normal' fullWidth id='email' label='Email' name='email' autoComplete='email' autoFocus />} />
       {errors.mail && emailErrors.length > 0 && <p className={`${st.errorMessage}`}>{emailErrors}</p>}
     </>
   );
