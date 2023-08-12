@@ -17,7 +17,7 @@ export default function LoginBtn() {
   function handleClick(btnName: string): void {
     switch (btnName) {
       case 'profile':
-        navigate('/user-page');
+        navigate('/profile');
         break;
       case 'logout':
         navigate('/');

@@ -11,6 +11,6 @@ describe('Registration Page', () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText(/Registration Page/i)).toBeInTheDocument();
+    expect(screen.getByText(/Profile Page/i)).toBeInTheDocument();
   });
 });
