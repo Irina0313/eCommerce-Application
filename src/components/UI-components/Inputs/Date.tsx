@@ -8,7 +8,7 @@ export function DateInput({ control, register, errors, valueToValidate, inputNam
   let errorsArr: string[] = [];
   let registerParams = {};
 
-  if (inputName === 'birthDate') {
+  if (inputName === 'dateOfBirth') {
     const result = useBirthDateValidation(valueToValidate);
     errorsArr = result.errorsArr;
     registerParams = result.registerParams;
