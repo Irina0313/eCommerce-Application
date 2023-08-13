@@ -1,11 +1,13 @@
 import { UseFormRegister, Control, FieldErrors } from 'react-hook-form';
 
 export interface IFormInput {
+  title?: string;
   firstName?: string;
   lastName?: string;
-  mail?: string;
+  email?: string;
   password?: string;
-  birthDate?: string;
+  dateOfBirth?: string;
+  country?: string;
 }
 
 export interface IInputProps {

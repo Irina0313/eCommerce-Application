@@ -34,7 +34,7 @@ export function RegistrationPage() {
       } else {
         setApiResponse(false);
         setShowModal(true);
-        setMessage('Ooops... Something went wrong. Check fields.'); //надо проверить, возможно нужно будет выводить разные сообщения в зависимости от ответа API
+        setMessage('Ooops... Something went wrong. Check fields.'); //надо проверить, возможно нужно  будет выводить разные сообщения в зависимости от ответа API
       }
     }
   };

@@ -13,7 +13,7 @@ export function FirstNameInput({ control, register, errors, valueToValidate, inp
         name={inputName}
         control={control}
         defaultValue=''
-        render={({ field }) => <TextField {...register(inputName, registerParams)} {...field} autoComplete='given-name' name={inputName} required fullWidth id={inputName} label='First Name' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} />}
+        render={({ field }) => <TextField {...register(inputName, registerParams)} {...field} autoComplete='given-name' name={inputName} fullWidth id={inputName} label='First Name' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} />}
       />
     </>
   );
@@ -28,7 +28,7 @@ export function LastNameInput({ control, register, errors, valueToValidate, inpu
         name={inputName}
         control={control}
         defaultValue=''
-        render={({ field }) => <TextField {...register(inputName, registerParams)} {...field} required fullWidth id={inputName} label='Last Name' name={inputName} autoComplete='family-name' error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} />}
+        render={({ field }) => <TextField {...register(inputName, registerParams)} {...field} fullWidth id={inputName} label='Last Name' name={inputName} autoComplete='family-name' error={hasError} helperText={hasError ? `⚠  ${errorsArr}` : ''} />}
       />
     </>
   );

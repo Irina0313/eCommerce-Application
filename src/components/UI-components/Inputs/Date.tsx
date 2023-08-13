@@ -37,8 +37,7 @@ export function DateInput({ control, register, errors, valueToValidate, inputNam
               autoComplete={inputName}
               autoFocus
               error={hasError}
-              helperText={hasError ? `⚠ ${errorsArr}` : ''}
-              required
+              helperText={hasError ? `⚠  ${errorsArr}` : ''}
               sx={{ marginTop: 0, marginBottom: 0 }}
               InputLabelProps={{ shrink: true }}
               inputProps={{ placeholder: 'dd/mm/yyyy' }}

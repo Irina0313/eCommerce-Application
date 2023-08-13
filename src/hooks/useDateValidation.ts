@@ -19,7 +19,7 @@ function isAcceptableAge(dateOfBirth: string): boolean {
 }
 
 export function useBirthDateValidation(watcher: string): IBirthDateValidationResult {
-  const isOver13 = isAcceptableAge(watcher);
+  const isOverAcceptableAge = isAcceptableAge(watcher);
   const registerParams = {
     required: true,
     validate: (dateOfBirth: string) => isAcceptableAge(dateOfBirth),
@@ -27,7 +27,7 @@ export function useBirthDateValidation(watcher: string): IBirthDateValidationRes
   const errorsArr: string[] = [];
   if (!watcher) {
     errorsArr.push('This field is required');
-  } else if (!isOver13) {
+  } else if (!isOverAcceptableAge) {
     errorsArr.push('You are too young to create an account. The acceptable age is 13 years old');
   }
   return { errorsArr, registerParams };
