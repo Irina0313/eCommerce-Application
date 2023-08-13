@@ -3,8 +3,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { ProfilePage } from './ProfilePage';
 
-describe('Registration Page', () => {
-  test('Renders Registration Page', () => {
+describe('Profile Page', () => {
+  test('Renders Profile Page', () => {
     render(
       <BrowserRouter>
         <ProfilePage />
