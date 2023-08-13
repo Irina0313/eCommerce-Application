@@ -70,6 +70,18 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
               <Grid item xs={12}>
                 <DateInput control={control} register={register} errors={errors} valueToValidate={watchBirthDate as string} inputName='birthDate' />
               </Grid>
+              <Grid item xs={12} md={8}>
+                <FirstNameInput control={control} register={register} errors={errors} valueToValidate={watchFirstName as string} inputName='firstName' />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <FirstNameInput control={control} register={register} errors={errors} valueToValidate={watchFirstName as string} inputName='firstName' />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <FirstNameInput control={control} register={register} errors={errors} valueToValidate={watchFirstName as string} inputName='firstName' />
+              </Grid>
+              <Grid item xs={12} md={8}>
+                <FirstNameInput control={control} register={register} errors={errors} valueToValidate={watchFirstName as string} inputName='firstName' />
+              </Grid>
             </Grid>
             <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }} disabled={Object.keys(errors).length > 0}>
               Submit
