@@ -13,9 +13,7 @@ export function EmailInput({ control, register, errors, valueToValidate, inputNa
         name={inputName}
         control={control}
         defaultValue=''
-        render={({ field }) => (
-          <TextField {...register(inputName, registerParams)} {...field} margin='normal' fullWidth id='email' label='Email' name='email' autoComplete='email' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} required sx={{ marginTop: 0, marginBottom: 0 }} />
-        )}
+        render={({ field }) => <TextField {...register(inputName, registerParams)} {...field} margin='normal' fullWidth id='email' label='Email' name='email' autoComplete='email' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} sx={{ marginTop: 0, marginBottom: 0 }} />}
       />
     </>
   );

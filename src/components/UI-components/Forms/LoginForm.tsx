@@ -54,12 +54,22 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
           <Typography component='h1' variant='h5'>
             Log in
           </Typography>
-          <Box component='form' onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
-            <EmailInput control={control} register={register} errors={errors} valueToValidate={watchMail as string} inputName='mail' />
-            <PasswordInput control={control} register={register} errors={errors} valueToValidate={watchPassword as string} inputName='password' />
-            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }} disabled={Object.keys(errors).length > 0}>
-              Log In
-            </Button>
+
+          <Box component='form' onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 3, mb: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <EmailInput control={control} register={register} errors={errors} valueToValidate={watchMail as string} inputName='mail' />
+              </Grid>
+              <Grid item xs={12}>
+                <PasswordInput control={control} register={register} errors={errors} valueToValidate={watchPassword as string} inputName='password' />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Button type='submit' fullWidth variant='contained' sx={{ mt: 1, mb: 2 }} disabled={Object.keys(errors).length > 0}>
+                  Log In
+                </Button>
+              </Grid>
+            </Grid>
             <Grid container>
               <Grid item>
                 <Link href='/registation' variant='body2'>

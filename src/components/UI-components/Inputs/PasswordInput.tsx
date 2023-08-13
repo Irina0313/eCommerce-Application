@@ -35,7 +35,7 @@ export function PasswordInput({ control, register, errors, valueToValidate, inpu
   };
 
   return (
-    <FormControl sx={{ mt: 1 }} fullWidth variant='outlined' error={hasError} required>
+    <FormControl sx={{ mt: 1 }} fullWidth variant='outlined' error={hasError}>
       <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
       <Controller
         name={inputName}
