@@ -7,7 +7,7 @@ export function NotFoundPage() {
     <Grid container spacing={4} direction={'column'} justifyContent='center' alignItems='center'>
       <WebAssetOffIcon sx={{ width: '20vw', height: '20vw' }} />
       <Typography sx={{ textAlign: 'center', marginBottom: '20px' }} variant='h3'>
-        Oops...Not Found 404
+        Oops... Not Found 404
       </Typography>
       <Typography sx={{ textAlign: 'center' }} variant='h4'>
         <Link to={'/'}>
