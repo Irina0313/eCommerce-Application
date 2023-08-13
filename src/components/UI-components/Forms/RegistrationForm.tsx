@@ -76,10 +76,10 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
               <Grid item xs={12} md={4}>
                 <FirstNameInput control={control} register={register} errors={errors} valueToValidate={watchFirstName as string} inputName='firstName' />
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={3}>
                 <FirstNameInput control={control} register={register} errors={errors} valueToValidate={watchFirstName as string} inputName='firstName' />
               </Grid>
-              <Grid item xs={12} md={8}>
+              <Grid item xs={12} md={9}>
                 <FirstNameInput control={control} register={register} errors={errors} valueToValidate={watchFirstName as string} inputName='firstName' />
               </Grid>
             </Grid>
