@@ -12,11 +12,7 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import { EmailInput } from '../Inputs/EmailInput';
 import { PasswordInput } from '../Inputs/PasswordInput';
-
-interface IFormInput {
-  mail?: string;
-  password?: string;
-}
+import { IFormInput } from '../../../helpers/Interfaces.ts/FormsInterfaces';
 
 const defaultTheme = createTheme();
 
@@ -33,7 +29,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
     formState: { errors },
   } = useForm<IFormInput>();
 
-  const watchMail: string | undefined = watch('mail', '');
+  const watchMail: string | undefined = watch('email', '');
   const watchPassword: string | undefined = watch('password', '');
 
   return (

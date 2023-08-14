@@ -1,4 +1,4 @@
-interface INameValidationResult {
+interface ISimpleStringValidationResult {
   errorsArr: string[];
   registerParams: {
     required: boolean;
@@ -6,7 +6,7 @@ interface INameValidationResult {
   };
 }
 
-export function useNameValidation(watcher: string): INameValidationResult {
+export function useSimpleStringValidation(watcher: string): ISimpleStringValidationResult {
   const registerParams = {
     required: true,
     pattern: /^[A-Za-z]+$/,

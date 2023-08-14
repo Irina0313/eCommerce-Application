@@ -7,7 +7,22 @@ export interface IFormInput {
   email?: string;
   password?: string;
   dateOfBirth?: string;
-  country?: string;
+  addresses: [
+    {
+      streetName: string;
+      city: string;
+      country: string;
+      postalCode: string;
+    },
+    {
+      streetName: string;
+      city: string;
+      country: string;
+      postalCode: string;
+    },
+  ];
+  defaultBillingAddress?: number;
+  defaultShippingAddress?: number;
 }
 
 export interface IInputProps {
@@ -16,4 +31,16 @@ export interface IInputProps {
   errors: FieldErrors<IFormInput>;
   valueToValidate: string;
   inputName: keyof IFormInput;
+}
+
+export interface IAddressProps extends IInputProps {
+  index: number;
+}
+
+export interface ICountryProps {
+  index: number;
+  onSelectCountry: (country: string, index: number) => void;
+}
+export interface IPostalCodeProps extends IAddressProps {
+  currentCountry: string;
 }

@@ -31,7 +31,6 @@ export function DateInput({ control, register, errors, valueToValidate, inputNam
               type='date'
               fullWidth
               id={inputName}
-              defaultValue=''
               name={inputName}
               label='Birth Date'
               autoComplete={inputName}
