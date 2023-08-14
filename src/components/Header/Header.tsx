@@ -8,7 +8,7 @@ export function Header() {
   return (
     <header>
       <Grid container justifyContent='center' spacing={2}>
-        <Grid item xs={'auto'}>
+        <Grid item xs='auto'>
           <Link to='/'>Home</Link>
         </Grid>
         <Grid item xs='auto'>
