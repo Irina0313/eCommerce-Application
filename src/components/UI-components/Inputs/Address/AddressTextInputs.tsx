@@ -52,7 +52,7 @@ export function PostalCodeInput({ control, register, errors, valueToValidate, in
         name={targetAddressObject}
         control={control}
         defaultValue=''
-        render={({ field }) => <TextField {...register(targetAddressObject, registerParams)} {...field} autoComplete={targetName} name={targetName} fullWidth id={targetName} label='PostalCode' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} />}
+        render={({ field }) => <TextField {...register(targetAddressObject, registerParams)} {...field} autoComplete={targetName} name={targetName} fullWidth id={targetName} label='PostalCode' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} value={valueToValidate} />}
       />
     </>
   );
