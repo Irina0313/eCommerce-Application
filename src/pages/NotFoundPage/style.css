@@ -1,4 +1,6 @@
+
 .error-page--words {
+  font-size: 3rem;
   animation: wave 3s infinite;
 }
 .error-page--words:nth-child(1) {
@@ -73,9 +75,10 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(4px);
+    transform: translateY(0.4rem);
   }
   100% {
     transform: translateY(0);
   }
 }
+

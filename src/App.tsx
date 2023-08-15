@@ -14,6 +14,7 @@ function App() {
           <Route path='about' element={<pages.AboutPage />} />
           <Route path='login' element={isLogin ? <pages.MainPage /> : <pages.LoginPage />} />
           <Route path='profile' element={<pages.ProfilePage />} />
+          <Route path='prod/:id' element={<pages.ProductPage />} />
           <Route path='*' element={<pages.NotFoundPage />} />
         </Route>
       </Routes>
