@@ -1,14 +1,14 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
-import { useSimpleStringValidation } from '../../../../hooks/useSimpleStringValidation';
+import { useSimpleStringValidation, useOneCharacterValidation } from '../../../../hooks/useSimpleStringValidation';
 import { IAddressProps, IPostalCodeProps } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
 import { usePostalCodeValidation } from '../../../../hooks/usePostalCodeValidation';
 
 export function StreetInput({ control, register, errors, valueToValidate, inputName, index, isDisabled }: IAddressProps) {
   const targetAddressObject = index === 0 ? 'addresses.0.streetName' : 'addresses.1.streetName';
   const targetName = index === 0 ? 'billingStreet' : 'shippingStreet';
-  const { errorsArr, registerParams } = useSimpleStringValidation(valueToValidate as string);
+  const { errorsArr, registerParams } = useOneCharacterValidation(valueToValidate as string);
   const hasError = errors[inputName] && errorsArr.length > 0;
   return (
     <>
