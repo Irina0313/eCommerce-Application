@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface UserState {
-  id: null | number | string;
+  id: null | string;
 }
 
 const initialState: UserState = {
@@ -19,5 +19,4 @@ export const userSlice = createSlice({
 });
 
 export const { setId } = userSlice.actions;
-
 export default userSlice.reducer;
