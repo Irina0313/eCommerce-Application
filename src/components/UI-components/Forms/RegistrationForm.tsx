@@ -149,7 +149,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
               </Grid>
             </Grid>
 
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ margin: '20px 0' }}>
+            <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ margin: '20px 0' }}>
               <Box component='div'>
                 <Typography component='h5' variant='h6' sx={{ padding: '0 50px 0 30px', display: 'inline-block' }}>
                   Billing Address:
@@ -190,7 +190,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
               </Grid>
             </Grid>
 
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ margin: '20px 0' }}>
+            <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ margin: '20px 0' }}>
               <Typography component='h5' variant='h6' sx={{ padding: '0 30px', display: 'inline-block' }}>
                 Shipping Address:
               </Typography>
