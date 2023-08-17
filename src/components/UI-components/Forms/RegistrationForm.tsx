@@ -44,31 +44,20 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
   const watchShippingStreet: string | undefined = watch('addresses.1.streetName', '');
   const watchBillingCity: string | undefined = watch('addresses.0.city', '');
   const watchShippingCity: string | undefined = watch('addresses.1.city', '');
+  const watchBillingCountry: string | undefined = watch('addresses.0.country', '');
+  const watchShippingCountry: string | undefined = watch('addresses.1.country', '');
+
   const watchBillingPostalCode: string | undefined = watch('addresses.0.postalCode', '');
   const watchShippingPostalCode: string | undefined = watch('addresses.1.postalCode', '');
   const [isShipping, setIsShipping] = useState(false);
   const [isBilling, setIsBilling] = useState(false);
 
-  const watchBillingCountry: string | undefined = watch('addresses.0.country', '');
-  const watchShippingCountry: string | undefined = watch('addresses.1.country', '');
-
-  const [copyBillingStreet, setCopyBillingStreet] = useState<boolean | string>(false);
-  const [copyBillingCity, setCopyBillingCity] = useState<boolean | string>(false);
-  const [copyBillingPostalCode, setCopyBillingPostalCode] = useState<boolean | string>(false);
-
-  const [copyShippingStreet, setCopyShippingStreet] = useState<boolean | string>(false);
-  const [copyShippingCity, setCopyShippingCity] = useState<boolean | string>(false);
-  const [copyShippingPostalCode, setCopyShippingPostalCode] = useState<boolean | string>(false);
-
-  const [setAsBillingAddress, setSetAsBillingAddress] = useState<boolean>(false);
-  const [setAsShippingAddress, setSetAsShippingAddress] = useState<boolean>(false);
+  const [defaultBillingAddressChecked, setDefaultBillingAddressChecked] = useState<boolean>(true);
+  const [defaultShippingAddressChecked, setDefaultShippingAddressChecked] = useState<boolean>(true);
 
   const handleSetAsShippingAddressChange = (checked: boolean) => {
-    setSetAsShippingAddress(checked);
     if (checked) {
-      setSetAsBillingAddress(false);
       setIsShipping(true);
-
       setValue('addresses.1.streetName', watchBillingStreet || '');
       setValue('addresses.1.city', watchBillingCity || '');
       setValue('addresses.1.postalCode', watchBillingPostalCode || '');
@@ -76,17 +65,11 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
     } else {
       setIsShipping(false);
     }
-    setCopyBillingStreet(checked);
-    setCopyBillingCity(checked);
-    setCopyBillingPostalCode(checked);
   };
 
   const handleSetAsBillingAddressChange = (checked: boolean) => {
-    setSetAsBillingAddress(checked);
     if (checked) {
-      setSetAsShippingAddress(false);
       setIsBilling(true);
-
       setValue('addresses.0.streetName', watchShippingStreet || '');
       setValue('addresses.0.city', watchShippingCity || '');
       setValue('addresses.0.postalCode', watchShippingPostalCode || '');
@@ -94,13 +77,8 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
     } else {
       setIsBilling(false);
     }
-    setCopyShippingStreet(checked);
-    setCopyShippingCity(checked);
-    setCopyShippingPostalCode(checked);
   };
 
-  const [defaultBillingAddressChecked, setDefaultBillingAddressChecked] = useState<boolean>(true);
-  const [defaultShippingAddressChecked, setDefaultShippingAddressChecked] = useState<boolean>(true);
   const handleDefaultAddressChange = (checked: boolean, addressType: string) => {
     if (addressType === 'billing') {
       setDefaultBillingAddressChecked(checked);
@@ -109,40 +87,14 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
       setDefaultShippingAddressChecked(checked);
     }
   };
-  console.log('errors', Object.entries(errors));
   const handleFormSubmit = (data: IFormInput) => {
-    if (copyBillingStreet) {
-      data.addresses[1].streetName = watchBillingStreet || '';
-      data.addresses[1].city = watchBillingCity || '';
-      data.addresses[1].postalCode = watchBillingPostalCode || '';
-    }
-
-    if (copyShippingStreet) {
-      data.addresses[0].streetName = watchShippingStreet || '';
-      data.addresses[0].city = watchShippingCity || '';
-      data.addresses[0].postalCode = watchShippingPostalCode || '';
-    }
     const formDataWithDefaults = {
       ...data,
       defaultBillingAddress: defaultBillingAddressChecked ? 0 : undefined,
       defaultShippingAddress: defaultShippingAddressChecked ? 1 : undefined,
     };
-
     onSubmit(formDataWithDefaults);
   };
-
-  const [selectedBillingCountry, setSelectedBillingCountry] = useState<string>('USA');
-  const [selectedShippingCountry, setSelectedShippingCountry] = useState<string>('USA');
-
-  const handleCountryChange = (country: string, index: number) => {
-    console.log('index', index, 'country', country);
-    if (index === 0) {
-      setSelectedBillingCountry(country);
-    } else if (index === 1) {
-      setSelectedShippingCountry(country);
-    }
-  };
-  console.log('watchBillingCountry', watchBillingCountry, 'watchShippingCountry', watchShippingCountry, 'isShipping', isShipping, 'isBilling', isBilling);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -203,14 +155,14 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                   Billing Address:
                 </Typography>
                 <FormControlLabel control={<Checkbox checked={defaultBillingAddressChecked} onChange={(e) => handleDefaultAddressChange(e.target.checked, 'billing')} />} label='Set as default Billing Address' />
-                <FormControlLabel control={<Checkbox onChange={(e) => handleSetAsShippingAddressChange(e.target.checked)} />} id='setAsShippingAddress' label='Set as Shipping Address' disabled={setAsBillingAddress} />
+                <FormControlLabel control={<Checkbox onChange={(e) => handleSetAsShippingAddressChange(e.target.checked)} />} id='setAsShippingAddress' label='Set as Shipping Address' disabled={isBilling} />
               </Box>
 
               <Grid item xs={12} md={12}>
-                <StreetInput control={control} register={register} errors={errors} valueToValidate={copyShippingStreet ? watchShippingStreet : watchBillingStreet} inputName='addresses' index={0} />
+                <StreetInput control={control} register={register} errors={errors} valueToValidate={watchBillingStreet} inputName='addresses' index={0} />
               </Grid>
               <Grid item xs={12} md={4}>
-                <CityInput control={control} register={register} errors={errors} valueToValidate={copyShippingCity ? watchShippingCity : watchBillingCity} inputName='addresses' index={0} />
+                <CityInput control={control} register={register} errors={errors} valueToValidate={watchBillingCity} inputName='addresses' index={0} />
               </Grid>
               <Grid item xs={12} md={4}>
                 <Controller
@@ -222,11 +174,10 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                       {...field}
                       control={control}
                       index={0}
-                      valueToCheck={isBilling ? watchShippingCountry || 'USA' : isShipping ? watchBillingCountry || 'USA' : watchBillingCountry || 'USA'}
+                      valueToCheck={watchBillingCountry || 'USA'}
                       onSelectCountry={(currCountry) => {
-                        console.log('currCountry 0', currCountry);
                         field.onChange(currCountry);
-                        handleCountryChange(currCountry, 0);
+                        setValue('addresses.0.country', currCountry);
                       }}
                       ref={field.ref}
                     />
@@ -234,7 +185,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={copyShippingPostalCode ? watchShippingPostalCode : watchBillingPostalCode} inputName='addresses' index={0} currentCountry={selectedBillingCountry} />
+                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchBillingPostalCode} inputName='addresses' index={0} currentCountry={watchBillingCountry} />
               </Grid>
             </Grid>
 
@@ -253,13 +204,13 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                 }
                 id='setAsShippingAddress'
                 label='Set as Billing Address'
-                disabled={setAsShippingAddress}
+                disabled={isShipping}
               />
               <Grid item xs={12} md={12}>
-                <StreetInput control={control} register={register} errors={errors} valueToValidate={copyBillingStreet ? watchBillingStreet : watchShippingStreet} inputName='addresses' index={1} />
+                <StreetInput control={control} register={register} errors={errors} valueToValidate={watchShippingStreet} inputName='addresses' index={1} />
               </Grid>
               <Grid item xs={12} md={4}>
-                <CityInput control={control} register={register} errors={errors} valueToValidate={copyBillingCity ? watchBillingCity : watchShippingCity} inputName='addresses' index={1} />
+                <CityInput control={control} register={register} errors={errors} valueToValidate={watchShippingCity} inputName='addresses' index={1} />
               </Grid>
               <Grid item xs={12} md={4}>
                 <Controller
@@ -271,11 +222,10 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                       {...field}
                       control={control}
                       index={1}
-                      valueToCheck={isShipping ? watchBillingCountry || 'USA' : isBilling ? watchShippingCountry || 'USA' : watchShippingCountry || 'USA'}
+                      valueToCheck={watchShippingCountry || 'USA'}
                       onSelectCountry={(currCountry) => {
-                        console.log('currCountry 1', currCountry);
                         field.onChange(currCountry);
-                        handleCountryChange(currCountry, 1);
+                        setValue('addresses.1.country', currCountry);
                       }}
                       ref={field.ref}
                     />
@@ -283,7 +233,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={copyBillingPostalCode ? watchBillingPostalCode : watchShippingPostalCode} inputName='addresses' index={1} currentCountry={selectedShippingCountry} />
+                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchShippingPostalCode} inputName='addresses' index={1} currentCountry={watchShippingCountry} />
               </Grid>
             </Grid>
 

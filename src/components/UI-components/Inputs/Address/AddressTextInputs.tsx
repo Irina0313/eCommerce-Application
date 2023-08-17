@@ -10,7 +10,6 @@ export function StreetInput({ control, register, errors, valueToValidate, inputN
   const targetName = index === 0 ? 'billingStreet' : 'shippingStreet';
   const { errorsArr, registerParams } = useSimpleStringValidation(valueToValidate as string);
   const hasError = errors[inputName] && errorsArr.length > 0;
-  console.log('elem street valueToValidate', valueToValidate, 'index', index, 'hasError', hasError);
   return (
     <>
       <Controller
