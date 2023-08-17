@@ -159,10 +159,10 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
               </Box>
 
               <Grid item xs={12} md={12}>
-                <StreetInput control={control} register={register} errors={errors} valueToValidate={watchBillingStreet} inputName='addresses' index={0} />
+                <StreetInput control={control} register={register} errors={errors} valueToValidate={watchBillingStreet} inputName='addresses' index={0} isDisabled={isBilling} />
               </Grid>
               <Grid item xs={12} md={4}>
-                <CityInput control={control} register={register} errors={errors} valueToValidate={watchBillingCity} inputName='addresses' index={0} />
+                <CityInput control={control} register={register} errors={errors} valueToValidate={watchBillingCity} inputName='addresses' index={0} isDisabled={isBilling} />
               </Grid>
               <Grid item xs={12} md={4}>
                 <Controller
@@ -180,12 +180,13 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                         setValue('addresses.0.country', currCountry);
                       }}
                       ref={field.ref}
+                      isDisabled={isBilling}
                     />
                   )}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchBillingPostalCode} inputName='addresses' index={0} currentCountry={watchBillingCountry} />
+                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchBillingPostalCode} inputName='addresses' index={0} currentCountry={watchBillingCountry} isDisabled={isBilling} />
               </Grid>
             </Grid>
 
@@ -207,10 +208,10 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                 disabled={isShipping}
               />
               <Grid item xs={12} md={12}>
-                <StreetInput control={control} register={register} errors={errors} valueToValidate={watchShippingStreet} inputName='addresses' index={1} />
+                <StreetInput control={control} register={register} errors={errors} valueToValidate={watchShippingStreet} inputName='addresses' index={1} isDisabled={isShipping} />
               </Grid>
               <Grid item xs={12} md={4}>
-                <CityInput control={control} register={register} errors={errors} valueToValidate={watchShippingCity} inputName='addresses' index={1} />
+                <CityInput control={control} register={register} errors={errors} valueToValidate={watchShippingCity} inputName='addresses' index={1} isDisabled={isShipping} />
               </Grid>
               <Grid item xs={12} md={4}>
                 <Controller
@@ -228,12 +229,13 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                         setValue('addresses.1.country', currCountry);
                       }}
                       ref={field.ref}
+                      isDisabled={isShipping}
                     />
                   )}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchShippingPostalCode} inputName='addresses' index={1} currentCountry={watchShippingCountry} />
+                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchShippingPostalCode} inputName='addresses' index={1} currentCountry={watchShippingCountry} isDisabled={isShipping} />
               </Grid>
             </Grid>
 

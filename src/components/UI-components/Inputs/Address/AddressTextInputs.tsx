@@ -5,7 +5,7 @@ import { useSimpleStringValidation } from '../../../../hooks/useSimpleStringVali
 import { IAddressProps, IPostalCodeProps } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
 import { usePostalCodeValidation } from '../../../../hooks/usePostalCodeValidation';
 
-export function StreetInput({ control, register, errors, valueToValidate, inputName, index }: IAddressProps) {
+export function StreetInput({ control, register, errors, valueToValidate, inputName, index, isDisabled }: IAddressProps) {
   const targetAddressObject = index === 0 ? 'addresses.0.streetName' : 'addresses.1.streetName';
   const targetName = index === 0 ? 'billingStreet' : 'shippingStreet';
   const { errorsArr, registerParams } = useSimpleStringValidation(valueToValidate as string);
@@ -16,13 +16,15 @@ export function StreetInput({ control, register, errors, valueToValidate, inputN
         name={targetAddressObject}
         control={control}
         defaultValue=''
-        render={({ field }) => <TextField {...register(targetAddressObject, registerParams)} {...field} autoComplete={targetName} name={targetName} fullWidth id={targetName} label='Street' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} value={valueToValidate} />}
+        render={({ field }) => (
+          <TextField {...register(targetAddressObject, registerParams)} {...field} autoComplete={targetName} name={targetName} fullWidth id={targetName} label='Street' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} value={valueToValidate} disabled={isDisabled} />
+        )}
       />
     </>
   );
 }
 
-export function CityInput({ control, register, errors, valueToValidate, inputName, index }: IAddressProps) {
+export function CityInput({ control, register, errors, valueToValidate, inputName, index, isDisabled }: IAddressProps) {
   const targetAddressObject = index === 0 ? 'addresses.0.city' : 'addresses.1.city';
   const targetName = index === 0 ? 'billingCity' : 'shippingCity';
   const { errorsArr, registerParams } = useSimpleStringValidation(valueToValidate);
@@ -33,13 +35,15 @@ export function CityInput({ control, register, errors, valueToValidate, inputNam
         name={targetAddressObject}
         control={control}
         defaultValue=''
-        render={({ field }) => <TextField {...register(targetAddressObject, registerParams)} {...field} autoComplete={targetName} name={targetName} fullWidth id={targetName} label='City' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} value={valueToValidate} />}
+        render={({ field }) => (
+          <TextField {...register(targetAddressObject, registerParams)} {...field} autoComplete={targetName} name={targetName} fullWidth id={targetName} label='City' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} value={valueToValidate} disabled={isDisabled} />
+        )}
       />
     </>
   );
 }
 
-export function PostalCodeInput({ control, register, errors, valueToValidate, inputName, index, currentCountry }: IPostalCodeProps) {
+export function PostalCodeInput({ control, register, errors, valueToValidate, inputName, index, currentCountry, isDisabled }: IPostalCodeProps) {
   const targetAddressObject = index === 0 ? 'addresses.0.postalCode' : 'addresses.1.postalCode';
   const targetName = index === 0 ? 'billingPostalCode' : 'shippingPostalCode';
   const { errorsArr, registerParams } = usePostalCodeValidation(valueToValidate, currentCountry);
@@ -50,7 +54,9 @@ export function PostalCodeInput({ control, register, errors, valueToValidate, in
         name={targetAddressObject}
         control={control}
         defaultValue=''
-        render={({ field }) => <TextField {...register(targetAddressObject, registerParams)} {...field} autoComplete={targetName} name={targetName} fullWidth id={targetName} label='PostalCode' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} value={valueToValidate} />}
+        render={({ field }) => (
+          <TextField {...register(targetAddressObject, registerParams)} {...field} autoComplete={targetName} name={targetName} fullWidth id={targetName} label='PostalCode' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} value={valueToValidate} disabled={isDisabled} />
+        )}
       />
     </>
   );

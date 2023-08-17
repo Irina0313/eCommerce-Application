@@ -35,6 +35,7 @@ export interface IInputProps {
 
 export interface IAddressProps extends IInputProps {
   index: number;
+  isDisabled: boolean;
 }
 
 export interface ICountryProps {
@@ -42,6 +43,7 @@ export interface ICountryProps {
   index: number;
   onSelectCountry: (country: string, index: number) => void;
   valueToCheck: string;
+  isDisabled: boolean;
 }
 export interface IPostalCodeProps extends IAddressProps {
   currentCountry: string;
