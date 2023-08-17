@@ -11,6 +11,7 @@ describe('Login Page', () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText(/Login Page/i)).toBeInTheDocument();
+    const loginHeading = screen.getByRole('heading', { name: /log in/i });
+    expect(loginHeading).toBeInTheDocument();
   });
 });
