@@ -31,6 +31,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
     register,
     handleSubmit,
     control,
+    clearErrors,
     formState: { errors },
     setValue,
   } = useForm<IFormInput>();
@@ -62,6 +63,11 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
       setValue('addresses.1.city', watchBillingCity || '');
       setValue('addresses.1.postalCode', watchBillingPostalCode || '');
       setValue('addresses.1.country', watchBillingCountry || 'USA');
+
+      clearErrors('addresses.1.streetName');
+      clearErrors('addresses.1.city');
+      clearErrors('addresses.1.postalCode');
+      clearErrors('addresses.1.country');
     } else {
       setIsShipping(false);
     }
@@ -74,6 +80,11 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
       setValue('addresses.0.city', watchShippingCity || '');
       setValue('addresses.0.postalCode', watchShippingPostalCode || '');
       setValue('addresses.0.country', watchShippingCountry || 'USA');
+
+      clearErrors('addresses.0.streetName');
+      clearErrors('addresses.0.city');
+      clearErrors('addresses.0.postalCode');
+      clearErrors('addresses.0.country');
     } else {
       setIsBilling(false);
     }
