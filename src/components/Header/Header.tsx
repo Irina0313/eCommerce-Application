@@ -1,15 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.module.scss';
+import { Grid } from '@mui/material';
 
 export function Header() {
   return (
     <header>
-      <Link to='/'>Home</Link> ::
-      <Link to='/about'>About</Link> ::
-      <Link to='/login'>Login</Link> ::
-      <Link to='/registation'>Registration</Link> ::
-      <Link to='/xcvsdfv'>404</Link>
+      <Grid container justifyContent='center' spacing={2}>
+        <Grid item xs='auto'>
+          <Link to='/'>Home</Link>
+        </Grid>
+        <Grid item xs='auto'>
+          <Link to='/about'>About</Link>
+        </Grid>
+        <Grid item xs='auto'>
+          <Link to='/login'>Login</Link>
+        </Grid>
+        <Grid item xs='auto'>
+          <Link to='/registration'>Registration</Link>
+        </Grid>
+        <Grid item xs='auto'>
+          <Link to='/xcvsdfv'>404</Link>
+        </Grid>
+        {/* merge <Grid item xs='auto'>
+          <LoginBtn></LoginBtn>
+        </Grid> */}
+      </Grid>
     </header>
   );
 }
