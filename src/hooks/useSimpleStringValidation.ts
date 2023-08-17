@@ -10,11 +10,13 @@ interface ISimpleStringValidationResult {
 export function useSimpleStringValidation(watcher: string): ISimpleStringValidationResult {
   const registerParams = {
     required: true,
-    pattern: /^[A-Za-z]+$/,
+    pattern: /^(?! )(?<! )([A-Za-z ])+(?<! )(?<! )$/,
   };
   const errorsArr: string[] = [];
   if (!watcher) {
     errorsArr.push('This field is required');
+  } else if (watcher.trim().length < watcher.length) {
+    errorsArr.push('No leading or trailing whitespace');
   } else if (!watcher.match(registerParams.pattern)) {
     errorsArr.push('Only letters of the English al  phabet are allowed. At least one character is required, without special characters or numbers');
   }
@@ -26,11 +28,13 @@ export function useSimpleStringValidation(watcher: string): ISimpleStringValidat
 export function useOneCharacterValidation(watcher: string): ISimpleStringValidationResult {
   const registerParams = {
     required: true,
-    pattern: /^(?!\s*$).+/,
+    pattern: /^(?!\s*$)(?<!\s)\S+(?<!\s)$/,
   };
   const errorsArr: string[] = [];
   if (!watcher) {
     errorsArr.push('This field is required');
+  } else if (watcher.trim().length < watcher.length) {
+    errorsArr.push('No leading or trailing whitespace');
   } else if (!watcher.match(registerParams.pattern)) {
     errorsArr.push('Must contain at least one character');
   }

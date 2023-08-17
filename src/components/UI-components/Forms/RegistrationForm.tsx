@@ -187,7 +187,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchBillingPostalCode} inputName='addresses' index={0} currentCountry={watchBillingCountry} isDisabled={isBilling} />
+                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchBillingPostalCode} inputName='addresses' index={0} currentCountry={watchBillingCountry || 'USA'} isDisabled={isBilling} />
               </Grid>
             </Grid>
 
@@ -236,7 +236,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchShippingPostalCode} inputName='addresses' index={1} currentCountry={watchShippingCountry} isDisabled={isShipping} />
+                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchShippingPostalCode} inputName='addresses' index={1} currentCountry={watchShippingCountry || 'USA'} isDisabled={isShipping} />
               </Grid>
             </Grid>
 
