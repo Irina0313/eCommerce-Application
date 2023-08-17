@@ -1,20 +1,19 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import App from './App';
 import { Provider } from 'react-redux';
-import { store } from './store/store';
+import { store } from '../../store/store';
+import LoginBtn from './LoginBtn';
 
-describe('App', () => {
-  test('Renders App', () => {
+describe('LoginBtn', () => {
+  test('renders without errors', () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <App />
+          <LoginBtn />
         </BrowserRouter>
       </Provider>
     );
-
-    expect(screen.getByText(/This is our Main Page/i)).toBeInTheDocument();
+    expect(screen.getByRole('button')).toBeInTheDocument();
   });
 });
