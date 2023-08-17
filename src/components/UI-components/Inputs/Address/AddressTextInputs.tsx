@@ -10,7 +10,7 @@ export function StreetInput({ control, register, errors, valueToValidate, inputN
   const targetName = index === 0 ? 'billingStreet' : 'shippingStreet';
   const { errorsArr, registerParams } = useSimpleStringValidation(valueToValidate as string);
   const hasError = errors[inputName] && errorsArr.length > 0;
-
+  console.log('elem street valueToValidate', valueToValidate, 'index', index, 'hasError', hasError);
   return (
     <>
       <Controller
@@ -45,7 +45,6 @@ export function PostalCodeInput({ control, register, errors, valueToValidate, in
   const targetName = index === 0 ? 'billingPostalCode' : 'shippingPostalCode';
   const { errorsArr, registerParams } = usePostalCodeValidation(valueToValidate, currentCountry);
   const hasError = errors[inputName] && errorsArr.length > 0;
-
   return (
     <>
       <Controller

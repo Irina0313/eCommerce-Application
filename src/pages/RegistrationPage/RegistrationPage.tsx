@@ -17,6 +17,7 @@ export function RegistrationPage() {
   const navigate = useNavigate();
 
   const onSubmit = (data: IFormInput) => {
+    console.log('trg page', Object.entries(errors));
     if (Object.keys(errors).length === 0) {
       console.log(JSON.stringify(data));
       const isLoginSuccessful = true; // Это переменная с ответом от API для модалки (пока временно поставила false ручками). В результате тут должен быть вызов некой функции-запроса к API, возвращающей true, если пользователь залогинился или false, если нет.

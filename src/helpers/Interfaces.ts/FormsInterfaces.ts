@@ -38,8 +38,10 @@ export interface IAddressProps extends IInputProps {
 }
 
 export interface ICountryProps {
+  control: Control<IFormInput>;
   index: number;
   onSelectCountry: (country: string, index: number) => void;
+  valueToCheck: string;
 }
 export interface IPostalCodeProps extends IAddressProps {
   currentCountry: string;
