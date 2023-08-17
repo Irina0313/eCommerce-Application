@@ -103,6 +103,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
         <Box
           sx={{
             marginTop: 8,
+            marginBottom: 8,
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'center',
