@@ -10,6 +10,6 @@ describe('Login Page', () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText('Registration')).toBeInTheDocument();
+    expect(screen.getByText('Registration ')).toBeInTheDocument();
   });
 });

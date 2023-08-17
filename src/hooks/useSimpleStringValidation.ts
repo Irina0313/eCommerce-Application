@@ -18,7 +18,7 @@ export function useSimpleStringValidation(watcher: string): ISimpleStringValidat
   } else if (watcher.trim().length < watcher.length) {
     errorsArr.push('No leading or trailing whitespace');
   } else if (!watcher.match(registerParams.pattern)) {
-    errorsArr.push('Only letters of the English al  phabet are allowed. At least one character is required, without special characters or numbers');
+    errorsArr.push('Only letters of the English al  phabet are allowed. At least one character is required, without special characters or numbers ');
   }
   return { errorsArr, registerParams };
 }

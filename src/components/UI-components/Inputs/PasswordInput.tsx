@@ -63,7 +63,7 @@ export function PasswordInput({ control, register, errors, valueToValidate, inpu
           />
         )}
       />
-      <FormHelperText>{hasError ? `⚠ ${errorsArr}` : ''}</FormHelperText>
+      <FormHelperText>{hasError ? `⚠  ${errorsArr}` : ''}</FormHelperText>
     </FormControl>
   );
 }

@@ -28,7 +28,7 @@ export function useBirthDateValidation(watcher: string): IBirthDateValidationRes
   if (!watcher) {
     errorsArr.push('This field is required');
   } else if (!isOverAcceptableAge) {
-    errorsArr.push('You are too young to create an account. The acceptable age is 13 years old');
+    errorsArr.push('You are too young to create an account. The acceptable age is 13 years old ');
   }
   return { errorsArr, registerParams };
 }

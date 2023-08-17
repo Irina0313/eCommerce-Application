@@ -15,7 +15,7 @@ export function useEmailValidation(watcher: string): IEmailValidationResult {
   if (!watcher) {
     errorsArr.push('This field is required');
   } else if (watcher.trim().length < watcher.length) {
-    errorsArr.push('Email address must not contain leading or trailing whitespace');
+    errorsArr.push('Email address must not contain leading or trailing whitespace ');
   } else if (!watcher.includes('@')) {
     errorsArr.push('Email address must contain an @ symbol');
   } else if (!watcher.match(registerParams.pattern)) {

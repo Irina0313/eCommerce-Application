@@ -25,7 +25,7 @@ export function usePostalCodeValidation(watcher: string, currentCountry: string)
   if (!watcher) {
     errorsArr.push('This field is required');
   } else if (!watcher.match(registerParams.pattern)) {
-    errorsArr.push('Postal code must follow the format for the country');
+    errorsArr.push('Postal code must follow the format for the country ');
   }
   return { errorsArr, registerParams };
 }

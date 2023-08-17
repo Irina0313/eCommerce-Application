@@ -205,7 +205,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                   />
                 }
                 id='setAsShippingAddress'
-                label='Set as Billing Address'
+                label='Set as Billing Address '
                 disabled={isShipping}
               />
               <Grid item xs={12} md={12}>

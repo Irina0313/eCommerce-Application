@@ -19,7 +19,7 @@ export function RegistrationPage() {
   const onSubmit = (data: IFormInput) => {
     if (Object.keys(errors).length === 0) {
       console.log(JSON.stringify(data));
-      const isLoginSuccessful = true; // Это переменная с ответом от API для модалки (пока временно поставила false ручками). В результате тут должен быть вызов некой функции-запроса к API, возвращающей true, если пользователь залогинился или false, если нет.
+      const isLoginSuccessful = true; // Это переменная с ответом от API для модалки (пока временно поставила false ручками). В результате тут должен быть вызов некой функции-запроса к API, возвращающей true, если пользователь залогинился или false, если нет .
 
       //Дальше тут показываем модалку и либо продолаем логиниться, либо перебрасываем на main
       if (isLoginSuccessful) {

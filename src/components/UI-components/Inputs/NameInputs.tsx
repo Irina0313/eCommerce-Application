@@ -20,7 +20,7 @@ export function TitleInput() {
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel id='title'>Title</InputLabel>
-        <Select labelId='title' id='title' value={title} label='Title' onChange={handleChange}>
+        <Select labelId='title' id='title' value={title} label='Title ' onChange={handleChange}>
           <MenuItem value={'Mr'}>Mr</MenuItem>
           <MenuItem value={'Mrs'}>Mrs</MenuItem>
           <MenuItem value={'Ms'}>Ms</MenuItem>

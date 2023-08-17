@@ -69,7 +69,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
             <Grid container>
               <Grid item>
                 <Link href='/registation' variant='body2'>
-                  {"Don't have an account? Register now"}
+                  {"Don't have an account? Register now "}
                 </Link>
               </Grid>
             </Grid>

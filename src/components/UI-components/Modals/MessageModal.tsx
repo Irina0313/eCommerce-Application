@@ -12,7 +12,7 @@ interface IMessageModal {
   handleCloseModal: (apiResponse: boolean | null) => void;
   showModal: boolean;
 }
-
+//Modal
 export function MessageModal({ apiResponse, message, handleCloseModal, showModal }: IMessageModal) {
   const handleClose = () => handleCloseModal(apiResponse);
 

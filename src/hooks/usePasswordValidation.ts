@@ -24,7 +24,7 @@ export function usePasswordValidation(watcher: string): IPasswordValidationResul
   } else if (!watcher.match(/^(?=.*[!@#$%^&*])/)) {
     errorsArr.push('Password must contain at least one special character (e.g., !@#$%^&*)');
   } else if (!watcher.match(/^(?=.*[A-Z])/)) {
-    errorsArr.push('Password must contain at least one uppercase letter (A-Z)');
+    errorsArr.push('Password must contain at least one uppercase letter (A-Z) ');
   } else if (!watcher.match(/^(?=.*[a-z])/)) {
     errorsArr.push('Password must contain at least one lowercase letter (a-z)');
   } else if (!watcher.match(/^(?=.*\d)/)) {

@@ -17,7 +17,7 @@ export function StreetInput({ control, register, errors, valueToValidate, inputN
         control={control}
         defaultValue=''
         render={({ field }) => (
-          <TextField {...register(targetAddressObject, registerParams)} {...field} autoComplete={targetName} name={targetName} fullWidth id={targetName} label='Street' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} value={valueToValidate} disabled={isDisabled} />
+          <TextField {...register(targetAddressObject, registerParams)} {...field} autoComplete={targetName} name={targetName} fullWidth id={targetName} label='Street' autoFocus error={hasError} helperText={hasError ? `⚠  ${errorsArr}` : ''} value={valueToValidate} disabled={isDisabled} />
         )}
       />
     </>
