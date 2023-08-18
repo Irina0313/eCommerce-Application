@@ -3,7 +3,7 @@ import reducer, { UserState, setId } from './userSlice';
 describe('userSlice test', () => {
   test('should return the initial state', () => {
     expect(reducer(undefined, { type: undefined })).toEqual({
-      id: null,
+      id: '',
     });
   });
 

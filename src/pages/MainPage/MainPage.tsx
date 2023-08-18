@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Container, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import { Link } from 'react-router-dom';
 
 export function MainPage() {
   return (
@@ -19,10 +20,10 @@ export function MainPage() {
           margin: '2rem',
         }}
       >
-        {/* так похоже href использовать нельзя, не тру спа получается */}
-        <Button variant='outlined' href='/about'>
-          read about us
-        </Button>
+        <Link to={'/about'}>
+          <Button variant='outlined'>read about us</Button>
+        </Link>
+
         <Button variant='contained' startIcon={<SendIcon />} onClick={() => alert('Surprised!')}>
           receive a gift
         </Button>

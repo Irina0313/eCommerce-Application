@@ -15,15 +15,6 @@ export function Header() {
           <Link to='/about'>About</Link>
         </Grid>
         <Grid item xs='auto'>
-          <Link to='/login'>Login</Link>
-        </Grid>
-        <Grid item xs='auto'>
-          <Link to='/registration'>Registration</Link>
-        </Grid>
-        <Grid item xs='auto'>
-          <Link to='/xcvsdfv'>404</Link>
-        </Grid>
-        <Grid item xs='auto'>
           <LoginBtn></LoginBtn>
         </Grid>
       </Grid>

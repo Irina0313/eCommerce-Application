@@ -13,8 +13,8 @@ function App() {
           <Route index element={<pages.MainPage />} />
           <Route path='about' element={<pages.AboutPage />} />
           <Route path='login' element={isLogin ? <pages.MainPage /> : <pages.LoginPage />} />
-          <Route path='registration' element={<pages.RegistrationPage />} />
-          <Route path='profile' element={<pages.ProfilePage />} />
+          <Route path='registration' element={isLogin ? <pages.MainPage /> : <pages.RegistrationPage />} />
+          <Route path='profile' element={isLogin ? <pages.ProfilePage /> : <pages.MainPage />} />
           <Route path='prod/:id' element={<pages.ProductPage />} />
           <Route path='*' element={<pages.NotFoundPage />} />
         </Route>
