@@ -21,10 +21,10 @@ export default function LoginBtn() {
         break;
       case 'logout':
         navigate('/');
-        dispatch(setId(null));
+        dispatch(setId(''));
         break;
       case 'login':
-        dispatch(setId('id1'));
+        // dispatch(setId('id1'));
         navigate('/login');
         break;
       case 'register':
