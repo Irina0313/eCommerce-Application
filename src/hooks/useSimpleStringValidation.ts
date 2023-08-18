@@ -28,7 +28,7 @@ export function useSimpleStringValidation(watcher: string): ISimpleStringValidat
 export function useOneCharacterValidation(watcher: string): ISimpleStringValidationResult {
   const registerParams = {
     required: true,
-    pattern: /^(?!\s*$)(?<!\s)\S+(?<!\s)$/,
+    pattern: /^(?!\s)(?!\s*$).+$/,
   };
   const errorsArr: string[] = [];
   if (!watcher) {
