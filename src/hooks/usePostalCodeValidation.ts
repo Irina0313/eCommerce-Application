@@ -1,7 +1,7 @@
-interface ICountryPatterns {
+interface ICountry {
   [key: string]: RegExp;
 }
-export const Countries: ICountryPatterns = {
+export const Countries: ICountry = {
   Canada: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/,
   USA: /^\d{5}(?:-\d{4})?$/,
 };

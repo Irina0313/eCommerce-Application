@@ -4,8 +4,8 @@ export interface IFormInput {
   title?: string;
   firstName?: string;
   lastName?: string;
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
   dateOfBirth?: string;
   addresses: [
     {
