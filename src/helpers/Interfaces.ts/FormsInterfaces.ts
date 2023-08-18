@@ -1,6 +1,6 @@
 import { UseFormRegister, Control, FieldErrors } from 'react-hook-form';
 
-export interface IFormInput {
+export interface IUserInfoFormInput {
   title?: string;
   firstName?: string;
   lastName?: string;
@@ -23,14 +23,16 @@ export interface IFormInput {
   ];
   defaultBillingAddress?: number;
   defaultShippingAddress?: number;
+  shippingAddresses?: number[];
+  billingAddresses?: number[];
 }
 
 export interface IInputProps {
-  control: Control<IFormInput>;
-  register: UseFormRegister<IFormInput>;
-  errors: FieldErrors<IFormInput>;
+  control: Control<IUserInfoFormInput>;
+  register: UseFormRegister<IUserInfoFormInput>;
+  errors: FieldErrors<IUserInfoFormInput>;
   valueToValidate: string;
-  inputName: keyof IFormInput;
+  inputName: keyof IUserInfoFormInput;
 }
 
 export interface IAddressProps extends IInputProps {
@@ -39,7 +41,7 @@ export interface IAddressProps extends IInputProps {
 }
 //country
 export interface ICountryProps {
-  control: Control<IFormInput>;
+  control: Control<IUserInfoFormInput>;
   index: number;
   onSelectCountry: (country: string, index: number) => void;
   valueToCheck: string;

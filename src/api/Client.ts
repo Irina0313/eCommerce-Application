@@ -1,6 +1,7 @@
 import { ctpClient } from './BuildClient';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { APIKeys } from './BuildClient';
+import { IUserInfoFormInput } from '../helpers/Interfaces.ts/FormsInterfaces';
 
 // Create apiRoot from the imported ClientBuilder and include your Project key
 const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: APIKeys.projectKey });
@@ -15,8 +16,10 @@ export const userLogin = (email: string, password: string) => {
   return apiRoot.login().post({ body: { email, password } }).execute();
 };
 
-export const userRegister = (email: string, password: string) => {
-  return apiRoot.customers().post({ body: { email, password } }).execute();
+export const userRegister = (data: IUserInfoFormInput) => {
+  data.billingAddresses = [0];
+  data.shippingAddresses = [1];
+  return apiRoot.customers().post({ body: data }).execute();
 };
 
 export const getCustomerInfo = (id: string) => {

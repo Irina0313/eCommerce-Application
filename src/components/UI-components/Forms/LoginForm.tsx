@@ -12,12 +12,12 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import { EmailInput } from '../Inputs/EmailInput';
 import { PasswordInput } from '../Inputs/PasswordInput';
-import { IFormInput } from '../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IUserInfoFormInput } from '../../../helpers/Interfaces.ts/FormsInterfaces';
 
 const defaultTheme = createTheme();
 
 interface LoginFormProps {
-  onSubmit: (data: IFormInput) => void;
+  onSubmit: (data: IUserInfoFormInput) => void;
 }
 
 export function LoginForm({ onSubmit }: LoginFormProps) {
@@ -27,7 +27,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<IFormInput>();
+  } = useForm<IUserInfoFormInput>();
 
   const watchMail: string | undefined = watch('email', '');
   const watchPassword: string | undefined = watch('password', '');
