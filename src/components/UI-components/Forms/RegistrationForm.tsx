@@ -20,6 +20,7 @@ import { StreetInput, CityInput, PostalCodeInput } from '../Inputs/Address/Addre
 import { CountryInput } from '../Inputs/Address/CountryInput';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { Countries } from '../../../hooks/usePostalCodeValidation';
 
 const defaultTheme = createTheme();
 interface RegistrationFormProps {
@@ -105,7 +106,10 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
       defaultBillingAddress: defaultBillingAddressChecked ? 0 : undefined,
       defaultShippingAddress: defaultShippingAddressChecked ? 1 : undefined,
     };
-    console.log('formDataWithDefaults', formDataWithDefaults);
+    const shippingCountry = formDataWithDefaults.addresses[0].country;
+    const billingCountry = formDataWithDefaults.addresses[1].country;
+    formDataWithDefaults.addresses[0].country = Countries[shippingCountry].code;
+    formDataWithDefaults.addresses[1].country = Countries[billingCountry].code;
     onSubmit(formDataWithDefaults);
   };
 

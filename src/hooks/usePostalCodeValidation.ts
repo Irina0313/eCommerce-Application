@@ -1,25 +1,32 @@
 interface ICountry {
-  [key: string]: RegExp;
+  pattern: RegExp;
+  code: string;
 }
-export const Countries: ICountry = {
-  Canada: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/,
-  USA: /^\d{5}(?:-\d{4})?$/,
+export const Countries: Record<string, ICountry> = {
+  Canada: {
+    pattern: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/,
+    code: 'CA',
+  },
+  USA: {
+    pattern: /^\d{5}(?:-\d{4})?$/,
+    code: 'US',
+  },
 };
 
 interface IPostalCodeValidationResult {
   errorsArr: string[];
   registerParams: {
     required: boolean;
-    pattern: RegExp | undefined;
+    pattern: RegExp;
   };
 }
 
 export function usePostalCodeValidation(watcher: string, currentCountry: string): IPostalCodeValidationResult {
-  const countryPattern = Countries[currentCountry];
+  const countryPattern = Countries[currentCountry].pattern;
 
   const registerParams = {
     required: true,
-    pattern: countryPattern || undefined,
+    pattern: countryPattern,
   };
   const errorsArr: string[] = [];
   if (!watcher) {
