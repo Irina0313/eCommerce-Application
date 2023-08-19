@@ -7,6 +7,7 @@ import { IUserInfoFormInput } from '../../helpers/Interfaces.ts/FormsInterfaces'
 import { userRegister } from '../../api/Client';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { setId } from '../../store/userSlice';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export function RegistrationPage() {
   const {
@@ -17,22 +18,26 @@ export function RegistrationPage() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
+  const [loading, setloading] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const onSubmit = (data: IUserInfoFormInput) => {
     if (Object.keys(errors).length === 0) {
+      setloading(true);
       userRegister(data)
         .then(({ body }) => {
           setUserId(body.customer.id);
           setApiResponse(true);
           setShowModal(true);
+          setloading(false);
           setMessage('Account is created successfully!');
         })
         .catch((e) => {
           setApiResponse(false);
           setShowModal(true);
+          setloading(false);
           setMessage(e.name === 'BadRequest' ? 'Ooops... Something went wrong: ' + e.message : 'Network error. Please try again.');
         });
 
@@ -53,6 +58,17 @@ export function RegistrationPage() {
     <>
       <RegistrationForm onSubmit={onSubmit} />
       <MessageModal apiResponse={apiResponse} message={message} handleCloseModal={handleCloseModal} showModal={showModal} />
+      {loading && (
+        <CircularProgress
+          size={96}
+          sx={{
+            color: 'blue',
+            position: 'absolute',
+            top: '40%',
+            left: '50%',
+          }}
+        />
+      )}
     </>
   );
 }
