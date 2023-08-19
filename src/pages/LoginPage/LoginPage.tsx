@@ -34,10 +34,10 @@ export function LoginPage() {
           setMessage('Logged in successfully!');
           setShowModal(true);
         })
-        .catch(() => {
+        .catch((e) => {
           setApiResponse(false);
           setShowModal(true);
-          setMessage('Invalid email or password. Please try again.');
+          setMessage(e.name === 'BadRequest' ? 'Invalid email or password. Please try again.' : 'Network error. Please try again.');
         });
     }
   };

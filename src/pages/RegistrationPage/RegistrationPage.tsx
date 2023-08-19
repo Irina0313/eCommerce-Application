@@ -33,7 +33,7 @@ export function RegistrationPage() {
         .catch((e) => {
           setApiResponse(false);
           setShowModal(true);
-          setMessage('Ooops... Something went wrong. Check fields. ' + e);
+          setMessage(e.name === 'BadRequest' ? 'Ooops... Something went wrong: ' + e.message : 'Network error. Please try again.');
         });
 
       console.log(JSON.stringify(data));
