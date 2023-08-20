@@ -13,6 +13,7 @@ import Grid from '@mui/material/Grid';
 import { EmailInput } from '../Inputs/EmailInput';
 import { PasswordInput } from '../Inputs/PasswordInput';
 import { IUserInfoFormInput } from '../../../helpers/Interfaces.ts/FormsInterfaces';
+import { Link as LinkNav } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
@@ -66,11 +67,9 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
                 </Button>
               </Grid>
             </Grid>
-            <Grid container>
+            <Grid container justifyContent='flex-end'>
               <Grid item>
-                <Link href='/registration' variant='body2'>
-                  {"Don't have an account? Register now "}
-                </Link>
+                <LinkNav to='/registration'>{"Don't have an account? Register now"}</LinkNav>
               </Grid>
             </Grid>
           </Box>

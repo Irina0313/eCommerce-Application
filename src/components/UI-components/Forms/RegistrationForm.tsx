@@ -21,6 +21,7 @@ import { CountryInput } from '../Inputs/Address/CountryInput';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Countries } from '../../../hooks/usePostalCodeValidation';
+import { Link as LinkNav } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 interface RegistrationFormProps {
@@ -262,9 +263,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
             </Button>
             <Grid container justifyContent='flex-end'>
               <Grid item>
-                <Link href='/login' variant='body2'>
-                  Already have an account? Log in
-                </Link>
+                <LinkNav to='/login'>Already have an account? Log in</LinkNav>
               </Grid>
             </Grid>
           </Box>
