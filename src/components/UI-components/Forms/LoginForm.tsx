@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import { EmailInput } from '../Inputs/EmailInput';
 import { PasswordInput } from '../Inputs/PasswordInput';
