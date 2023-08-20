@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LoginForm } from '../../components/UI-components/Forms/LoginForm';
 import { useForm } from 'react-hook-form';
 import { MessageModal } from '../../components/UI-components/Modals/MessageModal';
@@ -7,6 +7,7 @@ import { userLogin } from '../../api/Client';
 import { setId } from '../../store/userSlice';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 interface IFormInput {
   email?: string;
@@ -55,6 +56,12 @@ export function LoginPage() {
       }
     }
   };
+
+  const isLogin = useAppSelector((state) => state.userReducer.id);
+
+  useEffect(() => {
+    if (isLogin) navigate('/');
+  }, []);
 
   return (
     <>

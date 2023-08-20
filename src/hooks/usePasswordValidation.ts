@@ -19,8 +19,8 @@ export function usePasswordValidation(watcher: string): IPasswordValidationResul
     errorsArr.push('This field is required');
   } else if (watcher.length < 8) {
     errorsArr.push('Password must be at least 8 characters long');
-  } else if (watcher.trim().length < watcher.length) {
-    errorsArr.push('Password must not contain leading or trailing whitespace');
+  } else if (watcher.includes(' ')) {
+    errorsArr.push('Password must not contain whitespace');
   } else if (!watcher.match(/^(?=.*[!@#$%^&*])/)) {
     errorsArr.push('Password must contain at least one special character (e.g., !@#$%^&*)');
   } else if (!watcher.match(/^(?=.*[A-Z])/)) {

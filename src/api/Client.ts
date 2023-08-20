@@ -17,8 +17,6 @@ export const userLogin = (email: string, password: string) => {
 };
 
 export const userRegister = (data: IUserInfoFormInput) => {
-  data.billingAddresses = [0];
-  data.shippingAddresses = [1];
   return apiRoot.customers().post({ body: data }).execute();
 };
 

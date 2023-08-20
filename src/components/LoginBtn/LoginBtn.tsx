@@ -24,7 +24,6 @@ export default function LoginBtn() {
         dispatch(setId(''));
         break;
       case 'login':
-        // dispatch(setId('id1'));
         navigate('/login');
         break;
       case 'register':
@@ -75,12 +74,12 @@ export default function LoginBtn() {
               Logout
             </MenuItem>
           </div>
-        ) : (
-          <div>
-            <MenuItem onClick={() => handleClick('login')}>Log in</MenuItem>
-            <MenuItem onClick={() => handleClick('register')}>Register</MenuItem>
-          </div>
-        )}
+        ) : null}
+
+        <div>
+          <MenuItem onClick={() => handleClick('login')}>Log in</MenuItem>
+          <MenuItem onClick={() => handleClick('register')}>Register</MenuItem>
+        </div>
       </Menu>
     </React.Fragment>
   );

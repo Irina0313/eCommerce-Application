@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { MessageModal } from '../../components/UI-components/Modals/MessageModal';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { RegistrationForm } from '../../components/UI-components/Forms/Registrat
 import { IUserInfoFormInput } from '../../helpers/Interfaces.ts/FormsInterfaces';
 import { userRegister } from '../../api/Client';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
 import { setId } from '../../store/userSlice';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -54,6 +55,11 @@ export function RegistrationPage() {
     }
   };
 
+  const isLogin = useAppSelector((state) => state.userReducer.id);
+
+  useEffect(() => {
+    if (isLogin) navigate('/');
+  }, []);
   return (
     <>
       <RegistrationForm onSubmit={onSubmit} />
