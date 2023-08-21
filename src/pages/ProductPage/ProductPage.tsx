@@ -1,9 +1,15 @@
 import React from 'react';
 import { Button, Grid, Rating, TextField, Typography } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import Lightbox from 'yet-another-react-lightbox';
+import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
+import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import { Carousel } from 'react-responsive-carousel';
 import 'yet-another-react-lightbox/styles.css';
-
+import 'yet-another-react-lightbox/plugins/thumbnails.css';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import './style.scss';
 export function ProductPage() {
   type ProdData = { prodName: string; images: Array<string>; currency: string; price: number; discount: number; rating: number; description: string };
   const prodData: ProdData = {
@@ -18,6 +24,7 @@ export function ProductPage() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<number | null>(prodData.rating);
   const [ammount, setAmmount] = React.useState<number | null>(1);
+
   const handleChange = (am: number | null) => {
     setAmmount(am);
   };
@@ -28,13 +35,23 @@ export function ProductPage() {
         <Typography variant='h2'>Prod Name</Typography>
       </Grid>
 
-      <Grid item md={6} xs={12} sx={{ height: '60vh' }} justifyContent='center' alignItems='center'>
-        <Typography onClick={() => setOpen(true)} sx={{ height: '100%', width: '100%', bgcolor: 'grey', borderRadius: '1rem' }}>
-          image
-        </Typography>
+      <Grid item md={6} xs={12} sx={{ height: '60vh', justifyContent: 'center', justifyItems: 'center', position: 'relative' }}>
+        <ZoomInIcon sx={{ position: 'absolute', top: '0', right: '15%' }} onClick={() => setOpen(true)} />
+        <Carousel showArrows={false} dynamicHeight={false} showStatus={false}>
+          <div>
+            <img src={prodData.images[0]}></img>
+          </div>
+          <div>
+            <img src={prodData.images[1]}></img>
+          </div>
+          <div>
+            <img src={prodData.images[2]}></img>
+          </div>
+        </Carousel>
         <Lightbox
           open={open}
           close={() => setOpen(false)}
+          carousel={{ preload: 3 }}
           render={
             prodData.images.length <= 1
               ? {
@@ -47,23 +64,17 @@ export function ProductPage() {
             {
               src: prodData.images[0],
               alt: 'image 1',
-              width: 3840,
-              height: 2560,
             },
             {
               src: prodData.images[1],
               alt: 'image 1',
-              width: 3840,
-              height: 2560,
             },
             {
               src: prodData.images[2],
               alt: 'image 1',
-              width: 3840,
-              height: 2560,
             },
-            // ...
           ]}
+          plugins={[Zoom, Thumbnails]}
         />
       </Grid>
 
@@ -99,7 +110,7 @@ export function ProductPage() {
         <Grid item xs={12}>
           <>
             <Grid container alignItems='center' justifyContent='center'>
-              <Grid item xs={1}>
+              <Grid item xs={2}>
                 <TextField
                   sx={{ marginRight: '1rem' }}
                   id='standard-number'
@@ -113,7 +124,7 @@ export function ProductPage() {
                   variant='standard'
                 />
               </Grid>
-              <Grid item xs={11}>
+              <Grid item xs={10}>
                 <Button onClick={() => console.log(ammount)} variant='contained' sx={{ margin: ' 1rem 0' }}>
                   <AddShoppingCartIcon></AddShoppingCartIcon>
                   Add to cart
