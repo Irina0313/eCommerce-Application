@@ -61,7 +61,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
               </Grid>
 
               <Grid item xs={12}>
-                <Button type='submit' fullWidth variant='contained' sx={{ mt: 1, mb: 2 }} disabled={Object.keys(errors).length > 0}>
+                <Button type='submit' fullWidth variant='contained' sx={{ mt: 1, mb: 2 }} disabled={Object.keys(errors).length > 0} data-testid={'loginFormBtn'}>
                   Log In
                 </Button>
               </Grid>

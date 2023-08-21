@@ -5,15 +5,17 @@ import { LoginPage } from './LoginPage';
 import { Provider } from 'react-redux';
 import { store } from '../../store/store';
 
-test('Renders Login page', () => {
-  render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <LoginPage />
-      </BrowserRouter>
-    </Provider>
-  );
+describe('LoginPage', () => {
+  it('Renders Login page', () => {
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <LoginPage />
+        </BrowserRouter>
+      </Provider>
+    );
 
-  const loginHeading = screen.getByRole('heading', { name: /log in/i });
-  expect(loginHeading).toBeInTheDocument();
+    const loginHeading = screen.getByRole('heading', { name: /log in/i });
+    expect(loginHeading).toBeInTheDocument();
+  });
 });
