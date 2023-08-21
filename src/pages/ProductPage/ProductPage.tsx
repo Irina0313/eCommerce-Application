@@ -35,18 +35,14 @@ export function ProductPage() {
         <Typography variant='h2'>Prod Name</Typography>
       </Grid>
 
-      <Grid item md={6} xs={12} sx={{ height: '60vh', justifyContent: 'center', justifyItems: 'center', position: 'relative' }}>
+      <Grid item md={6} xs={12} sx={{ height: '60vh', justifyContent: 'center', justifyItems: 'center', position: 'relative', marginBottom: '10vh' }}>
         <ZoomInIcon sx={{ position: 'absolute', top: '0', right: '15%' }} onClick={() => setOpen(true)} />
         <Carousel showArrows={false} dynamicHeight={false} showStatus={false}>
-          <div>
-            <img src={prodData.images[0]}></img>
-          </div>
-          <div>
-            <img src={prodData.images[1]}></img>
-          </div>
-          <div>
-            <img src={prodData.images[2]}></img>
-          </div>
+          {prodData.images.map((image) => (
+            <div key={image}>
+              <img src={image}></img>
+            </div>
+          ))}
         </Carousel>
         <Lightbox
           open={open}
