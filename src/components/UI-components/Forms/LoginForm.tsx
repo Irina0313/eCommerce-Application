@@ -8,16 +8,16 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import { EmailInput } from '../Inputs/EmailInput';
 import { PasswordInput } from '../Inputs/PasswordInput';
-import { IFormInput } from '../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IUserInfoFormInput } from '../../../helpers/Interfaces.ts/FormsInterfaces';
+import { Link as LinkNav } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
 interface LoginFormProps {
-  onSubmit: (data: IFormInput) => void;
+  onSubmit: (data: IUserInfoFormInput) => void;
 }
 
 export function LoginForm({ onSubmit }: LoginFormProps) {
@@ -27,7 +27,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<IFormInput>();
+  } = useForm<IUserInfoFormInput>();
 
   const watchMail: string | undefined = watch('email', '');
   const watchPassword: string | undefined = watch('password', '');
@@ -66,11 +66,9 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
                 </Button>
               </Grid>
             </Grid>
-            <Grid container>
+            <Grid container justifyContent='flex-end'>
               <Grid item>
-                <Link href='/registration' variant='body2'>
-                  {"Don't have an account? Register now "}
-                </Link>
+                <LinkNav to='/registration'>{"Don't have an account? Register now"}</LinkNav>
               </Grid>
             </Grid>
           </Box>

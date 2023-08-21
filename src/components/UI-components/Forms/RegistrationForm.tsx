@@ -3,7 +3,6 @@ import { Controller } from 'react-hook-form';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -12,7 +11,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { TitleInput, FirstNameInput, LastNameInput } from '../Inputs/NameInputs';
-import { IFormInput } from '../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IUserInfoFormInput } from '../../../helpers/Interfaces.ts/FormsInterfaces';
 import { EmailInput } from '../Inputs/EmailInput';
 import { PasswordInput } from '../Inputs/PasswordInput';
 import { DateInput } from '../Inputs/Date';
@@ -21,10 +20,11 @@ import { CountryInput } from '../Inputs/Address/CountryInput';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Countries } from '../../../hooks/usePostalCodeValidation';
+import { Link as LinkNav } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 interface RegistrationFormProps {
-  onSubmit: (data: IFormInput) => void;
+  onSubmit: (data: IUserInfoFormInput) => void;
 }
 export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
   const {
@@ -35,7 +35,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
     clearErrors,
     formState: { errors },
     setValue,
-  } = useForm<IFormInput>();
+  } = useForm<IUserInfoFormInput>();
 
   const watchFirstName: string | undefined = watch('firstName', '');
   const watchLastName: string | undefined = watch('lastName', '');
@@ -100,7 +100,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
     }
   };
 
-  const handleFormSubmit = (data: IFormInput) => {
+  const handleFormSubmit = (data: IUserInfoFormInput) => {
     const formDataWithDefaults = {
       ...data,
       defaultBillingAddress: defaultBillingAddressChecked ? 0 : undefined,
@@ -140,7 +140,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component='h1' variant='h5'>
+            <Typography component='h1' variant='h5' margin={2}>
               Registration
             </Typography>
           </Box>
@@ -262,9 +262,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
             </Button>
             <Grid container justifyContent='flex-end'>
               <Grid item>
-                <Link href='/login' variant='body2'>
-                  Already have an account? Log in
-                </Link>
+                <LinkNav to='/login'>Already have an account? Log in</LinkNav>
               </Grid>
             </Grid>
           </Box>

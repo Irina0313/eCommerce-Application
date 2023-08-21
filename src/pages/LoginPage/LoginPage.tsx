@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LoginForm } from '../../components/UI-components/Forms/LoginForm';
 import { useForm } from 'react-hook-form';
 import { MessageModal } from '../../components/UI-components/Modals/MessageModal';
 import { useNavigate } from 'react-router-dom';
+import { userLogin } from '../../api/Client';
+import { setId } from '../../store/userSlice';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 interface IFormInput {
-  mail?: string;
+  email?: string;
   password?: string;
 }
 
@@ -17,39 +22,62 @@ export function LoginPage() {
   const [apiResponse, setApiResponse] = useState<boolean | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
+  const [userId, setUserId] = useState<string>('');
+  const [loading, setloading] = useState<boolean>(false);
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const onSubmit = (data: IFormInput) => {
-    if (Object.keys(errors).length === 0) {
-      console.log(JSON.stringify(data));
-      const isLoginSuccessful = true; // Это переменная с ответом от API для модалки (пока временно поставила false ручками). В результате тут должен быть вызов некой функции-запроса к API, возвращающей true, если пользователь залогинился или false, если нет.
-
-      //Дальше тут показываем модалку и либо продолаем логиниться, либо перебрасываем на main
-      if (isLoginSuccessful) {
-        setApiResponse(true);
-        setShowModal(true);
-        setMessage('Logged in successfully!');
-      } else {
-        setApiResponse(false);
-        setShowModal(true);
-        setMessage('Invalid email or password. Please try again.');
-      }
+    if (Object.keys(errors).length === 0 && data.email && data.password) {
+      setloading(true);
+      userLogin(data.email, data.password)
+        .then(({ body }) => {
+          setUserId(body.customer.id);
+          setApiResponse(true);
+          setMessage('Logged in successfully!');
+          setShowModal(true);
+          setloading(false);
+        })
+        .catch((e) => {
+          setApiResponse(false);
+          setShowModal(true);
+          setloading(false);
+          setMessage(e.name === 'BadRequest' ? 'Invalid email or password. Please try again.' : 'Network error. Please try again.');
+        });
     }
   };
   const handleCloseModal = (apiResponse: boolean | null): void => {
     if (apiResponse !== null) {
       setShowModal(false);
       if (apiResponse) {
+        dispatch(setId(userId));
         navigate('/');
       }
     }
   };
 
+  const isLogin = useAppSelector((state) => state.userReducer.id);
+
+  useEffect(() => {
+    if (isLogin) navigate('/');
+  }, []);
+
   return (
     <>
       <LoginForm onSubmit={onSubmit} />
       <MessageModal apiResponse={apiResponse} message={message} handleCloseModal={handleCloseModal} showModal={showModal} />
+      {loading && (
+        <CircularProgress
+          size={96}
+          sx={{
+            color: 'blue',
+            position: 'absolute',
+            top: '40%',
+            left: '50%',
+          }}
+        />
+      )}
     </>
   );
 }
