@@ -38,7 +38,7 @@ export default function LoginBtn() {
 
   return (
     <React.Fragment>
-      <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)} size='small' sx={{ ml: 2 }} aria-controls={open ? 'account-menu' : undefined} aria-haspopup='true' aria-expanded={open ? 'true' : undefined}>
+      <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)} size='small' sx={{ ml: 2 }} aria-controls={open ? 'account-menu' : undefined} aria-haspopup='true' aria-expanded={open ? 'true' : undefined} data-testid={'loginBtnIcon'}>
         <PersonPinIcon sx={{ width: 36, height: 36, marginTop: '-9px', color: 'wheat', borderRadius: '50%' }}></PersonPinIcon>
       </IconButton>
       <Menu
@@ -63,7 +63,7 @@ export default function LoginBtn() {
       >
         {isLogin ? (
           <div>
-            <MenuItem onClick={() => handleClick('profile')}>
+            <MenuItem onClick={() => handleClick('profile')} data-testid={'menuProfile'}>
               <Avatar /> Profile
             </MenuItem>
             <Divider />
@@ -77,8 +77,12 @@ export default function LoginBtn() {
         ) : null}
 
         <div>
-          <MenuItem onClick={() => handleClick('login')}>Log in</MenuItem>
-          <MenuItem onClick={() => handleClick('register')}>Register</MenuItem>
+          <MenuItem onClick={() => handleClick('login')} data-testid={'menuLogin'}>
+            Log in
+          </MenuItem>
+          <MenuItem onClick={() => handleClick('register')} data-testid={'menuRegister'}>
+            Register
+          </MenuItem>
         </div>
       </Menu>
     </React.Fragment>

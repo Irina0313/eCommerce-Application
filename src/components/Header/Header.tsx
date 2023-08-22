@@ -9,7 +9,7 @@ import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined
 
 export function Header() {
   return (
-    <AppBar position='static'>
+    <AppBar position='static' data-testid={'header'}>
       <Container maxWidth='md'>
         <Toolbar disableGutters>
           <EmojiEmotionsOutlinedIcon fontSize='large' sx={{ color: 'wheat' }} />

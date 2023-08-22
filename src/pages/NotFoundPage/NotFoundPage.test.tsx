@@ -10,7 +10,8 @@ describe('NotFoundPage Page', () => {
         <NotFoundPage />
       </BrowserRouter>
     );
+    const errorImg = screen.getByTestId('WebAssetOffIcon');
 
-    expect(screen.getByText(/404/i)).toBeInTheDocument();
+    expect(errorImg).toBeInTheDocument();
   });
 });

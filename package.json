@@ -9,6 +9,7 @@
     "build-dev": "set \"GENERATE_SOURCEMAP=true\" && react-scripts build",
     "build-prod": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "test": "react-scripts test",
+    "test-coverage": "react-scripts test --coverage .",
     "lint": "eslint . --ext .ts --ext .tsx",
     "lint-fix": "eslint . --ext .ts --ext .tsx --fix",
     "format": "npx prettier --write .",
@@ -18,6 +19,13 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/**/index.ts",
+      "!src/react-app-env.d.ts"
+    ]
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [

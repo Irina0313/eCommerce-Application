@@ -11,7 +11,7 @@ export function Layout() {
       <div className={style.pagelayout}>
         <Header />
 
-        <main className={style.container}>
+        <main className={style.container} data-testid={'main'}>
           <Outlet />
         </main>
 
