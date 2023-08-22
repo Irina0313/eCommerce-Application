@@ -39,7 +39,7 @@ export function RegistrationPage() {
           setApiResponse(false);
           setShowModal(true);
           setloading(false);
-          setMessage(e.name === 'BadRequest' ? 'Ooops... Something went wrong: ' + e.message : 'Network error. Please try again.');
+          setMessage(e.name === 'BadRequest' ? 'Ooops... Something went wrong: ' + e.message : e.message);
         });
 
       //console.log(JSON.stringify(data));
