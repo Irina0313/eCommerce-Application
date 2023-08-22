@@ -30,7 +30,7 @@ export function TitleInput() {
   );
 }
 
-export function FirstNameInput({ control, register, errors, valueToValidate, inputName }: IInputProps) {
+export function FirstNameInput({ control, register, errors, valueToValidate, inputName, trigger }: IInputProps) {
   const { errorsArr, registerParams } = useSimpleStringValidation(valueToValidate);
   const hasError = errors[inputName] && errorsArr.length > 0;
   return (
@@ -39,13 +39,30 @@ export function FirstNameInput({ control, register, errors, valueToValidate, inp
         name={inputName}
         control={control}
         defaultValue=''
-        render={({ field }) => <TextField {...register(inputName, registerParams)} {...field} autoComplete='given-name' name={inputName} fullWidth id={inputName} label='First Name' autoFocus error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} />}
+        render={({ field }) => (
+          <TextField
+            {...register(inputName, registerParams)}
+            {...field}
+            autoComplete='given-name'
+            name={inputName}
+            fullWidth
+            id={inputName}
+            label='First Name'
+            autoFocus
+            error={hasError}
+            helperText={hasError ? `⚠ ${errorsArr}` : ''}
+            onChange={(e) => {
+              field.onChange(e);
+              trigger(inputName);
+            }}
+          />
+        )}
       />
     </>
   );
 }
 
-export function LastNameInput({ control, register, errors, valueToValidate, inputName }: IInputProps) {
+export function LastNameInput({ control, register, errors, valueToValidate, inputName, trigger }: IInputProps) {
   const { errorsArr, registerParams } = useSimpleStringValidation(valueToValidate);
   const hasError = errors[inputName] && errorsArr.length > 0;
   return (
@@ -54,7 +71,23 @@ export function LastNameInput({ control, register, errors, valueToValidate, inpu
         name={inputName}
         control={control}
         defaultValue=''
-        render={({ field }) => <TextField {...register(inputName, registerParams)} {...field} fullWidth id={inputName} label='Last Name' name={inputName} autoComplete='family-name' error={hasError} helperText={hasError ? `⚠ ${errorsArr}` : ''} />}
+        render={({ field }) => (
+          <TextField
+            {...register(inputName, registerParams)}
+            {...field}
+            fullWidth
+            id={inputName}
+            label='Last Name'
+            name={inputName}
+            autoComplete='family-name'
+            error={hasError}
+            helperText={hasError ? `⚠ ${errorsArr}` : ''}
+            onChange={(e) => {
+              field.onChange(e);
+              trigger(inputName);
+            }}
+          />
+        )}
       />
     </>
   );

@@ -5,11 +5,11 @@ import { useSimpleStringValidation, useOneCharacterValidation } from '../../../.
 import { IAddressProps, IPostalCodeProps } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
 import { usePostalCodeValidation } from '../../../../hooks/usePostalCodeValidation';
 
-export function StreetInput({ control, register, errors, valueToValidate, inputName, index, isDisabled }: IAddressProps) {
+export function StreetInput({ control, register, errors, valueToValidate, index, isDisabled, trigger }: IAddressProps) {
   const targetAddressObject = index === 0 ? 'addresses.0.streetName' : 'addresses.1.streetName';
   const targetName = index === 0 ? 'billingStreet' : 'shippingStreet';
   const { errorsArr, registerParams } = useOneCharacterValidation(valueToValidate as string);
-  const hasError = errors[inputName] && errorsArr.length > 0;
+  const hasError = index === 0 ? errors.addresses?.[0]?.streetName && errorsArr.length > 0 : errors.addresses?.[1]?.streetName && errorsArr.length > 0;
   return (
     <>
       <Controller
@@ -31,6 +31,10 @@ export function StreetInput({ control, register, errors, valueToValidate, inputN
             value={valueToValidate}
             disabled={isDisabled}
             data-testid={targetName}
+            onChange={(e) => {
+              field.onChange(e);
+              trigger(targetAddressObject);
+            }}
           />
         )}
       />
@@ -38,11 +42,12 @@ export function StreetInput({ control, register, errors, valueToValidate, inputN
   );
 }
 
-export function CityInput({ control, register, errors, valueToValidate, inputName, index, isDisabled }: IAddressProps) {
+export function CityInput({ control, register, errors, valueToValidate, index, isDisabled, trigger }: IAddressProps) {
   const targetAddressObject = index === 0 ? 'addresses.0.city' : 'addresses.1.city';
   const targetName = index === 0 ? 'billingCity' : 'shippingCity';
   const { errorsArr, registerParams } = useSimpleStringValidation(valueToValidate);
-  const hasError = errors[inputName] && errorsArr.length > 0;
+  const hasError = index === 0 ? errors.addresses?.[0]?.city && errorsArr.length > 0 : errors.addresses?.[1]?.city && errorsArr.length > 0;
+
   return (
     <>
       <Controller
@@ -64,6 +69,10 @@ export function CityInput({ control, register, errors, valueToValidate, inputNam
             value={valueToValidate}
             disabled={isDisabled}
             data-testid={targetName}
+            onChange={(e) => {
+              field.onChange(e);
+              trigger(targetAddressObject);
+            }}
           />
         )}
       />
@@ -71,11 +80,11 @@ export function CityInput({ control, register, errors, valueToValidate, inputNam
   );
 }
 
-export function PostalCodeInput({ control, register, errors, valueToValidate, inputName, index, currentCountry, isDisabled }: IPostalCodeProps) {
+export function PostalCodeInput({ control, register, errors, valueToValidate, index, currentCountry, isDisabled, trigger }: IPostalCodeProps) {
   const targetAddressObject = index === 0 ? 'addresses.0.postalCode' : 'addresses.1.postalCode';
   const targetName = index === 0 ? 'billingPostalCode' : 'shippingPostalCode';
   const { errorsArr, registerParams } = usePostalCodeValidation(valueToValidate, currentCountry);
-  const hasError = errors[inputName] && errorsArr.length > 0;
+  const hasError = index === 0 ? errors.addresses?.[0]?.postalCode && errorsArr.length > 0 : errors.addresses?.[1]?.postalCode && errorsArr.length > 0;
   return (
     <>
       <Controller
@@ -97,6 +106,10 @@ export function PostalCodeInput({ control, register, errors, valueToValidate, in
             value={valueToValidate}
             disabled={isDisabled}
             data-testid={targetName}
+            onChange={(e) => {
+              field.onChange(e);
+              trigger(targetAddressObject);
+            }}
           />
         )}
       />

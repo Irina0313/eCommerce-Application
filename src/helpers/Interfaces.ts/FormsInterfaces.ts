@@ -1,4 +1,4 @@
-import { UseFormRegister, Control, FieldErrors } from 'react-hook-form';
+import { UseFormRegister, Control, FieldErrors, UseFormTrigger } from 'react-hook-form';
 
 export interface IUserInfoFormInput {
   title?: string;
@@ -33,6 +33,7 @@ export interface IInputProps {
   errors: FieldErrors<IUserInfoFormInput>;
   valueToValidate: string;
   inputName: keyof IUserInfoFormInput;
+  trigger: UseFormTrigger<IUserInfoFormInput>;
 }
 
 export interface IAddressProps extends IInputProps {
@@ -46,6 +47,7 @@ export interface ICountryProps {
   onSelectCountry: (country: string, index: number) => void;
   valueToCheck: string;
   isDisabled: boolean;
+  trigger: UseFormTrigger<IUserInfoFormInput>;
 }
 export interface IPostalCodeProps extends IAddressProps {
   currentCountry: string;
