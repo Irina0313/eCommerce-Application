@@ -1,4 +1,4 @@
-# Pull Request Template
+# Pull Request
 
 ## 🔁 Task/issue link
 

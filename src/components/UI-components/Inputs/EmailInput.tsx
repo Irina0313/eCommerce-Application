@@ -12,17 +12,17 @@ export function EmailInput({ control, register, errors, valueToValidate, inputNa
       <Controller
         name={inputName}
         control={control}
-        defaultValue=''
+        defaultValue=""
         render={({ field }) => (
           <TextField
             {...register(inputName, registerParams)}
             {...field}
-            margin='normal'
+            margin="normal"
             fullWidth
-            id='email'
-            label='Email'
-            name='email'
-            autoComplete='email'
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
             autoFocus
             error={hasError}
             helperText={hasError ? `⚠  ${errorsArr}` : ''}

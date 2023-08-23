@@ -23,7 +23,7 @@ export const CountryInput = React.forwardRef(function CountryInput({ index, onSe
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel id={targetAddressObject}>Country</InputLabel>
-        <Select labelId={targetAddressObject} label='Country ' value={valueToCheck} onChange={(event) => onSelectCountry(event.target.value as string, index)} ref={ref} disabled={isDisabled} data-testid={targetName} id={targetName}>
+        <Select labelId={targetAddressObject} label="Country " value={valueToCheck} onChange={(event) => onSelectCountry(event.target.value as string, index)} ref={ref} disabled={isDisabled} data-testid={targetName} id={targetName}>
           {countryOptions}
         </Select>
       </FormControl>

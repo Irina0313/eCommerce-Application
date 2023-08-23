@@ -35,31 +35,31 @@ export function PasswordInput({ control, register, errors, valueToValidate, inpu
   };
 
   return (
-    <FormControl sx={{ mt: 1, marginTop: 0 }} fullWidth variant='outlined' error={hasError}>
-      <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
+    <FormControl sx={{ mt: 1, marginTop: 0 }} fullWidth variant="outlined" error={hasError}>
+      <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
       <Controller
         name={inputName}
         control={control}
-        defaultValue=''
+        defaultValue=""
         render={({ field }) => (
           <OutlinedInput
             {...field}
             {...register(inputName, registerParams)}
-            id='outlined-adornment-password'
+            id="outlined-adornment-password"
             type={showPassword ? 'text' : inputName}
             inputRef={(ref: HTMLInputElement | null) => {
               passwordInputRef.current = ref;
             }}
             sx={{ marginTop: 0, marginBottom: 0 }}
             endAdornment={
-              <InputAdornment position='end'>
-                <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge='end'>
+              <InputAdornment position="end">
+                <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge="end">
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
             }
             label={inputName}
-            autoComplete='current-password'
+            autoComplete="current-password"
             onChange={(e) => {
               field.onChange(e);
               trigger(inputName);

@@ -21,18 +21,18 @@ export function DateInput({ control, register, errors, valueToValidate, inputNam
       <Controller
         name={inputName}
         control={control}
-        defaultValue=''
+        defaultValue=""
         render={({ field }) => (
           <>
             <TextField
               {...register(`${inputName}`, registerParams)}
               {...field}
-              margin='normal'
-              type='date'
+              margin="normal"
+              type="date"
               fullWidth
               id={inputName}
               name={inputName}
-              label='Birth Date'
+              label="Birth Date"
               autoComplete={inputName}
               autoFocus
               error={hasError}

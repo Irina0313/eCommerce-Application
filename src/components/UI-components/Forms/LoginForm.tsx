@@ -35,7 +35,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component='div' maxWidth='xs'>
+      <Container component="div" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -48,28 +48,28 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component='h1' variant='h5'>
+          <Typography component="h1" variant="h5">
             Log in
           </Typography>
 
-          <Box component='form' onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 3, mb: 3 }}>
+          <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 3, mb: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <EmailInput control={control} register={register} errors={errors} valueToValidate={watchMail as string} inputName='email' trigger={trigger} />
+                <EmailInput control={control} register={register} errors={errors} valueToValidate={watchMail as string} inputName="email" trigger={trigger} />
               </Grid>
               <Grid item xs={12}>
-                <PasswordInput control={control} register={register} errors={errors} valueToValidate={watchPassword as string} inputName='password' trigger={trigger} />
+                <PasswordInput control={control} register={register} errors={errors} valueToValidate={watchPassword as string} inputName="password" trigger={trigger} />
               </Grid>
 
               <Grid item xs={12}>
-                <Button type='submit' fullWidth variant='contained' sx={{ mt: 1, mb: 2 }} disabled={Object.keys(errors).length > 0} data-testid={'loginFormBtn'}>
+                <Button type="submit" fullWidth variant="contained" sx={{ mt: 1, mb: 2 }} disabled={Object.keys(errors).length > 0} data-testid={'loginFormBtn'}>
                   Log In
                 </Button>
               </Grid>
             </Grid>
-            <Grid container justifyContent='flex-end'>
+            <Grid container justifyContent="flex-end">
               <Grid item>
-                <LinkNav to='/registration'>{"Don't have an account? Register now"}</LinkNav>
+                <LinkNav to="/registration">{"Don't have an account? Register now"}</LinkNav>
               </Grid>
             </Grid>
           </Box>

@@ -15,7 +15,7 @@ export function StreetInput({ control, register, errors, valueToValidate, index,
       <Controller
         name={targetAddressObject}
         control={control}
-        defaultValue=''
+        defaultValue=""
         render={({ field }) => (
           <TextField
             {...register(targetAddressObject, registerParams)}
@@ -24,7 +24,7 @@ export function StreetInput({ control, register, errors, valueToValidate, index,
             name={targetName}
             fullWidth
             id={targetName}
-            label='Street'
+            label="Street"
             autoFocus
             error={hasError}
             helperText={hasError ? `⚠  ${errorsArr}` : ''}
@@ -53,7 +53,7 @@ export function CityInput({ control, register, errors, valueToValidate, index, i
       <Controller
         name={targetAddressObject}
         control={control}
-        defaultValue=''
+        defaultValue=""
         render={({ field }) => (
           <TextField
             {...register(targetAddressObject, registerParams)}
@@ -62,7 +62,7 @@ export function CityInput({ control, register, errors, valueToValidate, index, i
             name={targetName}
             fullWidth
             id={targetName}
-            label='City'
+            label="City"
             autoFocus
             error={hasError}
             helperText={hasError ? `⚠ ${errorsArr}` : ''}
@@ -90,7 +90,7 @@ export function PostalCodeInput({ control, register, errors, valueToValidate, in
       <Controller
         name={targetAddressObject}
         control={control}
-        defaultValue=''
+        defaultValue=""
         render={({ field }) => (
           <TextField
             {...register(targetAddressObject, registerParams)}
@@ -99,7 +99,7 @@ export function PostalCodeInput({ control, register, errors, valueToValidate, in
             name={targetName}
             fullWidth
             id={targetName}
-            label='PostalCode'
+            label="PostalCode"
             autoFocus
             error={hasError}
             helperText={hasError ? `⚠ ${errorsArr}` : ''}

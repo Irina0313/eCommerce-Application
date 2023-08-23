@@ -19,8 +19,8 @@ export function TitleInput() {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id='title'>Title</InputLabel>
-        <Select labelId='title' id='title' value={title} label='Title ' onChange={handleChange}>
+        <InputLabel id="title">Title</InputLabel>
+        <Select labelId="title" id="title" value={title} label="Title " onChange={handleChange}>
           <MenuItem value={'Mr'}>Mr</MenuItem>
           <MenuItem value={'Mrs'}>Mrs</MenuItem>
           <MenuItem value={'Ms'}>Ms</MenuItem>
@@ -38,16 +38,16 @@ export function FirstNameInput({ control, register, errors, valueToValidate, inp
       <Controller
         name={inputName}
         control={control}
-        defaultValue=''
+        defaultValue=""
         render={({ field }) => (
           <TextField
             {...register(inputName, registerParams)}
             {...field}
-            autoComplete='given-name'
+            autoComplete="given-name"
             name={inputName}
             fullWidth
             id={inputName}
-            label='First Name'
+            label="First Name"
             autoFocus
             error={hasError}
             helperText={hasError ? `⚠ ${errorsArr}` : ''}
@@ -70,16 +70,16 @@ export function LastNameInput({ control, register, errors, valueToValidate, inpu
       <Controller
         name={inputName}
         control={control}
-        defaultValue=''
+        defaultValue=""
         render={({ field }) => (
           <TextField
             {...register(inputName, registerParams)}
             {...field}
             fullWidth
             id={inputName}
-            label='Last Name'
+            label="Last Name"
             name={inputName}
-            autoComplete='family-name'
+            autoComplete="family-name"
             error={hasError}
             helperText={hasError ? `⚠ ${errorsArr}` : ''}
             onChange={(e) => {
