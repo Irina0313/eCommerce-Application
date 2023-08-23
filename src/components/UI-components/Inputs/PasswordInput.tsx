@@ -11,7 +11,7 @@ import { usePasswordValidation } from '../../../hooks/usePasswordValidation';
 import { IInputProps } from '../../../helpers/Interfaces.ts/FormsInterfaces';
 import FormHelperText from '@mui/material/FormHelperText';
 
-export function PasswordInput({ control, register, errors, valueToValidate, inputName }: IInputProps) {
+export function PasswordInput({ control, register, errors, valueToValidate, inputName, trigger }: IInputProps) {
   const { errorsArr, registerParams } = usePasswordValidation(valueToValidate);
   const hasError = errors[inputName] && errorsArr.length > 0;
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
@@ -60,6 +60,10 @@ export function PasswordInput({ control, register, errors, valueToValidate, inpu
             }
             label={inputName}
             autoComplete='current-password'
+            onChange={(e) => {
+              field.onChange(e);
+              trigger(inputName);
+            }}
           />
         )}
       />

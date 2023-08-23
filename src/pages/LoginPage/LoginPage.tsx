@@ -41,9 +41,9 @@ export function LoginPage() {
         })
         .catch((e) => {
           setApiResponse(false);
-          setShowModal(true);
           setloading(false);
-          setMessage(e.name === 'BadRequest' ? 'Invalid email or password. Please try again.' : 'Network error. Please try again.');
+          setMessage(e.name === 'BadRequest' ? 'Invalid email or password. Please try again.' : e.message);
+          setShowModal(true);
         });
     }
   };

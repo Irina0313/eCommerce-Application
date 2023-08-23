@@ -31,18 +31,18 @@ export function RegistrationPage() {
         .then(({ body }) => {
           setUserId(body.customer.id);
           setApiResponse(true);
-          setShowModal(true);
           setloading(false);
           setMessage('Account is created successfully!');
+          setShowModal(true);
         })
         .catch((e) => {
           setApiResponse(false);
-          setShowModal(true);
           setloading(false);
-          setMessage(e.name === 'BadRequest' ? 'Ooops... Something went wrong: ' + e.message : 'Network error. Please try again.');
+          setMessage(e.name === 'BadRequest' ? 'Ooops... Something went wrong: ' + e.message : e.message);
+          setShowModal(true);
         });
 
-      console.log(JSON.stringify(data));
+      //console.log(JSON.stringify(data));
     }
   };
   const handleCloseModal = (apiResponse: boolean | null): void => {
