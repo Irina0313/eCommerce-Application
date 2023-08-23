@@ -74,16 +74,16 @@ export default function LoginBtn() {
               Logout
             </MenuItem>
           </div>
-        ) : null}
-
-        <div>
-          <MenuItem onClick={() => handleClick('login')} data-testid={'menuLogin'}>
-            Log in
-          </MenuItem>
-          <MenuItem onClick={() => handleClick('register')} data-testid={'menuRegister'}>
-            Register
-          </MenuItem>
-        </div>
+        ) : (
+          <div>
+            <MenuItem onClick={() => handleClick('login')} data-testid={'menuLogin'}>
+              Log in
+            </MenuItem>
+            <MenuItem onClick={() => handleClick('register')} data-testid={'menuRegister'}>
+              Register
+            </MenuItem>
+          </div>
+        )}
       </Menu>
     </React.Fragment>
   );
