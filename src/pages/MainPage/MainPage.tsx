@@ -24,6 +24,14 @@ export function MainPage() {
           <Button variant="outlined">read about us</Button>
         </Link>
 
+        <Link to={'/login'}>
+          <Button variant="outlined">go to Log in page</Button>
+        </Link>
+
+        <Link to={'/registration'}>
+          <Button variant="outlined">go to Registration page</Button>
+        </Link>
+
         <Button variant="contained" startIcon={<SendIcon />} onClick={() => alert('Surprised!')}>
           receive a gift
         </Button>
