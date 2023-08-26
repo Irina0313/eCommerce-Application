@@ -38,12 +38,12 @@ export default function LoginBtn() {
 
   return (
     <React.Fragment>
-      <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)} size="small" sx={{ ml: 2 }} aria-controls={open ? 'account-menu' : undefined} aria-haspopup="true" aria-expanded={open ? 'true' : undefined} data-testid={'loginBtnIcon'}>
+      <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)} size='small' sx={{ ml: 2 }} aria-controls={open ? 'account-menu' : undefined} aria-haspopup='true' aria-expanded={open ? 'true' : undefined} data-testid={'loginBtnIcon'}>
         <PersonPinIcon sx={{ width: 36, height: 36, marginTop: '-9px', color: 'wheat', borderRadius: '50%' }}></PersonPinIcon>
       </IconButton>
       <Menu
         anchorEl={anchorEl}
-        id="account-menu"
+        id='account-menu'
         open={open}
         onClose={() => setAnchorEl(null)}
         onClick={() => setAnchorEl(null)}
@@ -69,7 +69,7 @@ export default function LoginBtn() {
             <Divider />
             <MenuItem onClick={() => handleClick('logout')}>
               <ListItemIcon>
-                <Logout fontSize="small" />
+                <Logout fontSize='small' />
               </ListItemIcon>
               Logout
             </MenuItem>

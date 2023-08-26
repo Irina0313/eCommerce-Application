@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 export function MainPage() {
   return (
     <>
-      <Typography variant="h1" m={10}>
+      <Typography variant='h1' m={10}>
         This is our Main Page
       </Typography>
-      <Typography variant="h3">Hi there!</Typography>
+      <Typography variant='h3'>Hi there!</Typography>
 
       <Container
         sx={{
@@ -21,18 +21,18 @@ export function MainPage() {
         }}
       >
         <Link to={'/about'}>
-          <Button variant="outlined">read about us</Button>
+          <Button variant='outlined'>read about us</Button>
         </Link>
 
         <Link to={'/login'}>
-          <Button variant="outlined">go to Log in page</Button>
+          <Button variant='outlined'>go to Log in page</Button>
         </Link>
 
         <Link to={'/registration'}>
-          <Button variant="outlined">go to Registration page</Button>
+          <Button variant='outlined'>go to Registration page</Button>
         </Link>
 
-        <Button variant="contained" startIcon={<SendIcon />} onClick={() => alert('Surprised!')}>
+        <Button variant='contained' startIcon={<SendIcon />} onClick={() => alert('Surprised!')}>
           receive a gift
         </Button>
       </Container>
