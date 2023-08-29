@@ -12,7 +12,7 @@ export default function CategoriesViewItem({ category, level }: ICategoriesViewI
   const navigate = useNavigate();
 
   const onClick = (slug: string) => {
-    navigate(`/category/${slug}`);
+    navigate(`/catalog/${slug}`);
   };
 
   return (

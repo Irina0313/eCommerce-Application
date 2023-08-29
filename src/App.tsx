@@ -22,7 +22,8 @@ function App() {
           <Route path='registration' element={<pages.RegistrationPage />} />
           <Route path='profile' element={<pages.ProfilePage />} />
           <Route path='prod/:id' element={<pages.ProductPage />} />
-          <Route path='category/:id' element={<pages.CategoryPage />} />
+          <Route path='catalog' element={<pages.CategoryPage />} />
+          <Route path='catalog/:id' element={<pages.CategoryPage />} />
           <Route path='*' element={<pages.NotFoundPage />} />
         </Route>
       </Routes>

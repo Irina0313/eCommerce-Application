@@ -17,7 +17,7 @@ export function Header() {
             <Typography
               variant='h4'
               noWrap
-              aria-label='account of current user'
+              aria-label='Logotype'
               sx={{
                 ml: 2,
                 fontFamily: 'monospace',
@@ -28,6 +28,13 @@ export function Header() {
               IKK SHOP
             </Typography>
           </Link>
+
+          <Link to={'/catalog'} style={{ textDecoration: 'none', flexGrow: 1 }}>
+            <Typography variant='h6' aria-label='Catalog' sx={{ color: 'wheat' }}>
+              Catalog
+            </Typography>
+          </Link>
+
           <Box sx={{ mt: 1 }}>
             <LoginBtn />
           </Box>
