@@ -5,6 +5,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import CategoriesView from '../../components/CategoriesView/CategoriesView';
 import { Container } from '@mui/system';
 import CatalogBreadcrumbs from '../../components/CatalogBreadcrumbs/CatalogBreadcrumbs';
+import ProductListView from '../../components/ProductListView/ProductListView';
 
 export function CategoryPage() {
   const { categories, error, loading } = useAppSelector((state) => state.categoriesReducer);
@@ -18,7 +19,7 @@ export function CategoryPage() {
   useEffect(() => {
     console.log('CategoryPage useEffect params.id: ', params.id);
     if (!loading && !category && !isCatalogMain) navigate('/404', { replace: true });
-  }, [loading, category]);
+  }, [params, loading]);
 
   return (
     <>
@@ -43,7 +44,11 @@ export function CategoryPage() {
         <Container sx={{ display: 'flex', flexDirection: 'column' }}>
           {category && <CatalogBreadcrumbs categories={categories} category={category} />}
 
-          <Typography variant='h1'>{isCatalogMain ? 'Catalog page' : `Category page: ${category?.name['en-US']}`}</Typography>
+          <Typography variant='h2' textAlign={'center'} mb={4}>
+            {isCatalogMain ? 'Our catalog' : category?.name['en-US']}
+          </Typography>
+
+          {!loading && <ProductListView category={category} />}
         </Container>
       </Container>
     </>

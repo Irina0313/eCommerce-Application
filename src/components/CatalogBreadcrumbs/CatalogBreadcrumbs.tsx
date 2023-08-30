@@ -21,7 +21,7 @@ export default function CatalogBreadcrumbs({ categories, category }: ICatalogBre
   });
 
   return (
-    <Breadcrumbs aria-label='breadcrumb' sx={{ ml: 2 }}>
+    <Breadcrumbs aria-label='breadcrumb' sx={{ ml: 2, mb: 2 }}>
       <Link to={'/catalog'} style={{ textDecoration: 'none' }} color='inherit'>
         Catalog
       </Link>
