@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Grid, Rating, TextField, Typography } from '@mui/material';
+import { Button, CircularProgress, Grid, Rating, TextField, Typography } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import Lightbox from 'yet-another-react-lightbox';
@@ -7,97 +7,29 @@ import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import { Carousel } from 'react-responsive-carousel';
 import { returnProductByKey } from '../../api/Product';
+import { ProductData } from '@commercetools/platform-sdk';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { setProd } from '../../store/productSlice';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import './style.scss';
-import { ProductData } from '@commercetools/platform-sdk';
 
 export function ProductPage() {
+  const prodTemplate = useAppSelector((state) => state.productReducer);
+  const dispatch = useAppDispatch();
+
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<number | null>(4);
   const [amount, setAmount] = React.useState<number | null>(1);
-  const [prodData, setProdData] = useState<ProductData>({
-    name: {
-      'en-US': 'Common product',
-    },
-    description: {
-      'en-US': 'Some description',
-    },
-    categories: [],
-    categoryOrderHints: {},
-    slug: {
-      'en-US': 'slug',
-    },
-    metaTitle: {
-      'en-US': 'metaTitle',
-    },
-    metaDescription: {
-      'en-US': 'MetaDescription',
-    },
-    masterVariant: {
-      id: 1,
-      key: 'key',
-      prices: [
-        {
-          id: 'anyId',
-          value: {
-            type: 'centPrecision',
-            currencyCode: 'USD',
-            centAmount: 1200,
-            fractionDigits: 2,
-          },
-          key: '132',
-          tiers: [
-            {
-              minimumQuantity: 1,
-              value: {
-                type: 'centPrecision',
-                currencyCode: 'USD',
-                centAmount: 1200,
-                fractionDigits: 2,
-              },
-            },
-          ],
-        },
-      ],
-      images: [
-        {
-          url: 'https://cdn.linenclub.com/media/catalog/product/cache/41d32663a01600992c99bcd3aa36f0e1/c/o/comshck08270-g4_0_1.jpg',
-          dimensions: {
-            w: 1117,
-            h: 1400,
-          },
-        },
-      ],
-      attributes: [
-        {
-          name: 'size',
-          value: {
-            key: 'Medium',
-            label: 'Medium',
-          },
-        },
-        {
-          name: 'color',
-          value: {
-            key: 'Green',
-            label: 'Green',
-          },
-        },
-      ],
-      assets: [],
-    },
-    variants: [],
-    searchKeywords: {},
-  });
+
+  const [prodData, setProdData] = useState<ProductData>(prodTemplate);
   useEffect(() => {
     returnProductByKey('CAVALLO_BY_LINEN_CLUB')
       .then(({ body }) => {
         setProdData(body.masterData.current);
-        if (prodData.description) {
-          console.log(Object.values(prodData.description));
-        }
+        dispatch(setProd(body.masterData.current));
       })
       .catch(console.error);
   }, []);
@@ -123,9 +55,10 @@ export function ProductPage() {
   };
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} justifyContent={'center'}>
+      {prodData.masterVariant.key === '...123abc' ? <CircularProgress /> : null}
       <Grid sx={{ textAlign: 'left' }} item xs={12}>
-        <Typography variant='h2'>Prod Name</Typography>
+        <Typography variant='h4'>{Object.values(prodData.name)[0]}</Typography>
       </Grid>
 
       <Grid item md={6} xs={12} sx={{ height: '60vh', justifyContent: 'center', justifyItems: 'center', position: 'relative', marginBottom: '10vh' }}>
