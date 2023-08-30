@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { useEmailValidation } from '../../../hooks/useEmailValidation';
 import { IInputProps } from '../../../helpers/Interfaces.ts/FormsInterfaces';
 
-export function EmailInput({ control, register, errors, valueToValidate, inputName, trigger }: IInputProps) {
+export function EmailInput({ control, register, errors, valueToValidate, inputName, trigger, readOnly, variant }: IInputProps) {
   const { errorsArr, registerParams } = useEmailValidation(valueToValidate);
   const hasError = errors[inputName] && errorsArr.length > 0;
   return (
@@ -12,7 +12,7 @@ export function EmailInput({ control, register, errors, valueToValidate, inputNa
       <Controller
         name={inputName}
         control={control}
-        defaultValue=""
+        defaultValue={valueToValidate}
         render={({ field }) => (
           <TextField
             {...register(inputName, registerParams)}
@@ -20,6 +20,10 @@ export function EmailInput({ control, register, errors, valueToValidate, inputNa
             margin="normal"
             fullWidth
             id="email"
+            InputProps={{
+              readOnly: readOnly,
+            }}
+            variant={variant}
             label="Email"
             name="email"
             autoComplete="email"

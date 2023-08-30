@@ -9,7 +9,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 
-export function TitleInput() {
+export function TitleInput({ readOnly }: Partial<IInputProps>) {
   const [title, setTitle] = useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -20,7 +20,7 @@ export function TitleInput() {
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel id="title">Title</InputLabel>
-        <Select labelId="title" id="title" value={title} label="Title " onChange={handleChange}>
+        <Select labelId="title" id="title" value={title} label="Title " onChange={handleChange} readOnly={readOnly}>
           <MenuItem value={'Mr'}>Mr</MenuItem>
           <MenuItem value={'Mrs'}>Mrs</MenuItem>
           <MenuItem value={'Ms'}>Ms</MenuItem>
@@ -30,7 +30,7 @@ export function TitleInput() {
   );
 }
 
-export function FirstNameInput({ control, register, errors, valueToValidate, inputName, trigger }: IInputProps) {
+export function FirstNameInput({ control, register, errors, valueToValidate, inputName, trigger, readOnly, variant }: IInputProps) {
   const { errorsArr, registerParams } = useSimpleStringValidation(valueToValidate);
   const hasError = errors[inputName] && errorsArr.length > 0;
   return (
@@ -38,15 +38,19 @@ export function FirstNameInput({ control, register, errors, valueToValidate, inp
       <Controller
         name={inputName}
         control={control}
-        defaultValue=""
+        defaultValue={valueToValidate}
         render={({ field }) => (
           <TextField
             {...register(inputName, registerParams)}
             {...field}
             autoComplete="given-name"
+            InputProps={{
+              readOnly: readOnly,
+            }}
             name={inputName}
             fullWidth
             id={inputName}
+            variant={variant}
             label="First Name"
             autoFocus
             error={hasError}
@@ -62,7 +66,7 @@ export function FirstNameInput({ control, register, errors, valueToValidate, inp
   );
 }
 
-export function LastNameInput({ control, register, errors, valueToValidate, inputName, trigger }: IInputProps) {
+export function LastNameInput({ control, register, errors, valueToValidate, inputName, trigger, readOnly, variant }: IInputProps) {
   const { errorsArr, registerParams } = useSimpleStringValidation(valueToValidate);
   const hasError = errors[inputName] && errorsArr.length > 0;
   return (
@@ -70,16 +74,20 @@ export function LastNameInput({ control, register, errors, valueToValidate, inpu
       <Controller
         name={inputName}
         control={control}
-        defaultValue=""
+        defaultValue={valueToValidate}
         render={({ field }) => (
           <TextField
             {...register(inputName, registerParams)}
             {...field}
             fullWidth
             id={inputName}
+            variant={variant}
             label="Last Name"
             name={inputName}
             autoComplete="family-name"
+            InputProps={{
+              readOnly: readOnly,
+            }}
             error={hasError}
             helperText={hasError ? `⚠ ${errorsArr}` : ''}
             onChange={(e) => {

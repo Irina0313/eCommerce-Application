@@ -15,6 +15,6 @@ describe('App', () => {
       </Provider>
     );
 
-    expect(screen.getByText(/This is our Main Page/i)).toBeInTheDocument();
+    expect(screen.getByText(/Personal info/i)).toBeInTheDocument();
   });
 });

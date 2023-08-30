@@ -34,6 +34,8 @@ export interface IInputProps {
   valueToValidate: string;
   inputName: keyof IUserInfoFormInput;
   trigger: UseFormTrigger<IUserInfoFormInput>;
+  readOnly: true | false;
+  variant: 'filled' | 'outlined' | 'standard';
 }
 
 export interface IAddressProps extends IInputProps {
@@ -51,4 +53,10 @@ export interface ICountryProps {
 }
 export interface IPostalCodeProps extends IAddressProps {
   currentCountry: string;
+}
+
+export interface ITabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
 }
