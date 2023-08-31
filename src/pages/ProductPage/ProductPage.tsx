@@ -15,6 +15,7 @@ import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import './style.scss';
+import { useParams } from 'react-router-dom';
 
 export function ProductPage() {
   const prodTemplate = useAppSelector((state) => state.productReducer);
@@ -25,8 +26,11 @@ export function ProductPage() {
   const [amount, setAmount] = React.useState<number | null>(1);
 
   const [prodData, setProdData] = useState<ProductData>(prodTemplate);
+
+  const { productKey } = useParams();
+
   useEffect(() => {
-    returnProductByKey('CAVALLO_BY_LINEN_CLUB')
+    returnProductByKey(productKey ? productKey.substring(1) : '1')
       .then(({ body }) => {
         setProdData(body.masterData.current);
         dispatch(setProd(body.masterData.current));
@@ -92,7 +96,7 @@ export function ProductPage() {
       <Grid item md={6} xs={12}>
         <Grid item xs={12} sx={{ height: 'max-content' }}>
           <>
-            <Grid container>
+            <Grid container justifyContent={'space-between'}>
               <Grid item xs={2}>
                 <Typography sx={{ color: 'red' }} variant='h5'>
                   {prodData.masterVariant.prices ? prodData.masterVariant.prices[0].value.centAmount / 100 + '$' : null}
