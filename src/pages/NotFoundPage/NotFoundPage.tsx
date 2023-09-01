@@ -3,6 +3,7 @@ import WebAssetOffIcon from '@mui/icons-material/WebAssetOff';
 import { Typography, Grid, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import './style.css';
+import GoHomeBth from '../../components/GoHomeBtn/GoHomeBth';
 
 export function NotFoundPage() {
   return (
@@ -34,9 +35,7 @@ export function NotFoundPage() {
       </Grid>
 
       <Typography sx={{ textAlign: 'center', marginTop: '1rem' }} variant='h4'>
-        <Link to={'/'}>
-          <Button variant='outlined'>Return to home page</Button>
-        </Link>
+        <GoHomeBth />
       </Typography>
     </Grid>
   );
