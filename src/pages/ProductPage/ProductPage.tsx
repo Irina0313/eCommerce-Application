@@ -28,7 +28,7 @@ export function ProductPage() {
   const [amount, setAmount] = React.useState<number | null>(1);
 
   const [prodData, setProdData] = useState<ProductData>(prodTemplate);
-  const [isError, setIsError] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(true);
 
   const { productKey } = useParams();
 
@@ -59,7 +59,9 @@ export function ProductPage() {
     <Grid container spacing={2} justifyContent={'center'}>
       {isError ? (
         <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Typography variant='h2'>Sorry, we have some problems...</Typography>
+          <Typography sx={{ marginBottom: '1rem' }} variant='h2'>
+            Sorry, we can&apos;t upload the product...
+          </Typography>
           <GoHomeBth />
         </Grid>
       ) : (
