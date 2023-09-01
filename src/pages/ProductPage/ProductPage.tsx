@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, CircularProgress, Grid, Rating, TextField, Typography } from '@mui/material';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import ZoomInIcon from '@mui/icons-material/ZoomIn';
+
 import Lightbox from 'yet-another-react-lightbox';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Carousel } from 'react-responsive-carousel';
 import { returnProductByKey } from '../../api/Product';
 import { ProductData } from '@commercetools/platform-sdk';
@@ -71,12 +72,14 @@ export function ProductPage() {
           ) : (
             <>
               <Grid sx={{ textAlign: 'left' }} item xs={12}>
-                <Typography variant='h4'>{Object.values(prodData.name)[0]}</Typography>
+                <Typography data-testid='prodName' variant='h4'>
+                  {Object.values(prodData.name)[0]}
+                </Typography>
               </Grid>
 
               <Grid item md={6} xs={12} sx={{ height: '60vh', justifyContent: 'center', justifyItems: 'center', position: 'relative', marginBottom: '10vh' }}>
                 <ZoomInIcon sx={{ position: 'absolute', top: '0', right: '15%' }} onClick={() => setOpen(true)} />
-                <Carousel showArrows={false} dynamicHeight={false} showStatus={false}>
+                <Carousel data-testid='carousel' showArrows={false} dynamicHeight={false} showStatus={false}>
                   {prodData.masterVariant.images?.map((image) => (
                     <div key={image.url}>
                       <img src={image.url}></img>
@@ -99,11 +102,12 @@ export function ProductPage() {
                   }
                   slides={imageSrcArr()}
                   plugins={[Zoom, Thumbnails]}
+                  data-testid='lightBox'
                 />
               </Grid>
 
               <Grid item md={6} xs={12}>
-                <Grid item xs={12} sx={{ height: 'max-content' }}>
+                <Grid item xs={12} sx={{ height: 'max-content' }} data-testid='prices'>
                   <>
                     <Grid container justifyContent={'space-between'}>
                       {prodData.masterVariant.prices ? (
@@ -162,12 +166,12 @@ export function ProductPage() {
                       </Grid>
                       <Grid item xs={10}>
                         {prodData.masterVariant.key === '...123abc' ? (
-                          <Button onClick={() => console.log(amount)} disabled variant='contained' sx={{ margin: ' 1rem 0' }}>
+                          <Button onClick={() => console.log(amount)} disabled variant='contained' sx={{ margin: ' 1rem 0' }} data-testid='addToCart'>
                             <AddShoppingCartIcon></AddShoppingCartIcon>
                             Add to cart
                           </Button>
                         ) : (
-                          <Button onClick={() => console.log(amount)} variant='contained' sx={{ margin: ' 1rem 0' }}>
+                          <Button onClick={() => console.log(amount)} variant='contained' sx={{ margin: ' 1rem 0' }} data-testid='addToCart'>
                             <AddShoppingCartIcon></AddShoppingCartIcon>
                             Add to cart
                           </Button>
@@ -179,7 +183,9 @@ export function ProductPage() {
 
                 <Grid item xs={12} sx={{ height: '20vh', marginTop: '1rem' }}>
                   <Typography variant='h5'>Description</Typography>
-                  <Typography variant='h6'>{prodData.description ? Object.values(prodData.description) : '1231'}</Typography>
+                  <Typography variant='h6' data-testid='descroption'>
+                    {prodData.description ? Object.values(prodData.description) : '1231'}
+                  </Typography>
                 </Grid>
               </Grid>
             </>

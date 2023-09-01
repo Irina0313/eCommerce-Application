@@ -1,7 +1,6 @@
 import React from 'react';
 import WebAssetOffIcon from '@mui/icons-material/WebAssetOff';
-import { Typography, Grid, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Typography, Grid } from '@mui/material';
 import './style.css';
 import GoHomeBth from '../../components/GoHomeBtn/GoHomeBth';
 
