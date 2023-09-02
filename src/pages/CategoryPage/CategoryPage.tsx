@@ -6,6 +6,7 @@ import CategoriesView from '../../components/CategoriesView/CategoriesView';
 import { Container } from '@mui/system';
 import CatalogBreadcrumbs from '../../components/CatalogBreadcrumbs/CatalogBreadcrumbs';
 import ProductListView from '../../components/ProductListView/ProductListView';
+import { siteLocale } from '../../api/BuildClient';
 
 export function CategoryPage() {
   const { categories, error, loading } = useAppSelector((state) => state.categoriesReducer);
@@ -13,7 +14,7 @@ export function CategoryPage() {
   const navigate = useNavigate();
 
   const isCatalogMain = !params.id;
-  const category = params.id ? categories.find((c) => c.slug['en-US'] === params.id) : undefined;
+  const category = params.id ? categories.find((c) => c.slug[siteLocale] === params.id) : undefined;
   const hasChild = category ? categories.some((c) => c.parent?.id === category.id) : undefined;
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export function CategoryPage() {
           {category && <CatalogBreadcrumbs categories={categories} category={category} />}
 
           <Typography variant='h2' textAlign={'center'} mb={4}>
-            {isCatalogMain ? 'Our catalog' : category?.name['en-US']}
+            {isCatalogMain ? 'Our catalog' : category?.name[siteLocale]}
           </Typography>
 
           {!loading && <ProductListView category={category} />}

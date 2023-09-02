@@ -15,6 +15,7 @@ export default function ProductListView({ category }: IProductListViewProps) {
 
   useEffect(() => {
     console.log('ProductListView useEffect category: ', category);
+    setLoading(true);
     getProducts(category?.id)
       .then(({ body }) => {
         console.log('ProductListView result: ', body.results);
@@ -42,10 +43,6 @@ export default function ProductListView({ category }: IProductListViewProps) {
 
   return (
     <>
-      {/* <Typography variant='h5' m={3} textAlign={'center'}>
-        Products
-      </Typography> */}
-
       {loading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
           <CircularProgress size={24} sx={{ color: 'grey' }} />

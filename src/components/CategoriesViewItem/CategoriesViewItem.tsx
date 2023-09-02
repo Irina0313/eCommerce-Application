@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@mui/material';
 import { Category } from '@commercetools/platform-sdk';
 import { useNavigate } from 'react-router-dom';
+import { siteLocale } from '../../api/BuildClient';
 
 interface ICategoriesViewItemProps {
   category: Category;
@@ -17,8 +18,8 @@ export default function CategoriesViewItem({ category, level }: ICategoriesViewI
 
   return (
     <>
-      <Button color='primary' variant='text' fullWidth sx={{ justifyContent: 'flex-start', paddingLeft: `${0.5 + level * 1.5}rem` }} onClick={() => onClick(category.slug['en-US'])}>
-        {category.name['en-US']}
+      <Button color='primary' variant='text' fullWidth sx={{ justifyContent: 'flex-start', paddingLeft: `${0.5 + level * 1.5}rem` }} onClick={() => onClick(category.slug[siteLocale])}>
+        {category.name[siteLocale]}
       </Button>
     </>
   );

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, Container } from '@mui/material';
+import { Typography, Container } from '@mui/material';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { useNavigate } from 'react-router-dom';
+import { siteLocale } from '../../api/BuildClient';
 
 interface IProductViewListItemProps {
   item: ProductProjection;
@@ -10,24 +11,31 @@ interface IProductViewListItemProps {
 export default function ProductViewListItem({ item }: IProductViewListItemProps) {
   const navigate = useNavigate();
 
-  const onClick = (slug: string) => {
-    navigate(`/product/${slug}`);
+  const onClick = (key: string) => {
+    navigate(`/product/${key}`);
   };
 
   return (
     <>
       <Container
+        onClick={() => onClick(item.key ? item.key : '404')}
         sx={{
           marginBottom: '2rem',
           border: '2px solid #000',
           borderRadius: '10px',
+          ':hover': {
+            cursor: 'pointer',
+            background: '#f1f1f1',
+          },
         }}
       >
-        <Button color='primary' variant='text' fullWidth onClick={() => onClick(item.slug['en-US'])}>
-          {item.name['en-US']}
-        </Button>
-        {item.description && item.description['en-US']}
-        {item.masterVariant.images?.length && <img src={item.masterVariant.images[0].url} alt={item.name['en-US']} height={150} />}
+        <Typography variant='h5' textAlign={'center'} m={2}>
+          {item.name[siteLocale]}
+        </Typography>
+        <Container sx={{ display: 'flex', gap: '2rem', paddingBottom: '2rem' }}>
+          {item.masterVariant.images?.length && <img src={item.masterVariant.images[0].url} alt={item.name[siteLocale]} height={150} />}
+          {item.description && item.description[siteLocale]}
+        </Container>
       </Container>
     </>
   );

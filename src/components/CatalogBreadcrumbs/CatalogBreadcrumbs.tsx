@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Typography } from '@mui/material';
 import { Category } from '@commercetools/platform-sdk';
+import { siteLocale } from '../../api/BuildClient';
 
 interface ICatalogBreadcrumbsProps {
   categories: Category[];
@@ -13,8 +14,8 @@ export default function CatalogBreadcrumbs({ categories, category }: ICatalogBre
     const res = categories.find((item) => item.id === c.id);
     return (
       res && (
-        <Link to={`/catalog/${res.slug['en-US']}`} style={{ textDecoration: 'none' }} color='inherit' key='{c.id}'>
-          {res.name['en-US']}
+        <Link to={`/catalog/${res.slug[siteLocale]}`} style={{ textDecoration: 'none' }} color='inherit' key='{c.id}'>
+          {res.name[siteLocale]}
         </Link>
       )
     );
@@ -28,7 +29,7 @@ export default function CatalogBreadcrumbs({ categories, category }: ICatalogBre
 
       {paths}
 
-      <Typography color='text.primary'>{category.name['en-US']}</Typography>
+      <Typography color='text.primary'>{category.name[siteLocale]}</Typography>
     </Breadcrumbs>
   );
 }
