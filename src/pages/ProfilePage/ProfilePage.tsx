@@ -11,6 +11,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { ITabPanelProps } from '../../helpers/Interfaces.ts/FormsInterfaces';
 
 export function ProfilePage() {
+  const [value, setValue] = React.useState(0);
+
   const [loading, setloading] = useState<boolean>(false);
 
   function CustomTabPanel(props: ITabPanelProps) {
@@ -20,7 +22,7 @@ export function ProfilePage() {
       <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
         {value === index && (
           <Box sx={{ p: 3 }}>
-            <Typography>{children}</Typography>
+            <div>{children}</div>
           </Box>
         )}
       </div>
@@ -53,10 +55,22 @@ export function ProfilePage() {
     fetchCustomerInfo();
   }, []);
 
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = async (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    if (newValue === 0) {
+      setloading(true);
+      const storeState = store.getState();
+      const userId = storeState.userReducer.id;
+
+      try {
+        const apiResponse = await Client.getCustomerInfo(userId);
+        setCustomerInfo(apiResponse.body);
+      } catch (error) {
+        console.error(error);
+      }
+
+      setloading(false);
+    }
   };
 
   return (

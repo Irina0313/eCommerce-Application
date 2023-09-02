@@ -39,6 +39,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
     trigger,
   } = useForm<IUserInfoFormInput>();
 
+  const watchTitle: string | undefined = watch('title', '');
   const watchFirstName: string | undefined = watch('firstName', '');
   const watchLastName: string | undefined = watch('lastName', '');
   const watchMail: string | undefined = watch('email', '');
@@ -150,7 +151,25 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
           <Box component="form" noValidate onSubmit={handleSubmit(handleFormSubmit)} sx={{ mt: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={2}>
-                <TitleInput />
+                <Controller
+                  name="title"
+                  control={control}
+                  defaultValue={watchTitle}
+                  render={({ field }) => (
+                    <TitleInput
+                      {...field}
+                      readOnly={false}
+                      variant="outlined"
+                      trigger={trigger}
+                      valueToValidate={watchTitle as string}
+                      inputName="title"
+                      control={control}
+                      onSelectTitle={(currTitle) => {
+                        field.onChange(currTitle);
+                      }}
+                    />
+                  )}
+                />
               </Grid>
               <Grid item xs={12} md={5}>
                 <FirstNameInput control={control} register={register} errors={errors} valueToValidate={watchFirstName as string} inputName="firstName" trigger={trigger} variant="outlined" readOnly={false} />

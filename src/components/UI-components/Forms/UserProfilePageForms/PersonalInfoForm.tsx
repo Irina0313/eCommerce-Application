@@ -1,59 +1,65 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { store } from '../../../../store/store';
-import * as Client from '../../../../api/Client';
 import { Controller } from 'react-hook-form';
 import { TitleInput, FirstNameInput, LastNameInput } from '../../../../components/UI-components/Inputs/NameInputs';
 import { EmailInput } from '../../../../components/UI-components/Inputs/EmailInput';
 import { DateInput } from '../../../../components/UI-components/Inputs/Date';
-import { Customer } from '@commercetools/platform-sdk';
-import { Typography } from '@mui/material';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import { getCustomerInfo } from '../../../../api/Client';
+import { Customer, CustomerUpdate } from '@commercetools/platform-sdk';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
-import { ITabPanelProps } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
-//import InputAdornment from '@mui/material/InputAdornment';
-//import IconButton from '@mui/material/IconButton';
-//import Visibility from '@mui/icons-material/Visibility';
-//import VisibilityOff from '@mui/icons-material/VisibilityOff';
-//import Input from '@mui/material/Input';
-//import InputLabel from '@mui/material/InputLabel';
-//import FormControl from '@mui/material/FormControl';
-import { ChangePasswordModal } from '../../../../components/UI-components/Modals/ChangePasswordModal';
 import { IUserInfoFormInput } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
-
-/* interface RegistrationFormProps {
-  onSubmit: (data: IUserInfoFormInput) => void;
-} */
+import { updateCustomerInfo } from '../../../../api/Client';
+import { ChangePasswordModal } from '../../Modals/ChangePasswordModal';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export function PersonalInfoForm(props: { customerInfo: Customer }) {
-  const { customerInfo } = props;
+  const [loading, setloading] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const customerInfo = props.customerInfo;
+  const [currCustomerInfo, setCurrCustomerInfo] = useState<Customer>(customerInfo);
+
   const {
     watch,
     register,
-    handleSubmit,
     control,
-    clearErrors,
     formState: { errors },
-    //setValue,
     trigger,
   } = useForm<IUserInfoFormInput>();
-
+  const watchTitle: string | undefined = watch('title', customerInfo?.title ? customerInfo?.title : 'Mr');
   const watchFirstName: string | undefined = watch('firstName', customerInfo?.firstName);
   const watchLastName: string | undefined = watch('lastName', customerInfo?.lastName);
   const watchMail: string | undefined = watch('email', customerInfo?.email);
-  //const watchPassword: string | undefined = watch('password', '');
-  const watchBirthDate: string | undefined = watch('dateOfBirth', '');
-
+  const watchBirthDate: string | undefined = watch('dateOfBirth', customerInfo?.dateOfBirth);
   const [isReadOnly, setIsReadOnly] = useState(true);
   const [inputsVariant, setInputsVariant] = useState<'filled' | 'outlined' | 'standard'>('standard');
   const [editPersonalInfoBtmText, setEditPersonalInfoBtmText] = useState('Edit Personal Info');
-
+  const userNewInfo: CustomerUpdate = {
+    version: customerInfo.version,
+    actions: [
+      {
+        action: 'setTitle',
+        title: watchTitle,
+      },
+      {
+        action: 'setFirstName',
+        firstName: watchFirstName,
+      },
+      {
+        action: 'setLastName',
+        lastName: watchLastName,
+      },
+      {
+        action: 'changeEmail',
+        email: watchMail,
+      },
+      {
+        action: 'setDateOfBirth',
+        dateOfBirth: watchBirthDate,
+      },
+    ],
+  };
   const handleEditPersonalInfoBtn = () => {
     if (isReadOnly) {
       setIsReadOnly(false);
@@ -64,10 +70,31 @@ export function PersonalInfoForm(props: { customerInfo: Customer }) {
       setIsReadOnly(true);
       setInputsVariant('standard');
       setEditPersonalInfoBtmText('Edit Personal Info');
+      updateCustomerInfo(customerInfo.id, userNewInfo);
     }
   };
-  const handleChangePasswordBtn = () => {
-    console.log('22');
+  const handleChangePasswordBtn = async () => {
+    setloading(true);
+    customerInfo;
+    async function fetchCustomerInfo() {
+      if (customerInfo) {
+        try {
+          const apiResponse = await getCustomerInfo(customerInfo.id);
+          setCurrCustomerInfo(apiResponse.body);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+    await fetchCustomerInfo();
+    setShowModal(true);
+    setloading(false);
+  };
+
+  const handleCloseModal = (close: boolean) => {
+    if (close) {
+      setShowModal(false);
+    }
   };
   return (
     <>
@@ -76,15 +103,24 @@ export function PersonalInfoForm(props: { customerInfo: Customer }) {
           <Card sx={{ padding: '20px' }}>
             <Grid container spacing={6}>
               <Grid item xs={12} md={2} sx={{ display: !customerInfo?.title ? 'none' : 'block' }}>
-                <TitleInput readOnly={isReadOnly} />
-                <TextField
-                  id="title"
-                  label="Title: "
-                  variant={inputsVariant}
-                  defaultValue={customerInfo?.title}
-                  InputProps={{
-                    readOnly: true,
-                  }}
+                <Controller
+                  name="title"
+                  control={control}
+                  defaultValue={watchTitle}
+                  render={({ field }) => (
+                    <TitleInput
+                      {...field}
+                      readOnly={isReadOnly}
+                      variant={inputsVariant}
+                      trigger={trigger}
+                      valueToValidate={watchTitle as string}
+                      inputName="title"
+                      control={control}
+                      onSelectTitle={(currTitle) => {
+                        field.onChange(currTitle);
+                      }}
+                    />
+                  )}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -96,6 +132,9 @@ export function PersonalInfoForm(props: { customerInfo: Customer }) {
               </Grid>
               <Grid item xs={12} md={4}>
                 <EmailInput control={control} register={register} errors={errors} valueToValidate={watchMail as string} inputName="email" trigger={trigger} readOnly={isReadOnly} variant={inputsVariant} />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <DateInput control={control} register={register} errors={errors} valueToValidate={watchBirthDate as string} inputName="dateOfBirth" trigger={trigger} readOnly={isReadOnly} variant={inputsVariant} />
               </Grid>
               <Grid item xs={12} md={12}>
                 <Button variant="outlined" onClick={handleEditPersonalInfoBtn}>
@@ -109,6 +148,18 @@ export function PersonalInfoForm(props: { customerInfo: Customer }) {
           </Card>
         </Grid>
       </Grid>
+      <ChangePasswordModal showModal={showModal} handleCloseModal={handleCloseModal} customerInfo={currCustomerInfo} />
+      {loading && (
+        <CircularProgress
+          size={96}
+          sx={{
+            color: 'blue',
+            position: 'absolute',
+            top: '40%',
+            left: '50%',
+          }}
+        />
+      )}
     </>
   );
 }

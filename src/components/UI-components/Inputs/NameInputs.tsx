@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import { useSimpleStringValidation } from '../../../hooks/useSimpleStringValidation';
-import { IInputProps } from '../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IInputProps, ITitleProps } from '../../../helpers/Interfaces.ts/FormsInterfaces';
 import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 
-export function TitleInput({ readOnly }: Partial<IInputProps>) {
-  const [title, setTitle] = useState('');
+const titleArr = ['Mr', 'Mrs', 'Ms'];
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setTitle(event.target.value as string);
-  };
+const titleOptions = titleArr.map((item) => (
+  <MenuItem key={item} value={item}>
+    {item}
+  </MenuItem>
+));
 
+export function TitleInput({ readOnly, variant, onSelectTitle, valueToValidate }: ITitleProps) {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel id="title">Title</InputLabel>
-        <Select labelId="title" id="title" value={title} label="Title " onChange={handleChange} readOnly={readOnly}>
-          <MenuItem value={'Mr'}>Mr</MenuItem>
-          <MenuItem value={'Mrs'}>Mrs</MenuItem>
-          <MenuItem value={'Ms'}>Ms</MenuItem>
+        <Select labelId="title" id="title" label="Title " value={valueToValidate} onChange={(event) => onSelectTitle(event.target.value as string)} readOnly={readOnly} variant={variant}>
+          {titleOptions}
         </Select>
       </FormControl>
     </Box>

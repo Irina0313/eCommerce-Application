@@ -26,6 +26,11 @@ export interface IUserInfoFormInput {
   shippingAddresses?: number[];
   billingAddresses?: number[];
 }
+export interface IUserPasswordChange {
+  version: number;
+  currentPassword: string;
+  newPassword: string;
+}
 
 export interface IInputProps {
   control: Control<IUserInfoFormInput>;
@@ -36,8 +41,30 @@ export interface IInputProps {
   trigger: UseFormTrigger<IUserInfoFormInput>;
   readOnly: true | false;
   variant: 'filled' | 'outlined' | 'standard';
+  controllertName?: string;
 }
 
+export interface IPasswordInputProps {
+  control: Control<IUserPasswordChange>;
+  register: UseFormRegister<IUserPasswordChange>;
+  errors: FieldErrors<IUserPasswordChange>;
+  valueToValidate: string;
+  inputName: keyof IUserPasswordChange;
+  trigger: UseFormTrigger<IUserPasswordChange>;
+  readOnly: true | false;
+  variant: 'filled' | 'outlined' | 'standard';
+  label: string;
+  display: string;
+}
+export interface ITitleProps {
+  control: Control<IUserInfoFormInput>;
+  readOnly: true | false;
+  variant: 'filled' | 'outlined' | 'standard';
+  onSelectTitle: (title: string) => void;
+  valueToValidate: string;
+  trigger: UseFormTrigger<IUserInfoFormInput>;
+  inputName: keyof IUserInfoFormInput;
+}
 export interface IAddressProps extends IInputProps {
   index: number;
   isDisabled: boolean;
