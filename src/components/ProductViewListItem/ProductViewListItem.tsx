@@ -33,7 +33,7 @@ export default function ProductViewListItem({ item }: IProductViewListItemProps)
           {item.name[siteLocale]}
         </Typography>
         <Container sx={{ display: 'flex', gap: '2rem', paddingBottom: '2rem' }}>
-          {item.masterVariant.images?.length && <img src={item.masterVariant.images[0].url} alt={item.name[siteLocale]} height={150} />}
+          {item.masterVariant.images && item.masterVariant.images.length > 0 && <img src={item.masterVariant.images[0].url} alt={item.name[siteLocale]} height={150} />}
           {item.description && item.description[siteLocale]}
         </Container>
       </Container>

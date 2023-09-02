@@ -15,6 +15,7 @@ import {
 //   ApiURL = 'https://api.europe-west1.gcp.commercetools.com',
 //   AuthURL = 'https://auth.europe-west1.gcp.commercetools.com',
 // }
+// export const siteLocale = 'en-US';
 
 export enum APIKeys {
   projectKey = 'digitaldreamteam2',
@@ -24,7 +25,6 @@ export enum APIKeys {
   ApiURL = 'https://api.europe-west1.gcp.commercetools.com',
   AuthURL = 'https://auth.europe-west1.gcp.commercetools.com',
 }
-
 export const siteLocale = 'en';
 
 const scopes = [APIKeys.scope];

@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { CircularProgress, Typography, Box } from '@mui/material';
 import { Category, ProductProjection } from '@commercetools/platform-sdk';
 import { getProducts } from '../../api/Client';
 import ProductViewListItem from '../ProductViewListItem/ProductViewListItem';
-
+import SearchField from '../SearchField/SearchField';
+import { siteLocale } from '../../api/BuildClient';
+///////////////////////////
 interface IProductListViewProps {
   category?: Category;
 }
@@ -12,11 +14,17 @@ export default function ProductListView({ category }: IProductListViewProps) {
   const [list, setList] = useState<ProductProjection[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const queryRef = useRef<HTMLInputElement>();
 
   useEffect(() => {
-    console.log('ProductListView useEffect category: ', category);
+    setSearchQuery('');
+    if (queryRef.current) queryRef.current.value = '';
+  }, [category]);
+
+  useEffect(() => {
     setLoading(true);
-    getProducts(category?.id)
+    getProducts(category?.id, searchQuery)
       .then(({ body }) => {
         console.log('ProductListView result: ', body.results);
         setLoading(false);
@@ -29,20 +37,22 @@ export default function ProductListView({ category }: IProductListViewProps) {
         setError(e.message);
         setList([]);
       });
-  }, [category]);
+  }, [category, searchQuery]);
 
-  const getProductsList = (list: ProductProjection[]): JSX.Element[] => {
-    const content: JSX.Element[] = [];
-    for (let i = 0; i < list.length; i++) {
-      const item = list[i];
-      //    if (item.masterData.published)
-      content.push(<ProductViewListItem item={item} key={item.id} />);
-    }
-    return content;
+  const onSearchClick = (query: string): void => {
+    if (query !== searchQuery) setSearchQuery(query);
   };
+
+  console.log('ListVew Render:', searchQuery, '---', category);
 
   return (
     <>
+      <Typography variant='h2' textAlign={'center'} mb={4}>
+        {searchQuery ? `Search result for : ${searchQuery}` : category ? category?.name[siteLocale] : 'Our catalog'}
+      </Typography>
+
+      <SearchField onSearchClick={onSearchClick} queryRef={queryRef} />
+
       {loading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
           <CircularProgress size={24} sx={{ color: 'grey' }} />
@@ -55,7 +65,7 @@ export default function ProductListView({ category }: IProductListViewProps) {
         </Typography>
       )}
 
-      {!loading && !error && getProductsList(list)}
+      {!loading && !error && list.length > 0 && list.map((item) => <ProductViewListItem item={item} key={item.id} />)}
     </>
   );
 }

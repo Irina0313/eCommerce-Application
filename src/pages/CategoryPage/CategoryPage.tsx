@@ -45,10 +45,6 @@ export function CategoryPage() {
         <Container sx={{ display: 'flex', flexDirection: 'column' }}>
           {category && <CatalogBreadcrumbs categories={categories} category={category} />}
 
-          <Typography variant='h2' textAlign={'center'} mb={4}>
-            {isCatalogMain ? 'Our catalog' : category?.name[siteLocale]}
-          </Typography>
-
           {!loading && <ProductListView category={category} />}
         </Container>
       </Container>

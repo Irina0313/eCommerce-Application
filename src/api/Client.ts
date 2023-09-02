@@ -1,4 +1,4 @@
-import { ctpClient } from './BuildClient';
+import { ctpClient, siteLocale } from './BuildClient';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { APIKeys } from './BuildClient';
 import { IUserInfoFormInput } from '../helpers/Interfaces.ts/FormsInterfaces';
@@ -30,9 +30,11 @@ export const getCustomerInfo = (id: string) => {
 //   return apiRoot.categories().get().execute();
 // };
 
-export const getProducts = (category?: string, limit = 100) => {
-  // const queryArgs = { limit };
-  // if (category) queryArgs.filter = `categories.id: subtree("${category}")`;
+export const getProducts = (category?: string, searchQuery = '', limit = '100') => {
+  const queryArgs: Record<string, string> = { limit };
+  if (searchQuery) queryArgs['text.' + siteLocale] = searchQuery;
+  else if (category) queryArgs.filter = `categories.id: subtree("${category}")`;
+
   return (
     apiRoot
       .productProjections()
@@ -41,7 +43,8 @@ export const getProducts = (category?: string, limit = 100) => {
       //.get({ queryArgs: { where: 'masterData.published=true' } })
       //.get({ queryArgs: { where: 'masterData(published=true) and masterData(current(categories contains any("e768d29e-78e2-4560-a4d3-262d9ee2e19b"))))' } })
       //      .get(category ? { queryArgs: { filter: `categories.id: subtree("${category}")` } } : {})
-      .get(category ? { queryArgs: { limit, filter: `categories.id: subtree("${category}")` } } : { queryArgs: { limit } })
+      //.get(category ? { queryArgs: { limit, filter: `categories.id: subtree("${category}")` } } : { queryArgs: { limit } })
+      .get({ queryArgs })
       .execute()
   );
 };
