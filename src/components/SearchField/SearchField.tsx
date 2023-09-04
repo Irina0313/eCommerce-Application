@@ -23,7 +23,7 @@ export default function SearchField({ onSearchClick, queryRef }: ISearchFieldPro
     setShowSearchBtn('none');
   };
 
-  console.log('SearchField Render');
+  // console.log('SearchField Render');
   return (
     <Box
       component='form'

@@ -14,6 +14,7 @@ export function MainPage() {
       <Container
         sx={{
           display: 'flex',
+          flexWrap: 'wrap',
           alignItems: 'center',
           justifyContent: 'center',
           gap: '2rem',

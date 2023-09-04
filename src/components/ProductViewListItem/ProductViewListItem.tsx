@@ -34,8 +34,8 @@ export default function ProductViewListItem({ item }: IProductViewListItemProps)
           {item.name[siteLocale]}
         </Typography>
 
-        <Container sx={{ display: 'flex', flexDirection: 'row', paddingBottom: '2rem' }}>
-          {item.masterVariant.images && item.masterVariant.images.length > 0 && <img src={item.masterVariant.images[0].url} alt={item.name[siteLocale]} height={200} />}
+        <Container sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: '3rem', paddingBottom: '2rem' }}>
+          {item.masterVariant.images && item.masterVariant.images.length > 0 && <img src={item.masterVariant.images[0].url} alt={item.name[siteLocale]} width={200} height='auto' />}
 
           <Container sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', paddingBottom: '2rem' }}>
             <PriceView prices={item.masterVariant.prices} />

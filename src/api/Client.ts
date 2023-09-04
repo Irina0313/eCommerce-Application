@@ -87,14 +87,14 @@ export const fetchCategories = (limit = 100) => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch(categoriesFetching());
-      console.log('Categories - start fetching');
+      // console.log('Categories - start fetching');
 
       const response = await apiRoot.categories().get({ queryArgs: { limit } }).execute();
-      console.log('Categories - ', response.body.results);
+      // console.log('Categories - ', response.body.results);
 
       dispatch(categoriesFetchingSuccess(response.body.results));
     } catch (e) {
-      console.warn('Categories - Eror fetching');
+      // console.warn('Categories - Eror fetching');
       dispatch(categoriesFetchingError((e as Error).message));
     }
   };

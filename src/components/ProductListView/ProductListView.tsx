@@ -34,13 +34,12 @@ export default function ProductListView({ category }: IProductListViewProps) {
     setLoading(true);
     getProducts(category?.id, searchQuery, filterByPriceQuery, sortByValue)
       .then(({ body }) => {
-        console.log('ProductListView result: ', body.results);
+        // console.log('ProductListView result: ', body.results);
         setLoading(false);
         setError('');
         setList(body.results);
       })
       .catch((e) => {
-        console.log('ProductListView err: ', e);
         setLoading(false);
         setError(e.message);
         setList([]);
@@ -63,7 +62,7 @@ export default function ProductListView({ category }: IProductListViewProps) {
     setFilterByPriceString(active ? `variants.price.centAmount:range (${minPrice * 100} to ${maxPrice * 100})` : '');
   };
 
-  console.log('ListVew Render:', searchQuery, '---', category);
+  // console.log('ListVew Render:', searchQuery, '---', category);
 
   return (
     <>
@@ -71,11 +70,12 @@ export default function ProductListView({ category }: IProductListViewProps) {
         {searchQuery ? `Search result for : ${searchQuery}` : category ? category?.name[siteLocale] : 'Our catalog'}
       </Typography>
 
-      <Container sx={{ display: 'flex', alignItems: 'center', gap: 2, marginBottom: '1rem' }}>
+      <Container sx={{ display: 'flex', flexWrap: 'wrap', alignItems: { lg: 'center' }, gap: 3, marginBottom: '1rem' }}>
+        {/* Search */}
         <SearchField onSearchClick={onSearchClick} queryRef={queryRef} />
 
         {/* Sort */}
-        <FormControl sx={{ m: 1, width: '12rem' }}>
+        <FormControl sx={{ width: '12rem' }}>
           <InputLabel htmlFor='sortBySelect'>Sort by</InputLabel>
           <Select native id='sortBySelect' label='Sort by' defaultValue={sortByValue} onChange={(e) => setSortByValue(e.target.value)}>
             <option value={`name.${siteLocale} asc`}>Name ascending</option>
@@ -105,9 +105,8 @@ export default function ProductListView({ category }: IProductListViewProps) {
             disabled={!filterByPrice}
             onChange={onMinPriceChange}
             onBlur={() => onPriceFilterUpdate(true)}
-            sx={{ width: '7rem', marginRight: '0.5rem' }}
+            sx={{ width: '7rem', marginRight: '1rem' }}
             type='number'
-            size='small'
             autoComplete='off'
             InputProps={{
               startAdornment: <InputAdornment position='start'>$</InputAdornment>,
@@ -121,7 +120,6 @@ export default function ProductListView({ category }: IProductListViewProps) {
             onBlur={() => onPriceFilterUpdate(true)}
             sx={{ width: '7rem' }}
             type='number'
-            size='small'
             autoComplete='off'
             InputProps={{
               startAdornment: <InputAdornment position='start'>$</InputAdornment>,
