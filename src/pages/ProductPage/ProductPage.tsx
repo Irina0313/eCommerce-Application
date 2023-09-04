@@ -37,7 +37,6 @@ export function ProductPage() {
       .then(({ body }) => {
         setProdData(body.masterData.current);
         dispatch(setProd(body.masterData.current));
-        console.log(body.masterData.current);
       })
       .catch((e) => {
         e.code === 404 ? navigate('/not-found-product') : setIsError(true);
