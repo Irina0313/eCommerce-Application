@@ -1,0 +1,25 @@
+.carousel-root,
+.carousel-root .slider,
+.carousel .slider-wrapper,
+.slide div,
+.slide img {
+  object-fit: contain;
+  height: 100%;
+}
+
+.carousel.carousel-slider {
+  margin: auto;
+  width: 80%;
+  height: 60%;
+}
+
+.thumbs {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+.thumbs .thumb img {
+  object-fit: contain;
+  height: 100%;
+  width: 100%;
+}

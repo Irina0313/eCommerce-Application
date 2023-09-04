@@ -1,8 +1,8 @@
 import React from 'react';
 import WebAssetOffIcon from '@mui/icons-material/WebAssetOff';
-import { Typography, Grid, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Typography, Grid } from '@mui/material';
 import './style.css';
+import GoHomeBth from '../../components/GoHomeBtn/GoHomeBth';
 
 export function NotFoundPage() {
   return (
@@ -33,10 +33,8 @@ export function NotFoundPage() {
         <div className='error-page--words'>4</div>
       </Grid>
 
-      <Typography sx={{ textAlign: 'center', marginTop: '1rem' }} variant='h4'>
-        <Link to={'/'}>
-          <Button variant='outlined'>Return to home page</Button>
-        </Link>
+      <Typography sx={{ textAlign: 'center', margin: '1rem 0' }} variant='h4'>
+        <GoHomeBth />
       </Typography>
     </Grid>
   );
