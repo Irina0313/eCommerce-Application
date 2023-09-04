@@ -11,6 +11,6 @@ describe('Profile Page', () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText(/Profile Page/i)).toBeInTheDocument();
+    expect(screen.getByText(/Personal info/i)).toBeInTheDocument();
   });
 });

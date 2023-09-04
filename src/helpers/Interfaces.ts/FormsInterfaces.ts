@@ -1,6 +1,6 @@
 import { UseFormRegister, Control, FieldErrors, UseFormTrigger } from 'react-hook-form';
 
-interface IUserAddress {
+export interface IUserAddress {
   streetName: string;
   city: string;
   country: string;
@@ -47,6 +47,8 @@ export interface IAddressChangeProps {
   trigger: UseFormTrigger<IUserAddress>;
   display: string;
   value: string;
+  currentCountry: string;
+  isDisabled: boolean;
 }
 export interface IPasswordInputProps {
   control: Control<IUserPasswordChange>;
@@ -81,6 +83,15 @@ export interface ICountryProps {
   valueToCheck: string;
   isDisabled: boolean;
   trigger: UseFormTrigger<IUserInfoFormInput>;
+}
+
+export interface ICountryChangeProps {
+  inputName: keyof IUserAddress;
+  onSelectCountry: (country: string) => void;
+  valueToCheck: string;
+  isDisabled: boolean;
+  trigger: UseFormTrigger<IUserAddress>;
+  display: string;
 }
 export interface IPostalCodeProps extends IAddressProps {
   currentCountry: string;

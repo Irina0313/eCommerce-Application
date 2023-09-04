@@ -9,6 +9,8 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { ITabPanelProps } from '../../helpers/Interfaces.ts/FormsInterfaces';
 import { BillingAddressesForm } from '../../components/UI-components/Forms/UserProfilePageForms/BillingAddressesForm';
+import { ShippingAddressesForm } from '../../components/UI-components/Forms/UserProfilePageForms/ShippingAddressForm';
+
 export function ProfilePage() {
   const [value, setValue] = React.useState(0);
 
@@ -56,7 +58,7 @@ export function ProfilePage() {
 
   const handleChange = async (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    if (newValue === 0) {
+    if (newValue === 0 || newValue === 1 || newValue === 2) {
       setloading(true);
       const storeState = store.getState();
       const userId = storeState.userReducer.id;
@@ -71,7 +73,7 @@ export function ProfilePage() {
       setloading(false);
     }
   };
-  console.log(customerInfo);
+  // console.log(customerInfo);
   return (
     <>
       {customerInfo !== undefined && (
@@ -80,7 +82,7 @@ export function ProfilePage() {
             <Tabs value={value} onChange={handleChange} centered>
               <Tab label="Personal Info" {...a11yProps(0)} />
               <Tab label="Billing Addresses" {...a11yProps(1)} />
-              <Tab label="Sipping Addresses" {...a11yProps(2)} />
+              <Tab label="Shipping Addresses" {...a11yProps(2)} />
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
@@ -90,7 +92,7 @@ export function ProfilePage() {
             <BillingAddressesForm customerInfo={customerInfo} />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={2}>
-            Item Three
+            <ShippingAddressesForm customerInfo={customerInfo} />
           </CustomTabPanel>
         </Box>
       )}

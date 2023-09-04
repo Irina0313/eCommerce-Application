@@ -44,13 +44,13 @@ export function StreetInput({ control, register, errors, valueToValidate, index,
 
 export function StreetChangeInput({ control, register, errors, valueToValidate, trigger, inputName, display, value }: IAddressChangeProps) {
   const { errorsArr, registerParams } = useOneCharacterValidation(valueToValidate as string);
-  const hasError = errors.streetName && errorsArr.length > 0;
+  const hasError = errors[inputName] && errorsArr.length > 0;
   return (
     <>
       <Controller
         name={inputName}
         control={control}
-        //defaultValue={value}
+        defaultValue={value}
         render={({ field }) => (
           <TextField
             {...register(inputName, registerParams)}
@@ -197,7 +197,7 @@ export function PostalCodeChangeInput({ control, register, errors, valueToValida
       <Controller
         name={inputName}
         control={control}
-        defaultValue=""
+        defaultValue="12345"
         render={({ field }) => (
           <TextField
             {...register(inputName, registerParams)}
