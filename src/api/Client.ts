@@ -30,23 +30,12 @@ export const getCustomerInfo = (id: string) => {
 //   return apiRoot.categories().get().execute();
 // };
 
-export const getProducts = (category?: string, searchQuery = '', limit = '100') => {
-  const queryArgs: Record<string, string> = { limit };
+export const getProducts = (category?: string, searchQuery = '', sort = `name.${siteLocale} asc`, limit = '100') => {
+  const queryArgs: Record<string, string> = { limit, sort };
   if (searchQuery) queryArgs['text.' + siteLocale] = searchQuery;
   else if (category) queryArgs.filter = `categories.id: subtree("${category}")`;
 
-  return (
-    apiRoot
-      .productProjections()
-      .search()
-      //.get({ queryArgs: { where: 'key="sandals"' } })
-      //.get({ queryArgs: { where: 'masterData.published=true' } })
-      //.get({ queryArgs: { where: 'masterData(published=true) and masterData(current(categories contains any("e768d29e-78e2-4560-a4d3-262d9ee2e19b"))))' } })
-      //      .get(category ? { queryArgs: { filter: `categories.id: subtree("${category}")` } } : {})
-      //.get(category ? { queryArgs: { limit, filter: `categories.id: subtree("${category}")` } } : { queryArgs: { limit } })
-      .get({ queryArgs })
-      .execute()
-  );
+  return apiRoot.productProjections().search().get({ queryArgs }).execute();
 };
 
 export function testApi() {

@@ -33,9 +33,8 @@ export default function SearchField({ onSearchClick, queryRef }: ISearchFieldPro
       }}
     >
       <TextField
-        sx={{ mb: 3 }}
         type='search'
-        size='small'
+        size='medium'
         variant='outlined'
         aria-label='search'
         onChange={onChange}

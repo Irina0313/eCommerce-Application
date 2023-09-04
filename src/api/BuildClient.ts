@@ -7,25 +7,25 @@ import {
   // AnonymousAuthMiddlewareOptions, // Required for sending HTTP requests
 } from '@commercetools/sdk-client-v2';
 
-// export enum APIKeys {
-//   projectKey = 'digitaldreamteam',
-//   clientId = 'LVGRElUkuiKZNWoY7K0Nqo8q',
-//   secret = 'j1I8rjF5ojYkpgA6FRJIPOpMAXiAqyYx',
-//   scope = 'manage_project:digitaldreamteam',
-//   ApiURL = 'https://api.europe-west1.gcp.commercetools.com',
-//   AuthURL = 'https://auth.europe-west1.gcp.commercetools.com',
-// }
-// export const siteLocale = 'en-US';
-
 export enum APIKeys {
-  projectKey = 'digitaldreamteam2',
-  clientId = 'Y65iPAygK3xjjI0T2Upc9fG8',
-  secret = 'GHxUN4hnpb4dPTG0L_ODva6eYXK2rReI',
-  scope = 'manage_project:digitaldreamteam2',
+  projectKey = 'digitaldreamteam',
+  clientId = 'LVGRElUkuiKZNWoY7K0Nqo8q',
+  secret = 'j1I8rjF5ojYkpgA6FRJIPOpMAXiAqyYx',
+  scope = 'manage_project:digitaldreamteam',
   ApiURL = 'https://api.europe-west1.gcp.commercetools.com',
   AuthURL = 'https://auth.europe-west1.gcp.commercetools.com',
 }
-export const siteLocale = 'en';
+export const siteLocale = 'en-US';
+
+// export enum APIKeys {
+//   projectKey = 'digitaldreamteam2',
+//   clientId = 'Y65iPAygK3xjjI0T2Upc9fG8',
+//   secret = 'GHxUN4hnpb4dPTG0L_ODva6eYXK2rReI',
+//   scope = 'manage_project:digitaldreamteam2',
+//   ApiURL = 'https://api.europe-west1.gcp.commercetools.com',
+//   AuthURL = 'https://auth.europe-west1.gcp.commercetools.com',
+// }
+// export const siteLocale = 'en';
 
 const scopes = [APIKeys.scope];
 
