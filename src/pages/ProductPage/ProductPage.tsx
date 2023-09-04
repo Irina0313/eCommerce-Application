@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Button, CircularProgress, Grid, Rating, TextField, Typography } from '@mui/material';
-
 import Lightbox from 'yet-another-react-lightbox';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
@@ -29,7 +28,7 @@ export function ProductPage() {
   const [amount, setAmount] = React.useState<number | null>(1);
 
   const [prodData, setProdData] = useState<ProductData>(prodTemplate);
-  const [isError, setIsError] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const { productKey } = useParams();
 
@@ -38,6 +37,7 @@ export function ProductPage() {
       .then(({ body }) => {
         setProdData(body.masterData.current);
         dispatch(setProd(body.masterData.current));
+        console.log(body.masterData.current);
       })
       .catch((e) => {
         e.code === 404 ? navigate('/not-found-product') : setIsError(true);

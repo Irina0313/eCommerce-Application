@@ -33,7 +33,7 @@ export function NotFoundPage() {
         <div className='error-page--words'>4</div>
       </Grid>
 
-      <Typography sx={{ textAlign: 'center', marginTop: '1rem' }} variant='h4'>
+      <Typography sx={{ textAlign: 'center', margin: '1rem 0' }} variant='h4'>
         <GoHomeBth />
       </Typography>
     </Grid>
