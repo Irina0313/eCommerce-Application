@@ -26,14 +26,13 @@ export const getCustomerInfo = (id: string) => {
   return apiRoot.customers().withId({ ID: id }).get().execute();
 };
 
-// export const getCategories = () => {
-//   return apiRoot.categories().get().execute();
-// };
+export const getProducts = (category?: string, searchQuery = '', filterQuery = '', sort = `name.${siteLocale} asc`, limit = '100') => {
+  const filter: string[] = [];
+  if (filterQuery) filter.push(filterQuery);
 
-export const getProducts = (category?: string, searchQuery = '', sort = `name.${siteLocale} asc`, limit = '100') => {
-  const queryArgs: Record<string, string> = { limit, sort };
+  const queryArgs: Record<string, string | string[]> = { limit, sort, filter };
   if (searchQuery) queryArgs['text.' + siteLocale] = searchQuery;
-  else if (category) queryArgs.filter = `categories.id: subtree("${category}")`;
+  else if (category) filter.push(`categories.id: subtree("${category}")`);
 
   return apiRoot.productProjections().search().get({ queryArgs }).execute();
 };

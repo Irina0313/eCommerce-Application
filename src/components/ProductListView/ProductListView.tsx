@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { CircularProgress, Typography, Box, Container } from '@mui/material';
+import { CircularProgress, Typography, Box, Container, Checkbox, FormGroup, FormControlLabel, TextField, InputAdornment } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -19,6 +19,10 @@ export default function ProductListView({ category }: IProductListViewProps) {
   const [error, setError] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortByValue, setSortByValue] = useState<string>(`name.${siteLocale} asc`);
+  const [filterByPriceQuery, setFilterByPriceString] = React.useState('');
+  const [filterByPrice, setFilterByPrice] = React.useState(false);
+  const [minPrice, setMinPrice] = React.useState(0);
+  const [maxPrice, setMaxPrice] = React.useState(1000);
   const queryRef = useRef<HTMLInputElement>();
 
   useEffect(() => {
@@ -28,7 +32,7 @@ export default function ProductListView({ category }: IProductListViewProps) {
 
   useEffect(() => {
     setLoading(true);
-    getProducts(category?.id, searchQuery, sortByValue)
+    getProducts(category?.id, searchQuery, filterByPriceQuery, sortByValue)
       .then(({ body }) => {
         console.log('ProductListView result: ', body.results);
         setLoading(false);
@@ -41,10 +45,22 @@ export default function ProductListView({ category }: IProductListViewProps) {
         setError(e.message);
         setList([]);
       });
-  }, [category, searchQuery, sortByValue]);
+  }, [category, searchQuery, sortByValue, filterByPriceQuery]);
 
   const onSearchClick = (query: string): void => {
     if (query !== searchQuery) setSearchQuery(query);
+  };
+
+  const onMinPriceChange = (e: React.FocusEvent<HTMLInputElement>) => {
+    setMinPrice(+e.target.value > -1 ? +e.target.value : 0);
+  };
+
+  const onMaxPriceChange = (e: React.FocusEvent<HTMLInputElement>) => {
+    setMaxPrice(+e.target.value > -1 ? +e.target.value : 0);
+  };
+
+  const onPriceFilterUpdate = (active: boolean) => {
+    setFilterByPriceString(active ? `variants.price.centAmount:range (${minPrice * 100} to ${maxPrice * 100})` : '');
   };
 
   console.log('ListVew Render:', searchQuery, '---', category);
@@ -55,10 +71,11 @@ export default function ProductListView({ category }: IProductListViewProps) {
         {searchQuery ? `Search result for : ${searchQuery}` : category ? category?.name[siteLocale] : 'Our catalog'}
       </Typography>
 
-      <Container sx={{ display: 'flex', alignItems: 'center', gap: 3, marginBottom: '1rem' }}>
+      <Container sx={{ display: 'flex', alignItems: 'center', gap: 2, marginBottom: '1rem' }}>
         <SearchField onSearchClick={onSearchClick} queryRef={queryRef} />
 
-        <FormControl sx={{ m: 1, width: '15rem' }}>
+        {/* Sort */}
+        <FormControl sx={{ m: 1, width: '12rem' }}>
           <InputLabel htmlFor='sortBySelect'>Sort by</InputLabel>
           <Select native id='sortBySelect' label='Sort by' defaultValue={sortByValue} onChange={(e) => setSortByValue(e.target.value)}>
             <option value={`name.${siteLocale} asc`}>Name ascending</option>
@@ -67,6 +84,50 @@ export default function ProductListView({ category }: IProductListViewProps) {
             <option value='price desc'>Price descending</option>
           </Select>
         </FormControl>
+
+        {/* Filter by Price */}
+        <FormGroup sx={{ flexDirection: 'row' }}>
+          <FormControlLabel
+            label='Filter by priсe'
+            control={
+              <Checkbox
+                checked={filterByPrice}
+                onChange={(e) => {
+                  setFilterByPrice(e.target.checked);
+                  onPriceFilterUpdate(e.target.checked);
+                }}
+              />
+            }
+          />
+          <TextField
+            label='From'
+            value={minPrice}
+            disabled={!filterByPrice}
+            onChange={onMinPriceChange}
+            onBlur={() => onPriceFilterUpdate(true)}
+            sx={{ width: '7rem', marginRight: '0.5rem' }}
+            type='number'
+            size='small'
+            autoComplete='off'
+            InputProps={{
+              startAdornment: <InputAdornment position='start'>$</InputAdornment>,
+            }}
+          />
+          <TextField
+            label='To'
+            value={maxPrice}
+            disabled={!filterByPrice}
+            onChange={onMaxPriceChange}
+            onBlur={() => onPriceFilterUpdate(true)}
+            sx={{ width: '7rem' }}
+            type='number'
+            size='small'
+            autoComplete='off'
+            InputProps={{
+              startAdornment: <InputAdornment position='start'>$</InputAdornment>,
+            }}
+          />
+        </FormGroup>
       </Container>
 
       {loading && (
