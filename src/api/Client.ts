@@ -1,5 +1,5 @@
 import { ctpClient } from './BuildClient';
-import { CustomerChangePassword, CustomerUpdate, CustomerUpdateAction, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { CustomerChangePassword, CustomerUpdate, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { APIKeys } from './BuildClient';
 import { IUserInfoFormInput } from '../helpers/Interfaces.ts/FormsInterfaces';
 

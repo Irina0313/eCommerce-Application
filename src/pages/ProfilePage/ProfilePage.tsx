@@ -3,13 +3,12 @@ import { store } from '../../store/store';
 import * as Client from '../../api/Client';
 import { PersonalInfoForm } from '../../components/UI-components/Forms/UserProfilePageForms/PersonalInfoForm';
 import { Customer } from '@commercetools/platform-sdk';
-import { Typography } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { ITabPanelProps } from '../../helpers/Interfaces.ts/FormsInterfaces';
-
+import { BillingAddressesForm } from '../../components/UI-components/Forms/UserProfilePageForms/BillingAddressesForm';
 export function ProfilePage() {
   const [value, setValue] = React.useState(0);
 
@@ -72,7 +71,7 @@ export function ProfilePage() {
       setloading(false);
     }
   };
-
+  console.log(customerInfo);
   return (
     <>
       {customerInfo !== undefined && (
@@ -88,7 +87,7 @@ export function ProfilePage() {
             <PersonalInfoForm customerInfo={customerInfo} />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
-            Item Two
+            <BillingAddressesForm customerInfo={customerInfo} />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={2}>
             Item Three

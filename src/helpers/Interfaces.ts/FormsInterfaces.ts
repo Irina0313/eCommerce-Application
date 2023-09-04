@@ -1,5 +1,11 @@
 import { UseFormRegister, Control, FieldErrors, UseFormTrigger } from 'react-hook-form';
 
+interface IUserAddress {
+  streetName: string;
+  city: string;
+  country: string;
+  postalCode: string;
+}
 export interface IUserInfoFormInput {
   title?: string;
   firstName?: string;
@@ -7,25 +13,13 @@ export interface IUserInfoFormInput {
   email: string;
   password: string;
   dateOfBirth?: string;
-  addresses: [
-    {
-      streetName: string;
-      city: string;
-      country: string;
-      postalCode: string;
-    },
-    {
-      streetName: string;
-      city: string;
-      country: string;
-      postalCode: string;
-    },
-  ];
+  addresses: IUserAddress[];
   defaultBillingAddress?: number;
   defaultShippingAddress?: number;
   shippingAddresses?: number[];
   billingAddresses?: number[];
 }
+
 export interface IUserPasswordChange {
   version: number;
   currentPassword: string;
@@ -44,6 +38,16 @@ export interface IInputProps {
   controllertName?: string;
 }
 
+export interface IAddressChangeProps {
+  control: Control<IUserAddress>;
+  register: UseFormRegister<IUserAddress>;
+  errors: FieldErrors<IUserAddress>;
+  valueToValidate: string;
+  inputName: keyof IUserAddress;
+  trigger: UseFormTrigger<IUserAddress>;
+  display: string;
+  value: string;
+}
 export interface IPasswordInputProps {
   control: Control<IUserPasswordChange>;
   register: UseFormRegister<IUserPasswordChange>;
@@ -69,7 +73,7 @@ export interface IAddressProps extends IInputProps {
   index: number;
   isDisabled: boolean;
 }
-//country
+
 export interface ICountryProps {
   control: Control<IUserInfoFormInput>;
   index: number;
