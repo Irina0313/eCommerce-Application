@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import { useSimpleStringValidation, useOneCharacterValidation } from '../../../../hooks/useSimpleStringValidation';
-import { IAddressProps, IPostalCodeProps, IAddressChangeProps } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IAddressProps, IPostalCodeProps, IAddressChangeProps } from '../../../../helpers/Interfaces/FormsInterfaces';
 import { usePostalCodeValidation } from '../../../../hooks/usePostalCodeValidation';
 
 export function StreetInput({ control, register, errors, valueToValidate, index, isDisabled, trigger }: IAddressProps) {
