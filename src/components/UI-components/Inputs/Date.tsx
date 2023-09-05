@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { useBirthDateValidation } from '../../../hooks/useDateValidation';
 import { IInputProps } from '../../../helpers/Interfaces.ts/FormsInterfaces';
 
-export function DateInput({ control, register, errors, valueToValidate, inputName, trigger }: IInputProps) {
+export function DateInput({ control, register, errors, valueToValidate, inputName, trigger, variant }: IInputProps) {
   let errorsArr: string[] = [];
   let registerParams = {};
 
@@ -21,7 +21,7 @@ export function DateInput({ control, register, errors, valueToValidate, inputNam
       <Controller
         name={inputName}
         control={control}
-        defaultValue=''
+        defaultValue={valueToValidate}
         render={({ field }) => (
           <>
             <TextField
@@ -36,6 +36,8 @@ export function DateInput({ control, register, errors, valueToValidate, inputNam
               autoComplete={inputName}
               autoFocus
               error={hasError}
+              value={valueToValidate}
+              variant={variant}
               helperText={hasError ? `⚠ ${errorsArr}` : ''}
               sx={{ marginTop: 0, marginBottom: 0 }}
               InputLabelProps={{ shrink: true }}

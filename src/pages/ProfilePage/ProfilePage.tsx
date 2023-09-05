@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { store } from '../../store/store';
 import * as Client from '../../api/Client';
-//import { PersonalInfoForm } from '../../components/UI-components/Forms/UserProfilePageForms/PersonalInfoForm';
+import { PersonalInfoForm } from '../../components/UI-components/Forms/UserProfilePageForms/PersonalInfoForm';
 import { Customer } from '@commercetools/platform-sdk';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -93,7 +93,7 @@ export function ProfilePage() {
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
-            {/* <PersonalInfoForm customerInfo={customerInfo} /> */}
+            <PersonalInfoForm customerInfo={customerInfo} />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
             {/* <BillingAddressesForm customerInfo={customerInfo} /> */}

@@ -1,5 +1,5 @@
 import { ctpClient, siteLocale } from './BuildClient';
-import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { CustomerChangePassword, CustomerUpdate, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { APIKeys } from './BuildClient';
 import { IUserInfoFormInput } from '../helpers/Interfaces.ts/FormsInterfaces';
 import { AppDispatch } from '../hooks/useAppDispatch';
@@ -24,6 +24,14 @@ export const userRegister = (data: IUserInfoFormInput) => {
 
 export const getCustomerInfo = (id: string) => {
   return apiRoot.customers().withId({ ID: id }).get().execute();
+};
+
+export const updateCustomerInfo = (id: string, data: CustomerUpdate) => {
+  return apiRoot.customers().withId({ ID: id }).post({ body: data }).execute();
+};
+
+export const changeCustomerPassword = (id: string, data: CustomerChangePassword) => {
+  return apiRoot.customers().password().post({ body: data }).execute();
 };
 
 export const getProducts = (category?: string, searchQuery = '', filterQuery = '', sort = `name.${siteLocale} asc`, limit = '100') => {

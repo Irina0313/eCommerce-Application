@@ -55,10 +55,10 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
           <Box component='form' onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 3, mb: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <EmailInput control={control} register={register} errors={errors} valueToValidate={watchMail as string} inputName='email' trigger={trigger} />
+                <EmailInput control={control} register={register} errors={errors} valueToValidate={watchMail as string} inputName='email' trigger={trigger} variant='outlined' readOnly={false} />
               </Grid>
               <Grid item xs={12}>
-                <PasswordInput control={control} register={register} errors={errors} valueToValidate={watchPassword as string} inputName='password' trigger={trigger} />
+                <PasswordInput control={control} register={register} errors={errors} valueToValidate={watchPassword as string} inputName='password' trigger={trigger} variant='outlined' readOnly={false} />
               </Grid>
 
               <Grid item xs={12}>

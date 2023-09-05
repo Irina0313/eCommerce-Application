@@ -39,6 +39,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
     trigger,
   } = useForm<IUserInfoFormInput>();
 
+  const watchTitle: string | undefined = watch('title', '');
   const watchFirstName: string | undefined = watch('firstName', '');
   const watchLastName: string | undefined = watch('lastName', '');
   const watchMail: string | undefined = watch('email', '');
@@ -150,22 +151,40 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
           <Box component='form' noValidate onSubmit={handleSubmit(handleFormSubmit)} sx={{ mt: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={2}>
-                <TitleInput />
+                <Controller
+                  name='title'
+                  control={control}
+                  defaultValue={watchTitle}
+                  render={({ field }) => (
+                    <TitleInput
+                      {...field}
+                      readOnly={false}
+                      variant='outlined'
+                      trigger={trigger}
+                      valueToValidate={watchTitle as string}
+                      inputName='title'
+                      control={control}
+                      onSelectTitle={(currTitle: string) => {
+                        field.onChange(currTitle);
+                      }}
+                    />
+                  )}
+                />
               </Grid>
               <Grid item xs={12} md={5}>
-                <FirstNameInput control={control} register={register} errors={errors} valueToValidate={watchFirstName as string} inputName='firstName' trigger={trigger} />
+                <FirstNameInput control={control} register={register} errors={errors} valueToValidate={watchFirstName as string} inputName='firstName' trigger={trigger} variant='outlined' readOnly={false} />
               </Grid>
               <Grid item xs={12} md={5}>
-                <LastNameInput control={control} register={register} errors={errors} valueToValidate={watchLastName as string} inputName='lastName' trigger={trigger} />
+                <LastNameInput control={control} register={register} errors={errors} valueToValidate={watchLastName as string} inputName='lastName' trigger={trigger} variant='outlined' readOnly={false} />
               </Grid>
               <Grid item xs={12} md={4}>
-                <EmailInput control={control} register={register} errors={errors} valueToValidate={watchMail as string} inputName='email' trigger={trigger} />
+                <EmailInput control={control} register={register} errors={errors} valueToValidate={watchMail as string} inputName='email' trigger={trigger} variant='outlined' readOnly={false} />
               </Grid>
               <Grid item xs={12} md={4}>
-                <PasswordInput control={control} register={register} errors={errors} valueToValidate={watchPassword as string} inputName='password' trigger={trigger} />
+                <PasswordInput control={control} register={register} errors={errors} valueToValidate={watchPassword as string} inputName='password' trigger={trigger} variant='outlined' readOnly={false} />
               </Grid>
               <Grid item xs={12} md={4}>
-                <DateInput control={control} register={register} errors={errors} valueToValidate={watchBirthDate as string} inputName='dateOfBirth' trigger={trigger} />
+                <DateInput control={control} register={register} errors={errors} valueToValidate={watchBirthDate as string} inputName='dateOfBirth' trigger={trigger} variant='outlined' readOnly={false} />
               </Grid>
             </Grid>
 
@@ -179,10 +198,10 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
               </Box>
 
               <Grid item xs={12} md={12}>
-                <StreetInput control={control} register={register} errors={errors} valueToValidate={watchBillingStreet} inputName='addresses' index={0} isDisabled={isBilling} trigger={trigger} />
+                <StreetInput control={control} register={register} errors={errors} valueToValidate={watchBillingStreet} inputName='addresses' index={0} isDisabled={isBilling} trigger={trigger} variant='outlined' readOnly={false} />
               </Grid>
               <Grid item xs={12} md={4}>
-                <CityInput control={control} register={register} errors={errors} valueToValidate={watchBillingCity} inputName='addresses' index={0} isDisabled={isBilling} trigger={trigger} />
+                <CityInput control={control} register={register} errors={errors} valueToValidate={watchBillingCity} inputName='addresses' index={0} isDisabled={isBilling} trigger={trigger} variant='outlined' readOnly={false} />
               </Grid>
               <Grid item xs={12} md={4}>
                 <Controller
@@ -195,7 +214,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                       control={control}
                       index={0}
                       valueToCheck={watchBillingCountry || 'USA'}
-                      onSelectCountry={(currCountry) => {
+                      onSelectCountry={(currCountry: string) => {
                         field.onChange(currCountry);
                         setValue('addresses.0.country', currCountry);
                       }}
@@ -207,7 +226,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchBillingPostalCode} inputName='addresses' index={0} currentCountry={watchBillingCountry || 'USA'} isDisabled={isBilling} trigger={trigger} />
+                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchBillingPostalCode} inputName='addresses' index={0} currentCountry={watchBillingCountry || 'USA'} isDisabled={isBilling} trigger={trigger} variant='outlined' readOnly={false} />
               </Grid>
             </Grid>
 
@@ -229,10 +248,10 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                 disabled={isShipping}
               />
               <Grid item xs={12} md={12}>
-                <StreetInput control={control} register={register} errors={errors} valueToValidate={watchShippingStreet} inputName='addresses' index={1} isDisabled={isShipping} trigger={trigger} />
+                <StreetInput control={control} register={register} errors={errors} valueToValidate={watchShippingStreet} inputName='addresses' index={1} isDisabled={isShipping} trigger={trigger} variant='outlined' readOnly={false} />
               </Grid>
               <Grid item xs={12} md={4}>
-                <CityInput control={control} register={register} errors={errors} valueToValidate={watchShippingCity} inputName='addresses' index={1} isDisabled={isShipping} trigger={trigger} />
+                <CityInput control={control} register={register} errors={errors} valueToValidate={watchShippingCity} inputName='addresses' index={1} isDisabled={isShipping} trigger={trigger} variant='outlined' readOnly={false} />
               </Grid>
               <Grid item xs={12} md={4}>
                 <Controller
@@ -245,7 +264,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                       control={control}
                       index={1}
                       valueToCheck={watchShippingCountry || 'USA'}
-                      onSelectCountry={(currCountry) => {
+                      onSelectCountry={(currCountry: string) => {
                         field.onChange(currCountry);
                         setValue('addresses.1.country', currCountry);
                       }}
@@ -257,7 +276,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchShippingPostalCode} inputName='addresses' index={1} currentCountry={watchShippingCountry || 'USA'} isDisabled={isShipping} trigger={trigger} />
+                <PostalCodeInput control={control} register={register} errors={errors} valueToValidate={watchShippingPostalCode} inputName='addresses' index={1} currentCountry={watchShippingCountry || 'USA'} isDisabled={isShipping} trigger={trigger} variant='outlined' readOnly={false} />
               </Grid>
             </Grid>
 
