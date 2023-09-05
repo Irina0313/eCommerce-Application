@@ -119,6 +119,7 @@ export function PersonalInfoForm(props: { customerInfo: Customer }) {
                       onSelectTitle={(currTitle) => {
                         field.onChange(currTitle);
                       }}
+                      ref={field.ref}
                     />
                   )}
                 />

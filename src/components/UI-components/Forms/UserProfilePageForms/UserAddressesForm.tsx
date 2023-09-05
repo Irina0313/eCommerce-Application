@@ -60,7 +60,7 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
     try {
       const resp = await getCustomerInfo(customerInfo.id);
       const currCustomerInfo = resp.body;
-      if ((addressType === 'billing' && currCustomerInfo.billingAddressIds.length < 2) || (addressType === 'shipping' && currCustomerInfo.shippingAddressIds.length < 2)) {
+      if ((addressType === 'billing' && currCustomerInfo.billingAddressIds && currCustomerInfo.billingAddressIds.length < 2) || (addressType === 'shipping' && currCustomerInfo.shippingAddressIds && currCustomerInfo.shippingAddressIds?.length < 2)) {
         setMessage('At least one address is required!');
         setApiResponce(false);
         setShowMessageModal(true);
@@ -125,8 +125,8 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
     }
   };
 
-  const handleCloseModal = async (close) => {
-    setLoading(close);
+  const handleCloseModal = async () => {
+    setLoading(true);
 
     const resp = await getCustomerInfo(customerInfo.id);
 
@@ -138,7 +138,7 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
 
     await setIdAddressesArr(addressType === 'billing' ? updatedCustomerInfo.billingAddressIds : updatedCustomerInfo.shippingAddressIds);
 
-    const filteredAddresses = addressType === 'billing' ? addresses.filter((address) => resp.body.billingAddressIds.includes(address.id)) : addresses.filter((address) => resp.body.shippingAddressIds.includes(address.id));
+    const filteredAddresses = addressType === 'billing' ? addresses.filter((address) => resp.body.billingAddressIds?.includes(address.id)) : addresses.filter((address) => resp.body.shippingAddressIds?.includes(address.id));
 
     await setTargetAddresses(filteredAddresses);
 

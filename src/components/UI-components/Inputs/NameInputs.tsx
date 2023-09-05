@@ -17,18 +17,18 @@ const titleOptions = titleArr.map((item) => (
   </MenuItem>
 ));
 
-export function TitleInput({ readOnly, variant, onSelectTitle, valueToValidate }: ITitleProps) {
+export const TitleInput = React.forwardRef(function TitleInput({ readOnly, variant, onSelectTitle, valueToValidate }: ITitleProps, ref) {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel id="title">Title</InputLabel>
-        <Select labelId="title" id="title" label="Title " value={valueToValidate} onChange={(event) => onSelectTitle(event.target.value as string)} readOnly={readOnly} variant={variant}>
+        <Select labelId="title" id="title" label="Title " value={valueToValidate} onChange={(event) => onSelectTitle(event.target.value as string)} ref={ref} readOnly={readOnly} variant={variant}>
           {titleOptions}
         </Select>
       </FormControl>
     </Box>
   );
-}
+});
 
 export function FirstNameInput({ control, register, errors, valueToValidate, inputName, trigger, readOnly, variant }: IInputProps) {
   const { errorsArr, registerParams } = useSimpleStringValidation(valueToValidate);
