@@ -12,14 +12,7 @@ import { AddressModal } from '../../Modals/ChangeAddressModal';
 import { MessageModal } from '../../Modals/MessageModal';
 import { getCustomerInfo, updateCustomerInfo } from '../../../../api/Client';
 import TextField from '@mui/material/TextField';
-
-export interface IAddress {
-  city: string;
-  country: string;
-  id: string;
-  postalCode: string;
-  streetName: string;
-}
+import { IAddress } from '../../../../helpers/Interfaces/FormsInterfaces';
 
 export function UserAddressesForm(props: { customerInfo: Customer; addressType: string }) {
   const [loading, setLoading] = useState<boolean>(false);

@@ -11,7 +11,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { TitleInput, FirstNameInput, LastNameInput } from '../Inputs/NameInputs';
-import { IUserInfoFormInput } from '../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IUserInfoFormInput } from '../../../helpers/Interfaces/FormsInterfaces';
 import { EmailInput } from '../Inputs/EmailInput';
 import { PasswordInput } from '../Inputs/PasswordInput';
 import { DateInput } from '../Inputs/Date';
@@ -164,7 +164,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                       valueToValidate={watchTitle as string}
                       inputName="title"
                       control={control}
-                      onSelectTitle={(currTitle) => {
+                      onSelectTitle={(currTitle: string) => {
                         field.onChange(currTitle);
                       }}
                     />
@@ -214,7 +214,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                       control={control}
                       index={0}
                       valueToCheck={watchBillingCountry || 'USA'}
-                      onSelectCountry={(currCountry) => {
+                      onSelectCountry={(currCountry: string) => {
                         field.onChange(currCountry);
                         setValue('addresses.0.country', currCountry);
                       }}
@@ -264,7 +264,7 @@ export function RegistrationForm({ onSubmit }: RegistrationFormProps) {
                       control={control}
                       index={1}
                       valueToCheck={watchShippingCountry || 'USA'}
-                      onSelectCountry={(currCountry) => {
+                      onSelectCountry={(currCountry: string) => {
                         field.onChange(currCountry);
                         setValue('addresses.1.country', currCountry);
                       }}

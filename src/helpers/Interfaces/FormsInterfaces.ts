@@ -102,3 +102,11 @@ export interface ITabPanelProps {
   index: number;
   value: number;
 }
+
+export interface IAddress {
+  city: string;
+  country: string;
+  id: string;
+  postalCode: string;
+  streetName: string;
+}

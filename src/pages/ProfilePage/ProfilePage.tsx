@@ -7,11 +7,19 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import { ITabPanelProps } from '../../helpers/Interfaces.ts/FormsInterfaces';
+import { ITabPanelProps } from '../../helpers/Interfaces/FormsInterfaces';
 import { BillingAddressesForm } from '../../components/UI-components/Forms/UserProfilePageForms/BillingAddressesForm';
 import { ShippingAddressesForm } from '../../components/UI-components/Forms/UserProfilePageForms/ShippingAddressForm';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useNavigate } from 'react-router-dom';
 
 export function ProfilePage() {
+  const isLogin = useAppSelector((state) => state.userReducer.id);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isLogin) navigate('/');
+  }, []);
+
   const [value, setValue] = React.useState(0);
 
   const [loading, setloading] = useState<boolean>(false);

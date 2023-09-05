@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { MessageModal } from '../../components/UI-components/Modals/MessageModal';
 import { useNavigate } from 'react-router-dom';
 import { RegistrationForm } from '../../components/UI-components/Forms/RegistrationForm';
-import { IUserInfoFormInput } from '../../helpers/Interfaces.ts/FormsInterfaces';
+import { IUserInfoFormInput } from '../../helpers/Interfaces/FormsInterfaces';
 import { userRegister } from '../../api/Client';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';

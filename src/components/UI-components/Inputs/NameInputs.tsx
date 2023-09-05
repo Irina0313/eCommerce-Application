@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import { useSimpleStringValidation } from '../../../hooks/useSimpleStringValidation';
-import { IInputProps, ITitleProps } from '../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IInputProps, ITitleProps } from '../../../helpers/Interfaces/FormsInterfaces';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';

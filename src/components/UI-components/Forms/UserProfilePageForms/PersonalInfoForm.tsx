@@ -9,7 +9,7 @@ import { Customer, CustomerUpdate } from '@commercetools/platform-sdk';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import { IUserInfoFormInput } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IUserInfoFormInput } from '../../../../helpers/Interfaces/FormsInterfaces';
 import { updateCustomerInfo } from '../../../../api/Client';
 import { ChangePasswordModal } from '../../Modals/ChangePasswordModal';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -116,7 +116,7 @@ export function PersonalInfoForm(props: { customerInfo: Customer }) {
                       valueToValidate={watchTitle as string}
                       inputName="title"
                       control={control}
-                      onSelectTitle={(currTitle) => {
+                      onSelectTitle={(currTitle: string) => {
                         field.onChange(currTitle);
                       }}
                       ref={field.ref}

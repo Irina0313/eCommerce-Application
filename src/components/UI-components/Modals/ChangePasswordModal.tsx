@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { PasswordChangeInput } from '../Inputs/PasswordInput';
 import { useForm } from 'react-hook-form';
-import { IUserPasswordChange } from '../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IUserPasswordChange } from '../../../helpers/Interfaces/FormsInterfaces';
 import { Customer, CustomerChangePassword } from '@commercetools/platform-sdk';
 import { changeCustomerPassword } from '../../../api/Client';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -42,8 +42,8 @@ export function ChangePasswordModal({ handleCloseModal, showModal, customerInfo 
     const userNewPassword: CustomerChangePassword = {
       version: customerInfo.version,
       id: customerInfo.id,
-      currentPassword: watchCurrentPassword,
-      newPassword: watchNewPassword,
+      currentPassword: watchCurrentPassword as string,
+      newPassword: watchNewPassword as string,
     };
     changeCustomerPassword(userNewPassword.id, userNewPassword)
       .then(() => {

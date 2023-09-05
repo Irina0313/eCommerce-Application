@@ -9,16 +9,15 @@ import { Customer, CustomerUpdate } from '@commercetools/platform-sdk';
 import CircularProgress from '@mui/material/CircularProgress';
 import { updateCustomerInfo } from '../../../api/Client';
 import { StreetChangeInput, CityChangeInput, PostalCodeChangeInput } from '../Inputs/Address/AddressTextInputs';
-import { IAddressChangeProps } from '../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IAddressChangeProps, IAddress } from '../../../helpers/Interfaces/FormsInterfaces';
 import { CountryChangeInput } from '../Inputs/Address/CountryInput';
 import { Controller } from 'react-hook-form';
 import { Countries } from '../../../hooks/usePostalCodeValidation';
-//import Box from '@mui/material/Box';
 
 interface IModal {
   showModal: boolean;
   address: IAddress;
-  handleCloseModal: (close: boolean, info: Customer) => void;
+  handleCloseModal: (close: boolean) => void;
   customerInfo: Customer;
   modalType: string;
 }
@@ -33,7 +32,6 @@ export function AddressModal({ handleCloseModal, showModal, address, customerInf
     trigger,
     setValue,
   } = useForm<IAddressChangeProps>();
-  const [info, setInfo] = useState<Customer>();
   const [apiResponse, setApiResponse] = useState<boolean | null>(null);
   const [message, setMessage] = useState<string>('');
   const [loading, setloading] = useState<boolean>(false);
@@ -56,7 +54,7 @@ export function AddressModal({ handleCloseModal, showModal, address, customerInf
   const handleOKClickBtn = async () => {
     //console.log(Object.keys(errors));
     setloading(true);
-
+    const countryIndex = Countries[watchCountry].code as string;
     const editedAddress: CustomerUpdate = {
       version: customerInfo.version,
       actions: [
@@ -67,7 +65,7 @@ export function AddressModal({ handleCloseModal, showModal, address, customerInf
             streetName: watchStreet,
             postalCode: watchPostalCode,
             city: watchCity,
-            country: Countries[watchCountry].code,
+            country: countryIndex,
           },
         },
       ],
@@ -95,7 +93,7 @@ export function AddressModal({ handleCloseModal, showModal, address, customerInf
     } catch (e) {
       setApiResponse(false);
       setloading(false);
-      setMessage(e.message);
+      setMessage('Something went wrong. Try again!');
     }
     setloading(false);
     setDisplayInputs('none');
@@ -109,7 +107,7 @@ export function AddressModal({ handleCloseModal, showModal, address, customerInf
     setDisplayCloseBtn('none');
     setMessage('');
 
-    handleCloseModal(true, info);
+    handleCloseModal(true);
   };
 
   return (
@@ -142,7 +140,7 @@ export function AddressModal({ handleCloseModal, showModal, address, customerInf
                   readOnly={false}
                   label="Country"
                   display={displayInputs}
-                  onSelectCountry={(currCountry) => {
+                  onSelectCountry={(currCountry: string) => {
                     field.onChange(currCountry);
                     setValue('country', currCountry);
                   }}

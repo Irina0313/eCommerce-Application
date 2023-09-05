@@ -1,5 +1,5 @@
 import React from 'react';
-import { ICountryProps, ICountryChangeProps } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
+import { ICountryProps, ICountryChangeProps } from '../../../../helpers/Interfaces/FormsInterfaces';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';

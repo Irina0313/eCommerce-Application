@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import { useBirthDateValidation } from '../../../hooks/useDateValidation';
-import { IInputProps } from '../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IInputProps } from '../../../helpers/Interfaces/FormsInterfaces';
 
 export function DateInput({ control, register, errors, valueToValidate, inputName, trigger, variant }: IInputProps) {
   let errorsArr: string[] = [];

@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import Grid from '@mui/material/Grid';
 import { EmailInput } from '../Inputs/EmailInput';
 import { PasswordInput } from '../Inputs/PasswordInput';
-import { IUserInfoFormInput } from '../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IUserInfoFormInput } from '../../../helpers/Interfaces/FormsInterfaces';
 import { Link as LinkNav } from 'react-router-dom';
 
 const defaultTheme = createTheme();

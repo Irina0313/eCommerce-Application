@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { usePasswordValidation } from '../../../hooks/usePasswordValidation';
-import { IInputProps, IPasswordInputProps } from '../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IInputProps, IPasswordInputProps } from '../../../helpers/Interfaces/FormsInterfaces';
 import FormHelperText from '@mui/material/FormHelperText';
 
 export function PasswordInput({ control, register, errors, valueToValidate, inputName, trigger }: IInputProps) {

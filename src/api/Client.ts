@@ -1,7 +1,7 @@
 import { ctpClient } from './BuildClient';
 import { CustomerChangePassword, CustomerUpdate, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { APIKeys } from './BuildClient';
-import { IUserInfoFormInput } from '../helpers/Interfaces.ts/FormsInterfaces';
+import { IUserInfoFormInput } from '../helpers/Interfaces/FormsInterfaces';
 
 // Create apiRoot from the imported ClientBuilder and include your Project key
 const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: APIKeys.projectKey });
