@@ -13,12 +13,17 @@ import { IUserInfoFormInput } from '../../../../helpers/Interfaces.ts/FormsInter
 import { updateCustomerInfo } from '../../../../api/Client';
 import { ChangePasswordModal } from '../../Modals/ChangePasswordModal';
 import CircularProgress from '@mui/material/CircularProgress';
+import { MessageModal } from '../../Modals/MessageModal';
 
 export function PersonalInfoForm(props: { customerInfo: Customer }) {
   const [loading, setloading] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const customerInfo = props.customerInfo;
   const [currCustomerInfo, setCurrCustomerInfo] = useState<Customer>(customerInfo);
+
+  const [message, setMessage] = useState('');
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [apiResponse, setApiResponse] = useState<boolean | null>(null);
 
   const {
     watch,
@@ -73,25 +78,47 @@ export function PersonalInfoForm(props: { customerInfo: Customer }) {
           },
         ],
       };
-      updateCustomerInfo(customerInfo.id, userNewInfo);
+      setloading(true);
+      updateCustomerInfo(customerInfo.id, userNewInfo)
+        .then(() => {
+          setApiResponse(true);
+          setMessage('Personal info was changed successfully!');
+          setShowMessageModal(true);
+          setloading(false);
+        })
+        .catch((e) => {
+          setApiResponse(false);
+          setloading(false);
+          setMessage(e.message);
+          setShowMessageModal(true);
+        });
     }
   };
+
   const handleChangePasswordBtn = async () => {
     setloading(true);
     customerInfo;
     async function fetchCustomerInfo() {
       if (customerInfo) {
-        try {
-          const apiResponse = await getCustomerInfo(customerInfo.id);
-          setCurrCustomerInfo(apiResponse.body);
-        } catch (error) {
-          console.error(error);
-        }
+        getCustomerInfo(customerInfo.id)
+          .then(({ body }) => {
+            setCurrCustomerInfo(body);
+          })
+          .catch((e) => {
+            setApiResponse(false);
+            setloading(false);
+            setMessage(e.message);
+            setShowMessageModal(true);
+          });
       }
     }
     await fetchCustomerInfo();
     setShowModal(true);
     setloading(false);
+  };
+
+  const handleCloseMessageModal = () => {
+    setShowMessageModal(false);
   };
 
   const handleCloseModal = (close: boolean) => {
@@ -164,6 +191,7 @@ export function PersonalInfoForm(props: { customerInfo: Customer }) {
           }}
         />
       )}
+      <MessageModal apiResponse={apiResponse} message={message} handleCloseModal={handleCloseMessageModal} showModal={showMessageModal} />
     </>
   );
 }

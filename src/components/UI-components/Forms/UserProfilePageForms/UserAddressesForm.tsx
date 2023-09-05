@@ -13,12 +13,6 @@ import { getCustomerInfo, updateCustomerInfo } from '../../../../api/Client';
 import TextField from '@mui/material/TextField';
 import { IAddress, IUserChangeAddress } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
 
-//import { useForm } from 'react-hook-form';
-//import Card from '@mui/material/Card';
-//import Grid from '@mui/material/Grid';
-///import { CityInput } from '../../Inputs/Address/AddressTextInputs';
-//import { Controller } from 'react-hook-form';
-
 export function UserAddressesForm(props: { customerInfo: Customer; addressType: string }) {
   const [loading, setLoading] = useState<boolean>(false);
   const customerInfo = props.customerInfo;

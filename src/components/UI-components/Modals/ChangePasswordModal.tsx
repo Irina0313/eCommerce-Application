@@ -22,6 +22,7 @@ export function ChangePasswordModal({ handleCloseModal, showModal, customerInfo 
     watch,
     register,
     control,
+    handleSubmit,
     formState: { errors },
     trigger,
   } = useForm<IUserPasswordChange>();
@@ -71,7 +72,7 @@ export function ChangePasswordModal({ handleCloseModal, showModal, customerInfo 
 
   return (
     <>
-      <Dialog open={showModal} onClose={handleClose} maxWidth='xs' fullWidth id={'messageModal'}>
+      <Dialog open={showModal} component='form' onSubmit={handleSubmit(handleOKClickBtn)} maxWidth='xs' fullWidth id={'messageModal'}>
         <DialogTitle color={apiResponse || apiResponse === null ? 'primary' : 'error'} fontSize={'1.5rem'}>
           Change password
         </DialogTitle>
@@ -83,7 +84,7 @@ export function ChangePasswordModal({ handleCloseModal, showModal, customerInfo 
           <PasswordChangeInput control={control} register={register} errors={errors} valueToValidate={watchNewPassword as string} inputName='newPassword' trigger={trigger} variant='outlined' readOnly={false} label='New password' display={displayInputs} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleOKClickBtn()} color='primary' variant='outlined' data-testid={'messageModalBtn'} sx={{ display: displayOKBtn }}>
+          <Button type='submit' color='primary' variant='outlined' data-testid={'messageModalBtn'} sx={{ display: displayOKBtn }} disabled={Object.keys(errors).length > 0}>
             Save
           </Button>
           <Button onClick={() => handleClose()} color='primary' variant='outlined' data-testid={'messageModalBtn'} sx={{ display: displayOKBtn }}>

@@ -27,13 +27,10 @@ export function AddressModal({ showModal, address, modalType, onSubmit, handleCa
     register,
     handleSubmit,
     control,
-    //clearErrors,
     formState: { errors },
     setValue,
     trigger,
   } = useForm<IUserChangeAddress>();
-  //console.log(modalType);
-  //setValue('address.streetName', address.streetName);
 
   const watchStreet: string = watch('address.streetName', address.streetName);
   const watchCity: string = watch('address.city', address.city);
