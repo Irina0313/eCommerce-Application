@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { ITabPanelProps } from '../../helpers/Interfaces.ts/FormsInterfaces';
 import { BillingAddressesForm } from '../../components/UI-components/Forms/UserProfilePageForms/BillingAddressesForm';
-//import { ShippingAddressesForm } from '../../components/UI-components/Forms/UserProfilePageForms/ShippingAddressForm';
+import { ShippingAddressesForm } from '../../components/UI-components/Forms/UserProfilePageForms/ShippingAddressForm';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useNavigate } from 'react-router-dom';
 
@@ -99,7 +99,7 @@ export function ProfilePage() {
             <BillingAddressesForm customerInfo={customerInfo} />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={2}>
-            {/*  <ShippingAddressesForm customerInfo={customerInfo} /> */}
+            <ShippingAddressesForm customerInfo={customerInfo} />
           </CustomTabPanel>
         </Box>
       )}
