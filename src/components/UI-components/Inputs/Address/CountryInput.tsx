@@ -1,5 +1,5 @@
 import React from 'react';
-import { ICountryProps } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
+import { ICountryProps, ICountryChangeProps } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -24,6 +24,22 @@ export const CountryInput = React.forwardRef(function CountryInput({ index, onSe
       <FormControl fullWidth>
         <InputLabel id={targetAddressObject}>Country</InputLabel>
         <Select labelId={targetAddressObject} label='Country ' value={valueToCheck} onChange={(event) => onSelectCountry(event.target.value as string, index)} ref={ref} disabled={isDisabled} data-testid={targetName} id={targetName}>
+          {countryOptions}
+        </Select>
+      </FormControl>
+    </Box>
+  );
+});
+
+export const CountryChangeInput = React.forwardRef(function CountryInput({ onSelectCountry, valueToCheck }: ICountryChangeProps, ref) {
+  const targetAddressObject = 'address.country';
+  const targetName = 'country';
+
+  return (
+    <Box sx={{ minWidth: 120, margin: '20px' }}>
+      <FormControl fullWidth>
+        <InputLabel id={targetAddressObject}>Country</InputLabel>
+        <Select labelId={targetAddressObject} label='Country ' value={valueToCheck} onChange={(event) => onSelectCountry(event.target.value as string)} ref={ref} data-testid={targetName} id={targetName}>
           {countryOptions}
         </Select>
       </FormControl>
