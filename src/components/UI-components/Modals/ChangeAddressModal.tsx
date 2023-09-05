@@ -17,22 +17,11 @@ interface IModal {
   showModal: boolean;
   address: IAddress;
   modalType: string;
-  onSubmit: (data: IUserChangeAddress) => void;
-  handleCanselClose: () => void;
+  onSubmit: (data: IUserChangeAddress, modalType: string) => void;
+  handleCancelClose: () => void;
 }
 
-/* export interface IUserChangeAddress {
-  action: string;
-  addressId: string;
-  address:{
-    streetName: string;
-    city: string;
-    country: string;
-     postalCode: string;
-  }
-  
-} */
-export function AddressModal({ showModal, address, modalType, onSubmit, handleCanselClose }: IModal) {
+export function AddressModal({ showModal, address, modalType, onSubmit, handleCancelClose }: IModal) {
   const {
     watch,
     register,
@@ -43,7 +32,7 @@ export function AddressModal({ showModal, address, modalType, onSubmit, handleCa
     setValue,
     trigger,
   } = useForm<IUserChangeAddress>();
-  // console.log('errors', errors, Object.keys(errors).length);
+  //console.log(modalType);
   //setValue('address.streetName', address.streetName);
 
   const watchStreet: string = watch('address.streetName', address.streetName);
@@ -52,12 +41,12 @@ export function AddressModal({ showModal, address, modalType, onSubmit, handleCa
   const watchPostalCode: string = watch('address.postalCode', address.postalCode);
 
   const handleFormSubmit = (data: IUserChangeAddress) => {
-    const formDataWithDefaults = {
+    const formDataWithDefaults: IUserChangeAddress = {
       ...data,
-      action: 'changeAddress',
+      action: modalType === 'Change' ? 'changeAddress' : 'addAddress',
       addressId: address.id,
     };
-    onSubmit(formDataWithDefaults);
+    onSubmit(formDataWithDefaults, modalType);
   };
   useEffect(() => {
     trigger('address.postalCode');
@@ -95,7 +84,7 @@ export function AddressModal({ showModal, address, modalType, onSubmit, handleCa
             Submit
           </Button>
 
-          <Button variant='contained' sx={{ margin: '15px', width: '100px', textAlign: 'center', alignSelf: 'center', display: 'inline' }} onClick={handleCanselClose}>
+          <Button variant='contained' sx={{ margin: '15px', width: '100px', textAlign: 'center', alignSelf: 'center', display: 'inline' }} onClick={handleCancelClose}>
             Cancel
           </Button>
         </Grid>

@@ -8,7 +8,7 @@ export interface IUserAddress {
 }
 
 export interface IUserChangeAddress {
-  action: string;
+  action: 'changeAddress' | 'addAddress';
   addressId: string;
   address: IUserAddress;
 }

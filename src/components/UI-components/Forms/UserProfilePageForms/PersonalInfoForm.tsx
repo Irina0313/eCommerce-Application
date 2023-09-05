@@ -35,32 +35,8 @@ export function PersonalInfoForm(props: { customerInfo: Customer }) {
   const [isReadOnly, setIsReadOnly] = useState(true);
   const [inputsVariant, setInputsVariant] = useState<'filled' | 'outlined' | 'standard'>('standard');
   const [editPersonalInfoBtmText, setEditPersonalInfoBtmText] = useState('Edit Personal Info');
-  const userNewInfo: CustomerUpdate = {
-    version: customerInfo.version,
-    actions: [
-      {
-        action: 'setTitle',
-        title: watchTitle,
-      },
-      {
-        action: 'setFirstName',
-        firstName: watchFirstName,
-      },
-      {
-        action: 'setLastName',
-        lastName: watchLastName,
-      },
-      {
-        action: 'changeEmail',
-        email: watchMail,
-      },
-      {
-        action: 'setDateOfBirth',
-        dateOfBirth: watchBirthDate,
-      },
-    ],
-  };
-  const handleEditPersonalInfoBtn = () => {
+
+  const handleEditPersonalInfoBtn = async () => {
     if (isReadOnly) {
       setIsReadOnly(false);
       setInputsVariant('outlined');
@@ -70,6 +46,33 @@ export function PersonalInfoForm(props: { customerInfo: Customer }) {
       setIsReadOnly(true);
       setInputsVariant('standard');
       setEditPersonalInfoBtmText('Edit Personal Info');
+      const resp = await getCustomerInfo(customerInfo.id);
+
+      const userNewInfo: CustomerUpdate = {
+        version: resp.body.version,
+        actions: [
+          {
+            action: 'setTitle',
+            title: watchTitle,
+          },
+          {
+            action: 'setFirstName',
+            firstName: watchFirstName,
+          },
+          {
+            action: 'setLastName',
+            lastName: watchLastName,
+          },
+          {
+            action: 'changeEmail',
+            email: watchMail,
+          },
+          {
+            action: 'setDateOfBirth',
+            dateOfBirth: watchBirthDate,
+          },
+        ],
+      };
       updateCustomerInfo(customerInfo.id, userNewInfo);
     }
   };

@@ -12,6 +12,7 @@ import { MessageModal } from '../../Modals/MessageModal';
 import { getCustomerInfo, updateCustomerInfo } from '../../../../api/Client';
 import TextField from '@mui/material/TextField';
 import { IAddress, IUserChangeAddress } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
+
 //import { useForm } from 'react-hook-form';
 //import Card from '@mui/material/Card';
 //import Grid from '@mui/material/Grid';
@@ -60,6 +61,7 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
       const currCustomerInfo = resp.body;
       if ((addressType === 'billing' && currCustomerInfo.billingAddressIds && currCustomerInfo.billingAddressIds.length < 2) || (addressType === 'shipping' && currCustomerInfo.shippingAddressIds && currCustomerInfo.shippingAddressIds?.length < 2)) {
         setMessage('At least one address is required!');
+        setLoading(false);
         setApiResponce(false);
         setShowMessageModal(true);
       } else {
@@ -76,6 +78,22 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
 
         if (apiResponce) {
           setCurrCustomerInfo(apiResponce.body);
+          const newCustomerInfo = apiResponce.body;
+
+          const addresses = newCustomerInfo['addresses'] as IAddress[];
+          await setAddressesArr(addresses);
+
+          await setIdAddressesArr(addressType === 'billing' ? newCustomerInfo.billingAddressIds : newCustomerInfo.shippingAddressIds);
+
+          const filteredAddresses = addressType === 'billing' ? addresses.filter((address) => apiResponce.body.billingAddressIds?.includes(address.id)) : addresses.filter((address) => apiResponce.body.shippingAddressIds?.includes(address.id));
+
+          await setTargetAddresses(filteredAddresses);
+
+          setApiResponce(true);
+          setLoading(false);
+          setMessage('Default address was set successfully!');
+          setShowMessageModal(true);
+
           setApiResponce(true);
           setLoading(false);
           setMessage('Address was deleted successfully!');
@@ -123,31 +141,121 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
     }
   };
   //Close Modal
-  const onSubmit = async (data: IUserChangeAddress) => {
-    console.log(data);
-
+  const changeAddress = async (data: IUserChangeAddress) => {
     setLoading(true);
-
     const resp = await getCustomerInfo(customerInfo.id);
+    const currCustomerInfo = resp.body;
+    const countryIndex = Countries[data.address.country].code as string;
+    const editedAddress: CustomerUpdate = {
+      version: currCustomerInfo.version,
+      actions: [
+        {
+          action: data.action,
+          addressId: data.addressId,
+          address: {
+            streetName: data.address.streetName,
+            postalCode: data.address.postalCode,
+            city: data.address.city,
+            country: countryIndex,
+          },
+        },
+      ],
+    };
+    try {
+      const resp = await updateCustomerInfo(customerInfo.id, editedAddress);
+      setCurrCustomerInfo(resp.body);
+      const updatedCustomerInfo = resp.body;
+      const addresses = updatedCustomerInfo['addresses'] as IAddress[];
+      await setAddressesArr(addresses);
 
-    setCurrCustomerInfo(resp.body);
+      await setIdAddressesArr(addressType === 'billing' ? updatedCustomerInfo.billingAddressIds : updatedCustomerInfo.shippingAddressIds);
 
-    const updatedCustomerInfo = resp.body;
-    const addresses = updatedCustomerInfo['addresses'] as IAddress[];
-    await setAddressesArr(addresses);
+      const filteredAddresses = addressType === 'billing' ? addresses.filter((address) => resp.body.billingAddressIds?.includes(address.id)) : addresses.filter((address) => resp.body.shippingAddressIds?.includes(address.id));
 
-    await setIdAddressesArr(addressType === 'billing' ? updatedCustomerInfo.billingAddressIds : updatedCustomerInfo.shippingAddressIds);
-
-    const filteredAddresses = addressType === 'billing' ? addresses.filter((address) => resp.body.billingAddressIds?.includes(address.id)) : addresses.filter((address) => resp.body.shippingAddressIds?.includes(address.id));
-
-    await setTargetAddresses(filteredAddresses);
-
-    setLoading(false);
-    //setShowMessageModal(false);
-    setShowModal(false);
+      await setTargetAddresses(filteredAddresses);
+      setShowModal(false);
+      setLoading(false);
+      setApiResponce(true);
+      setMessage(modalType === 'Change' ? 'Address was changed successfully!' : 'Address was added successfully!');
+      setShowMessageModal(true);
+    } catch (e) {
+      setShowModal(false);
+      setLoading(false);
+      setApiResponce(false);
+      setMessage('Something went wrong. Try again!');
+      setShowMessageModal(true);
+    }
   };
 
-  const handleCanselClose = () => {
+  const addAddress = async (data: IUserChangeAddress, modalType: string) => {
+    setLoading(true);
+    const resp = await getCustomerInfo(customerInfo.id);
+    const currCustomerInfo = resp.body;
+    const countryIndex = Countries[data.address.country].code as string;
+    const editedAddress: CustomerUpdate = {
+      version: currCustomerInfo.version,
+      actions: [
+        {
+          action: data.action,
+          addressId: data.addressId,
+          address: {
+            streetName: data.address.streetName,
+            postalCode: data.address.postalCode,
+            city: data.address.city,
+            country: countryIndex,
+          },
+        },
+      ],
+    };
+    try {
+      const resp = await updateCustomerInfo(customerInfo.id, editedAddress);
+      setCurrCustomerInfo(resp.body);
+      const updatedCustomerInfo = resp.body;
+      const addresses = updatedCustomerInfo['addresses'] as IAddress[];
+      const newAddress = addresses[addresses.length - 1];
+      const addressId: CustomerUpdate = {
+        version: resp.body['version'],
+        actions: [
+          {
+            action: modalType === 'Add billing' ? 'addBillingAddressId' : 'addShippingAddressId',
+            addressId: newAddress.id,
+          },
+        ],
+      };
+      const newInfo = await updateCustomerInfo(customerInfo.id, addressId);
+      const lastCustomerInfo = newInfo.body;
+      const lastAddresses = lastCustomerInfo['addresses'] as IAddress[];
+      await setAddressesArr(lastAddresses);
+
+      await setIdAddressesArr(addressType === 'billing' ? updatedCustomerInfo.billingAddressIds : updatedCustomerInfo.shippingAddressIds);
+
+      const filteredAddresses = addressType === 'billing' ? addresses.filter((address) => newInfo.body.billingAddressIds?.includes(address.id)) : addresses.filter((address) => newInfo.body.shippingAddressIds?.includes(address.id));
+
+      await setTargetAddresses(filteredAddresses);
+      setShowModal(false);
+      setLoading(false);
+      setApiResponce(true);
+      setMessage(modalType === 'Change' ? 'Address was changed successfully!' : 'Address was added successfully!');
+      setShowMessageModal(true);
+    } catch (e) {
+      setShowModal(false);
+      setLoading(false);
+      setApiResponce(false);
+      setMessage('Something went wrong. Try again!');
+      setShowMessageModal(true);
+    }
+  };
+
+  const onSubmit = async (data: IUserChangeAddress, modalType: string) => {
+    if (data.action === 'changeAddress') {
+      changeAddress(data);
+    }
+    if (data.action === 'addAddress') {
+      addAddress(data, modalType);
+    }
+  };
+
+  const handleCancelClose = () => {
     setShowModal(false);
   };
 
@@ -183,7 +291,7 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
           </Button>
         </Box>
       ))}
-      <AddressModal onSubmit={onSubmit} address={editedAddress} showModal={showModal} modalType={modalType} handleCanselClose={handleCanselClose} />
+      <AddressModal onSubmit={onSubmit} address={editedAddress} showModal={showModal} modalType={modalType} handleCancelClose={handleCancelClose} />
       {<MessageModal apiResponse={apiResponce} message={message} handleCloseModal={handleCloseMessageModal} showModal={showMessageModal} />}
       {loading && (
         <CircularProgress

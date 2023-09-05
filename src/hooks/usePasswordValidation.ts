@@ -8,7 +8,6 @@ interface IPasswordValidationResult {
 }
 
 export function usePasswordValidation(watcher: string): IPasswordValidationResult {
-  console.log('валидируюсь');
   const registerParams = {
     required: true,
     minLength: 8,
