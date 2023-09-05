@@ -6,6 +6,12 @@ export interface IUserAddress {
   country: string;
   postalCode: string;
 }
+
+export interface IUserChangeAddress {
+  action: string;
+  addressId: string;
+  address: IUserAddress;
+}
 export interface IUserInfoFormInput {
   title?: string;
   firstName?: string;
@@ -33,22 +39,22 @@ export interface IInputProps {
   valueToValidate: string;
   inputName: keyof IUserInfoFormInput;
   trigger: UseFormTrigger<IUserInfoFormInput>;
-  readOnly: true | false;
+  readOnly: boolean;
   variant: 'filled' | 'outlined' | 'standard';
   controllertName?: string;
 }
 
 export interface IAddressChangeProps {
-  control: Control<IUserAddress>;
-  register: UseFormRegister<IUserAddress>;
-  errors: FieldErrors<IUserAddress>;
+  control: Control<IUserChangeAddress>;
+  register: UseFormRegister<IUserChangeAddress>;
+  errors: FieldErrors<IUserChangeAddress>;
   valueToValidate: string;
-  inputName: keyof IUserAddress;
-  trigger: UseFormTrigger<IUserAddress>;
-  display: string;
-  value: string;
-  currentCountry: string;
-  isDisabled: boolean;
+  //inputName: keyof IUserChangeAddress;
+  trigger: UseFormTrigger<IUserChangeAddress>;
+  //display: string;
+  //value: string;
+  currentCountry?: string;
+  //isDisabled: boolean;
 }
 export interface IPasswordInputProps {
   control: Control<IUserPasswordChange>;
@@ -86,12 +92,13 @@ export interface ICountryProps {
 }
 
 export interface ICountryChangeProps {
-  inputName: keyof IUserAddress;
+  control: Control<IUserChangeAddress>;
+  //inputName: keyof IUserChangeAddress;
   onSelectCountry: (country: string) => void;
   valueToCheck: string;
-  isDisabled: boolean;
-  trigger: UseFormTrigger<IUserAddress>;
-  display: string;
+  //isDisabled: boolean;
+  trigger: UseFormTrigger<IUserChangeAddress>;
+  //display: string;
 }
 export interface IPostalCodeProps extends IAddressProps {
   currentCountry: string;

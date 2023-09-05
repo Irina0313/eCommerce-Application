@@ -11,7 +11,12 @@ import { AddressModal } from '../../Modals/ChangeAddressModal';
 import { MessageModal } from '../../Modals/MessageModal';
 import { getCustomerInfo, updateCustomerInfo } from '../../../../api/Client';
 import TextField from '@mui/material/TextField';
-import { IAddress } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IAddress, IUserChangeAddress } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
+//import { useForm } from 'react-hook-form';
+//import Card from '@mui/material/Card';
+//import Grid from '@mui/material/Grid';
+///import { CityInput } from '../../Inputs/Address/AddressTextInputs';
+//import { Controller } from 'react-hook-form';
 
 export function UserAddressesForm(props: { customerInfo: Customer; addressType: string }) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -36,17 +41,18 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
 
+  //Add
   const handleAddAddress = () => {
     addressType === 'billing' ? setModalType('Add billing') : setModalType('Add shipping');
     setShowModal(true);
   };
-
+  // Edit
   const handleEditAddress = (address: IAddress) => {
     setModalType('Change');
     setShowModal(true);
     setEditedAddress(address);
   };
-
+  //Delete
   const handleDeleteAddress = async (address: IAddress) => {
     setLoading(true);
     try {
@@ -81,7 +87,7 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
       setLoading(false);
     }
   };
-
+  //Set default
   const handleSetDefaultAddress = async (address: IAddress) => {
     setLoading(true);
     try {
@@ -116,8 +122,10 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
       setLoading(false);
     }
   };
+  //Close Modal
+  const onSubmit = async (data: IUserChangeAddress) => {
+    console.log(data);
 
-  const handleCloseModal = async () => {
     setLoading(true);
 
     const resp = await getCustomerInfo(customerInfo.id);
@@ -135,8 +143,17 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
     await setTargetAddresses(filteredAddresses);
 
     setLoading(false);
-    setShowMessageModal(false);
+    //setShowMessageModal(false);
     setShowModal(false);
+  };
+
+  const handleCanselClose = () => {
+    setShowModal(false);
+  };
+
+  //Close message modal
+  const handleCloseMessageModal = () => {
+    setShowMessageModal(false);
   };
 
   return (
@@ -145,9 +162,10 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
         Add new address
       </Button>
 
-      {targetAddresses.map((address: IAddress) => (
+      {targetAddresses.map((address: IAddress /* index: number */) => (
         <Box key={address.id} sx={{ margin: '10px 0' }}>
           <TextField value={`${address.streetName}, ${address.postalCode}, ${address.city}, ${Object.keys(Countries).find((key) => Countries[key].code === address.country)}`} size='small' variant='standard' sx={{ width: '80%' }} />
+
           <IconButton aria-label='edit' color='primary' onClick={() => handleEditAddress(address)}>
             <EditIcon />
           </IconButton>
@@ -165,8 +183,8 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
           </Button>
         </Box>
       ))}
-      {/* <AddressModal handleCloseModal={handleCloseModal} address={editedAddress} showModal={showModal} customerInfo={currCustomerInfo} modalType={modalType} /> */}
-      <MessageModal apiResponse={apiResponce} message={message} handleCloseModal={handleCloseModal} showModal={showMessageModal} />
+      <AddressModal onSubmit={onSubmit} address={editedAddress} showModal={showModal} modalType={modalType} handleCanselClose={handleCanselClose} />
+      {<MessageModal apiResponse={apiResponce} message={message} handleCloseModal={handleCloseMessageModal} showModal={showMessageModal} />}
       {loading && (
         <CircularProgress
           size={96}
