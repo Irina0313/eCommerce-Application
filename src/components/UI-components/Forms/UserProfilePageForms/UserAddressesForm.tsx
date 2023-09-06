@@ -260,18 +260,18 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
 
   return (
     <>
-      <Button variant='outlined' size='small' onClick={() => handleAddAddress()} sx={{ margin: '0 0 20px' }}>
+      <Button variant='outlined' size='small' onClick={() => handleAddAddress()} sx={{ margin: '0 0 20px' }} data-testid='addAddressBtn'>
         Add new address
       </Button>
 
-      {targetAddresses.map((address: IAddress /* index: number */) => (
+      {targetAddresses.map((address: IAddress) => (
         <Box key={address.id} sx={{ margin: '10px 0' }}>
           <TextField value={`${address.streetName}, ${address.postalCode}, ${address.city}, ${Object.keys(Countries).find((key) => Countries[key].code === address.country)}`} size='small' variant='standard' sx={{ width: '80%' }} />
 
-          <IconButton aria-label='edit' color='primary' onClick={() => handleEditAddress(address)}>
+          <IconButton aria-label='edit' color='primary' onClick={() => handleEditAddress(address)} data-testid='editAddressBtn'>
             <EditIcon />
           </IconButton>
-          <IconButton aria-label='delete' color='primary' onClick={() => handleDeleteAddress(address)}>
+          <IconButton aria-label='delete' color='primary' onClick={() => handleDeleteAddress(address)} data-testid='deleteAddressBtn'>
             <DeleteIcon />
           </IconButton>
           <Button
