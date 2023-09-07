@@ -17,21 +17,15 @@ export function UserAddressesForm(props: { customerInfo: Customer; addressType: 
   const [loading, setLoading] = useState<boolean>(false);
   const customerInfo = props.customerInfo;
   const [currCustomerInfo, setCurrCustomerInfo] = useState<Customer>(customerInfo as Customer);
-
   const addressType = props.addressType;
-
   const [idAddressesArr, setIdAddressesArr] = useState(addressType === 'billing' ? currCustomerInfo.billingAddressIds : currCustomerInfo.shippingAddressIds);
   const [addressesArr, setAddressesArr] = useState(currCustomerInfo.addresses as IAddress[]);
-
   const [targetAddresses, setTargetAddresses] = useState(addressesArr.filter((address) => idAddressesArr?.includes(address.id)));
   const [editedAddress, setEditedAddress] = useState<IAddress>(targetAddresses[0]);
-
   const [defaultBillingAddressId, setDefaultBillingAddressId] = useState(customerInfo?.defaultBillingAddressId || '');
-
   const [defaultShippingAddressId, setDefaultShippingAddressId] = useState(customerInfo?.defaultShippingAddressId || '');
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState('');
-
   const [apiResponce, setApiResponce] = useState(false);
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
