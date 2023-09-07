@@ -1,8 +1,6 @@
 import React from 'react';
-import { cleanup, render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { UserAddressesForm } from './UserAddressesForm';
-
-afterEach(cleanup);
 
 interface ICountry {
   pattern: RegExp;
@@ -20,7 +18,7 @@ const Countries: Record<string, ICountry> = {
   },
 };
 
-const customerInfo = {
+export const customerInfo = {
   id: '956d6bf3-5d75-4ffe-912f-d4afe14c6fe3',
   version: 1,
   createdAt: '2023-09-04T14:23:29.665Z',
@@ -54,16 +52,15 @@ const customerInfo = {
   isEmailVerified: false,
   authenticationMode: 'Password',
 };
-
+/* 
 jest.mock('../../../../api/Client', () => ({
   getCustomerInfo: jest.fn(() => customerInfo),
   updateCustomerInfo: jest.fn(() => customerInfo),
-}));
+})); */
 
 describe('UserAddressesForm', () => {
   it('renders without crashing', () => {
     const { container } = render(<UserAddressesForm customerInfo={customerInfo} addressType='billing' />);
-    expect(container).toBeTruthy();
     expect(container).toBeTruthy();
   });
 
@@ -84,11 +81,9 @@ describe('UserAddressesForm', () => {
 
   it('button add address to be in the document', async () => {
     render(<UserAddressesForm customerInfo={customerInfo} addressType='billing' />);
-    screen.debug();
     fireEvent.click(screen.getByTestId('addAddressBtn'), {
       target: { value: 'React' },
     });
-    screen.debug();
   });
 
   it('button edit address to be in the document', () => {

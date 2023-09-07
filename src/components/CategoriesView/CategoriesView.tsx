@@ -30,7 +30,7 @@ export default function CategoriesView({ categories, parentCategory, error, load
       </Typography>
 
       {loading && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }} data-testid='loading'>
           <CircularProgress size={24} sx={{ color: 'grey' }} />
         </Box>
       )}

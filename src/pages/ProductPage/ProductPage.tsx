@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, CircularProgress, Grid, Rating, TextField, Typography } from '@mui/material';
-import Lightbox from 'yet-another-react-lightbox';
+import { Lightbox } from 'yet-another-react-lightbox';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
@@ -56,7 +56,7 @@ export function ProductPage() {
   };
 
   return (
-    <Grid container spacing={2} justifyContent={'center'}>
+    <Grid container spacing={2} justifyContent={'center'} data-testid={'catalog'}>
       {isError ? (
         <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Typography sx={{ marginBottom: '1rem' }} variant='h2'>
@@ -182,7 +182,7 @@ export function ProductPage() {
 
                 <Grid item xs={12} sx={{ height: '20vh', marginTop: '1rem' }}>
                   <Typography variant='h5'>Description</Typography>
-                  <Typography variant='h6' data-testid='descroption'>
+                  <Typography variant='h6' data-testid='description'>
                     {prodData.description ? Object.values(prodData.description) : '1231'}
                   </Typography>
                 </Grid>
