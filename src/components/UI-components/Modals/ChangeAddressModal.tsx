@@ -1,14 +1,10 @@
 import React, { useEffect } from 'react';
 import { IAddress, IUserChangeAddress } from '../../../helpers/Interfaces.ts/FormsInterfaces';
 import { Controller } from 'react-hook-form';
-//import { Customer } from '@commercetools/platform-sdk';
-import { useForm /* useFieldArray */ } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-//import DialogContent from '@mui/material/DialogContent';
-//import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
-//import CircularProgress from '@mui/material/CircularProgress';
 import { StreetChangeInput, CityChangeInput, PostalCodeChangeInput } from '../Inputs/Address/AddressTextInputs';
 import { CountryChangeInput } from '../Inputs/Address/CountryInput';
 import Grid from '@mui/material/Grid';

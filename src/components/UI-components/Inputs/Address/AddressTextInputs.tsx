@@ -194,7 +194,6 @@ export function PostalCodeChangeInput({ control, register, errors, valueToValida
   const targetName = 'postalCode';
   const { errorsArr, registerParams } = usePostalCodeValidation(valueToValidate, currentCountry || 'USA');
   const hasError = errors.address?.postalCode && errorsArr.length > 0;
-  //console.log('hasError', hasError);
   return (
     <>
       <Controller
