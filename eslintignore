@@ -1,0 +1,5 @@
+# eslint ignore
+
+package.json
+node_modules
+build
