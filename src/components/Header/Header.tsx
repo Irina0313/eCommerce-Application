@@ -9,15 +9,15 @@ import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined
 
 export function Header() {
   return (
-    <AppBar position="static" data-testid={'header'}>
-      <Container maxWidth="md">
+    <AppBar position='static' data-testid={'header'}>
+      <Container maxWidth='md'>
         <Toolbar disableGutters>
-          <EmojiEmotionsOutlinedIcon fontSize="large" sx={{ color: 'wheat' }} />
+          <EmojiEmotionsOutlinedIcon fontSize='large' sx={{ color: 'wheat' }} />
           <Link to={'/'} style={{ textDecoration: 'none', flexGrow: 1 }}>
             <Typography
-              variant="h4"
+              variant='h4'
               noWrap
-              aria-label="account of current user"
+              aria-label='Logotype'
               sx={{
                 ml: 2,
                 fontFamily: 'monospace',
@@ -28,6 +28,13 @@ export function Header() {
               IKK SHOP
             </Typography>
           </Link>
+
+          <Link to={'/catalog'} style={{ textDecoration: 'none', flexGrow: 1 }}>
+            <Typography variant='h6' aria-label='Catalog' sx={{ color: 'wheat' }}>
+              Catalog
+            </Typography>
+          </Link>
+
           <Box sx={{ mt: 1 }}>
             <LoginBtn />
           </Box>

@@ -22,6 +22,7 @@ interface IPostalCodeValidationResult {
 }
 
 export function usePostalCodeValidation(watcher: string, currentCountry: string): IPostalCodeValidationResult {
+  // console.log(watcher, currentCountry);
   const countryPattern = Countries[currentCountry].pattern;
 
   const registerParams = {
@@ -34,5 +35,6 @@ export function usePostalCodeValidation(watcher: string, currentCountry: string)
   } else if (!watcher.match(registerParams.pattern)) {
     errorsArr.push('Postal code must follow the format for the country ');
   }
+  // console.log(errorsArr, registerParams);
   return { errorsArr, registerParams };
 }

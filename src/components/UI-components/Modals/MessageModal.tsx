@@ -18,7 +18,7 @@ export function MessageModal({ apiResponse, message, handleCloseModal, showModal
 
   return (
     <>
-      <Dialog open={showModal} onClose={handleClose} maxWidth="xs" fullWidth id={'messageModal'}>
+      <Dialog open={showModal} onClose={handleClose} maxWidth='xs' fullWidth id={'messageModal'}>
         <DialogTitle color={apiResponse ? 'primary' : 'error'} fontSize={'1.5rem'}>
           {apiResponse ? 'Success' : 'Error'}
         </DialogTitle>
@@ -26,7 +26,7 @@ export function MessageModal({ apiResponse, message, handleCloseModal, showModal
           <DialogContentText>{message}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleCloseModal(apiResponse)} color="primary" variant="outlined" data-testid={'messageModalBtn'}>
+          <Button onClick={() => handleCloseModal(apiResponse)} color='primary' variant='outlined' data-testid={'messageModalBtn'}>
             OK
           </Button>
         </DialogActions>

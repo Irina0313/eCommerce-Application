@@ -1,7 +1,9 @@
-import { ctpClient } from './BuildClient';
-import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { ctpClient, siteLocale } from './BuildClient';
+import { CustomerChangePassword, CustomerUpdate, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { APIKeys } from './BuildClient';
 import { IUserInfoFormInput } from '../helpers/Interfaces.ts/FormsInterfaces';
+import { AppDispatch } from '../hooks/useAppDispatch';
+import { categoriesFetching, categoriesFetchingError, categoriesFetchingSuccess } from '../store/categoriesSlice';
 
 // Create apiRoot from the imported ClientBuilder and include your Project key
 const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: APIKeys.projectKey });
@@ -24,11 +26,23 @@ export const getCustomerInfo = (id: string) => {
   return apiRoot.customers().withId({ ID: id }).get().execute();
 };
 
-export const getCategories = () => {
-  return apiRoot.categories().get().execute();
+export const updateCustomerInfo = (id: string, data: CustomerUpdate) => {
+  return apiRoot.customers().withId({ ID: id }).post({ body: data }).execute();
 };
-export const getProducts = () => {
-  return apiRoot.products().get().execute();
+
+export const changeCustomerPassword = (id: string, data: CustomerChangePassword) => {
+  return apiRoot.customers().password().post({ body: data }).execute();
+};
+
+export const getProducts = (category?: string, searchQuery = '', filterQuery = '', sort = `name.${siteLocale} asc`, limit = '100') => {
+  const filter: string[] = [];
+  if (filterQuery) filter.push(filterQuery);
+
+  const queryArgs: Record<string, string | string[]> = { limit, sort, filter };
+  if (searchQuery) queryArgs['text.' + siteLocale] = searchQuery;
+  else if (category) filter.push(`categories.id: subtree("${category}")`);
+
+  return apiRoot.productProjections().search().get({ queryArgs }).execute();
 };
 
 export function testApi() {
@@ -76,3 +90,20 @@ export function testApi() {
   //   })
   //   .catch(console.error);
 }
+
+export const fetchCategories = (limit = 100) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(categoriesFetching());
+      // console.log('Categories - start fetching');
+
+      const response = await apiRoot.categories().get({ queryArgs: { limit } }).execute();
+      // console.log('Categories - ', response.body.results);
+
+      dispatch(categoriesFetchingSuccess(response.body.results));
+    } catch (e) {
+      // console.warn('Categories - Eror fetching');
+      dispatch(categoriesFetchingError((e as Error).message));
+    }
+  };
+};

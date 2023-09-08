@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import { useSimpleStringValidation, useOneCharacterValidation } from '../../../../hooks/useSimpleStringValidation';
-import { IAddressProps, IPostalCodeProps } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
+import { IAddressProps, IPostalCodeProps, IAddressChangeProps } from '../../../../helpers/Interfaces.ts/FormsInterfaces';
 import { usePostalCodeValidation } from '../../../../hooks/usePostalCodeValidation';
 
 export function StreetInput({ control, register, errors, valueToValidate, index, isDisabled, trigger }: IAddressProps) {
@@ -15,7 +15,7 @@ export function StreetInput({ control, register, errors, valueToValidate, index,
       <Controller
         name={targetAddressObject}
         control={control}
-        defaultValue=""
+        defaultValue=''
         render={({ field }) => (
           <TextField
             {...register(targetAddressObject, registerParams)}
@@ -24,7 +24,7 @@ export function StreetInput({ control, register, errors, valueToValidate, index,
             name={targetName}
             fullWidth
             id={targetName}
-            label="Street"
+            label='Street'
             autoFocus
             error={hasError}
             helperText={hasError ? `⚠  ${errorsArr}` : ''}
@@ -35,6 +35,42 @@ export function StreetInput({ control, register, errors, valueToValidate, index,
               field.onChange(e);
               trigger(targetAddressObject);
             }}
+          />
+        )}
+      />
+    </>
+  );
+}
+
+export function StreetChangeInput({ control, register, errors, valueToValidate, trigger }: IAddressChangeProps) {
+  const targetAddressObject = 'address.streetName';
+  const targetName = 'street';
+  const { errorsArr, registerParams } = useOneCharacterValidation(valueToValidate as string);
+  const hasError = errors.address?.streetName && errorsArr.length > 0;
+  return (
+    <>
+      <Controller
+        name={targetAddressObject}
+        control={control}
+        defaultValue={valueToValidate}
+        render={({ field }) => (
+          <TextField
+            {...register(targetAddressObject, registerParams)}
+            {...field}
+            autoComplete={targetName}
+            name={targetName}
+            id={targetName}
+            label='Street'
+            autoFocus
+            error={hasError}
+            helperText={hasError ? `⚠  ${errorsArr}` : ''}
+            value={valueToValidate}
+            data-testid={targetName}
+            onChange={(e) => {
+              field.onChange(e);
+              trigger(targetAddressObject);
+            }}
+            sx={{ margin: '20px' }}
           />
         )}
       />
@@ -53,7 +89,7 @@ export function CityInput({ control, register, errors, valueToValidate, index, i
       <Controller
         name={targetAddressObject}
         control={control}
-        defaultValue=""
+        defaultValue=''
         render={({ field }) => (
           <TextField
             {...register(targetAddressObject, registerParams)}
@@ -62,7 +98,7 @@ export function CityInput({ control, register, errors, valueToValidate, index, i
             name={targetName}
             fullWidth
             id={targetName}
-            label="City"
+            label='City'
             autoFocus
             error={hasError}
             helperText={hasError ? `⚠ ${errorsArr}` : ''}
@@ -80,6 +116,42 @@ export function CityInput({ control, register, errors, valueToValidate, index, i
   );
 }
 
+export function CityChangeInput({ control, register, errors, valueToValidate, trigger }: IAddressChangeProps) {
+  const targetAddressObject = 'address.city';
+  const targetName = 'city';
+  const { errorsArr, registerParams } = useSimpleStringValidation(valueToValidate);
+  const hasError = errors.address?.city && errorsArr.length > 0;
+
+  return (
+    <>
+      <Controller
+        name={targetAddressObject}
+        control={control}
+        defaultValue={valueToValidate}
+        render={({ field }) => (
+          <TextField
+            {...register(targetAddressObject, registerParams)}
+            {...field}
+            autoComplete={targetName}
+            name={targetName}
+            id={targetName}
+            label='City'
+            autoFocus
+            error={hasError}
+            helperText={hasError ? `⚠ ${errorsArr}` : ''}
+            value={valueToValidate}
+            data-testid={targetName}
+            onChange={(e) => {
+              field.onChange(e);
+              trigger(targetAddressObject);
+            }}
+            sx={{ margin: '20px' }}
+          />
+        )}
+      />
+    </>
+  );
+}
 export function PostalCodeInput({ control, register, errors, valueToValidate, index, currentCountry, isDisabled, trigger }: IPostalCodeProps) {
   const targetAddressObject = index === 0 ? 'addresses.0.postalCode' : 'addresses.1.postalCode';
   const targetName = index === 0 ? 'billingPostalCode' : 'shippingPostalCode';
@@ -90,7 +162,7 @@ export function PostalCodeInput({ control, register, errors, valueToValidate, in
       <Controller
         name={targetAddressObject}
         control={control}
-        defaultValue=""
+        defaultValue=''
         render={({ field }) => (
           <TextField
             {...register(targetAddressObject, registerParams)}
@@ -99,7 +171,7 @@ export function PostalCodeInput({ control, register, errors, valueToValidate, in
             name={targetName}
             fullWidth
             id={targetName}
-            label="PostalCode"
+            label='PostalCode'
             autoFocus
             error={hasError}
             helperText={hasError ? `⚠ ${errorsArr}` : ''}
@@ -110,6 +182,42 @@ export function PostalCodeInput({ control, register, errors, valueToValidate, in
               field.onChange(e);
               trigger(targetAddressObject);
             }}
+          />
+        )}
+      />
+    </>
+  );
+}
+
+export function PostalCodeChangeInput({ control, register, errors, valueToValidate, trigger, currentCountry }: IAddressChangeProps) {
+  const targetAddressObject = 'address.postalCode';
+  const targetName = 'postalCode';
+  const { errorsArr, registerParams } = usePostalCodeValidation(valueToValidate, currentCountry || 'USA');
+  const hasError = errors.address?.postalCode && errorsArr.length > 0;
+  return (
+    <>
+      <Controller
+        name={targetAddressObject}
+        control={control}
+        defaultValue={valueToValidate}
+        render={({ field }) => (
+          <TextField
+            {...register(targetAddressObject, registerParams)}
+            {...field}
+            autoComplete={targetName}
+            name={targetName}
+            id={targetName}
+            label='PostalCode'
+            autoFocus
+            error={hasError}
+            helperText={hasError ? `⚠ ${errorsArr}` : ''}
+            value={valueToValidate}
+            data-testid={targetName}
+            onChange={(e) => {
+              field.onChange(e);
+              trigger(targetAddressObject);
+            }}
+            sx={{ margin: '20px' }}
           />
         )}
       />
