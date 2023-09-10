@@ -6,3 +6,4 @@ export * from './RegistrationPage';
 export * from './ProfilePage';
 export * from './ProductPage';
 export * from './CategoryPage';
+export * from './BasketPage';
