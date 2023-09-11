@@ -33,8 +33,8 @@ export interface IUserPasswordChange {
 }
 
 export interface ICurrentUser {
-  userID?: string;
-  cartID?: string;
+  userId?: string;
+  cartId?: string;
 }
 
 export interface IInputProps {

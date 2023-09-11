@@ -13,41 +13,43 @@ export function BasketPage() {
   const [customerInfo, setCustomerInfo] = useState<Customer>();
   const [cartId, setCartId] = useState('');
 
-  async function createNewCart() {
+  /*   async function createNewCart() {
     try {
       createCart().then((resp) => {
-        console.log(resp.body.id);
+        //console.log(resp.body.id);
       });
     } catch (error) {
       console.error(error);
     }
-  }
+  }  */
 
   useEffect(() => {
-    //setloading(true);
-    const storeState = store.getState();
-    const userId = storeState.userReducer.id;
+    const userFromLocaleStorage = localStorage.getItem('user');
+    if (userFromLocaleStorage) {
+      const userIds = JSON.parse(userFromLocaleStorage);
+      setCartId(userIds.cartId);
+      getCustomerCart();
+    } else {
+      createCart().then((resp) => {
+        const responce = resp.body;
+        const userIds = { cartId: responce.id };
+        localStorage.setItem('user', JSON.stringify(userIds));
+      });
+    }
 
-    async function fetchCustomerInfo() {
+    async function getCustomerCart() {
       try {
-        const apiResponse = await getCustomerInfo(userId);
-        const responce = apiResponse.body;
-        responce.id ? setCustomerInfo(responce) : createNewCart();
-        //setloading(false);
+        getCart(cartId).then((resp) => {
+          const responce = resp.body;
+          //console.log(responce);
+        });
       } catch (error) {
         console.error(error);
       }
     }
-    fetchCustomerInfo();
   }, []);
 
-  const storeState = store.getState();
-  const userId = storeState.userReducer.id;
-  //const userId = 'LVGRElUkuiKZNWoY7K0Nqo8q';
-  /* getCart(userId).then((resp) => {
-    console.log(resp.body);
-  });
-  getOrders(userId).then((resp) => {
+  /*getOrders(userId).then((resp) => {
     console.log(resp.body);
   }); */
   useEffect(() => {
