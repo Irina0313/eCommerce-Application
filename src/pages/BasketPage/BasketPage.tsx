@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, CircularProgress, Typography, Button } from '@mui/material';
 import { Container } from '@mui/system';
 import { Link } from 'react-router-dom';
-import { getCart, getCustomerInfo, getOrders, createCart } from '../../api/Client';
+import { getCart, getCustomerInfo, getOrders, createCart, getCarts } from '../../api/Client';
 import { Customer } from '@commercetools/platform-sdk';
 import { store } from '../../store/store';
 
@@ -52,6 +52,7 @@ export function BasketPage() {
   /*getOrders(userId).then((resp) => {
     console.log(resp.body);
   }); */
+
   useEffect(() => {
     setLoading(true);
     new Promise<string[]>((resolve) => {

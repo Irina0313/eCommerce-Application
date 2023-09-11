@@ -31,43 +31,50 @@ export function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const onSubmit = (data: IFormInput) => {
+  const onSubmit = async (data: IFormInput) => {
     if (Object.keys(errors).length === 0 && data.email && data.password) {
       setloading(true);
+      let carts: Cart[] = [];
+      await getCarts().then((resp) => {
+        //console.log(resp.body.results);
+        carts = carts.concat(resp.body.results);
+      });
       userLogin(data.email, data.password)
         .then(async ({ body }) => {
           setUserId(body.customer.id);
           //Проверяем есть ли анонимная корзина и если есть получаем ее
-          const user = localStorage.getItem('user');
+          const userFromLocaleStorage = localStorage.getItem('user');
+          const user: ICurrentUser = userFromLocaleStorage ? JSON.parse(userFromLocaleStorage) : {};
+          const anonymousCartId = user && user.cartId ? user.cartId : null;
 
-          const anonymousCartId = user && JSON.parse(user).cartId ? JSON.parse(user).cartId : null;
-          const anonymousCart = await getCart(anonymousCartId);
-          getCarts().then((resp) => {
-            const user: ICurrentUser = { userId: body.customer.id };
-            const responce = resp.body;
-            const carts = responce.results;
-            let isTargetUser = false;
-            carts.forEach((cart) => {
-              if (anonymousCart === null && cart.customerId === body.customer.id) {
-                user.cartId = cart.id;
-                localStorage.setItem('user', JSON.stringify(user));
-                isTargetUser = true;
-              } else if (anonymousCart !== null && cart.customerId === body.customer.id) {
-                console.log(anonymousCart); // тут надо объединить данные корзин или что-то еще
-              }
-            });
-            if (!isTargetUser) {
-              createCart().then((resp) => {
-                const responce = resp.body;
-                user.cartId = responce.id;
-                localStorage.setItem('user', JSON.stringify(user));
+          let isTargetUser = false;
+          // console.log(carts);
+          carts.forEach((cart) => {
+            console.log('cart.customerId', cart.customerId, 'body.customer.id', body.customer.id);
+            if (anonymousCartId === null && cart.customerId === body.customer.id) {
+              console.log('anonymousCartId === null', anonymousCartId);
+              user.userId = cart.customerId;
+              user.cartId = cart.id;
+              localStorage.setItem('user', JSON.stringify(user));
+              isTargetUser = true;
+            } else if (anonymousCartId !== null && cart.customerId === body.customer.id) {
+              getCart(anonymousCartId).then((resp) => {
+                console.log(resp.body); // тут надо объединить данные корзин или что-то еще
               });
             }
-            setApiResponse(true);
-            setMessage('Logged in successfully!');
-            setShowModal(true);
-            setloading(false);
           });
+          if (!isTargetUser) {
+            createCart().then((resp) => {
+              const responce = resp.body;
+              user.cartId = responce.id;
+              localStorage.setItem('user', JSON.stringify(user));
+            });
+          }
+          setApiResponse(true);
+          setMessage('Logged in successfully!');
+          setShowModal(true);
+          setloading(false);
+          //});
         })
         .catch((e) => {
           setApiResponse(false);
