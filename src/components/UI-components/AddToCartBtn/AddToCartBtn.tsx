@@ -9,7 +9,7 @@ interface PropsType {
 
 export default function AddToCartBtn({ handleClick, disabled = false }: PropsType) {
   return (
-    <Button onClick={(e) => (handleClick ? handleClick(e as unknown as MouseEvent) : '')} disabled={disabled} variant='contained' sx={{ margin: ' 1rem 0' }} data-testid='addToCart' style={{ width: 'max-content', margin: '0 auto' }}>
+    <Button onClick={(e) => (handleClick ? handleClick(e as unknown as MouseEvent) : '')} disabled={disabled} variant='contained' data-testid='addToCart' style={{ width: 'max-content', margin: '0 auto' }}>
       <AddShoppingCartIcon></AddShoppingCartIcon>
       Add to cart
     </Button>

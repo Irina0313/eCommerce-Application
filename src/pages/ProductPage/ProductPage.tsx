@@ -168,7 +168,19 @@ export function ProductPage() {
                         />
                       </Grid>
                       <Grid item xs={10}>
-                        {isProdInCart ? <RemoveFromCartBtn handleClick={() => setIsProdInCart(false)} /> : prodData.masterVariant.key === '...123abc' ? <AddToCartBtn handleClick={() => console.log(amount)} disabled={true} /> : <AddToCartBtn handleClick={() => setIsProdInCart(true)} />}
+                        {isProdInCart ? (
+                          <>
+                            <AddToCartBtn handleClick={() => console.log(amount)} disabled={true} />
+                            <span style={{ marginRight: '1rem' }}></span>
+                            <RemoveFromCartBtn handleClick={() => setIsProdInCart(false)} />
+                          </>
+                        ) : (
+                          <>
+                            <AddToCartBtn handleClick={() => setIsProdInCart(true)} />
+                            <span style={{ marginRight: '1rem' }}></span>
+                            <RemoveFromCartBtn handleClick={() => setIsProdInCart(false)} disabled={true} />
+                          </>
+                        )}
                       </Grid>
                     </Grid>
                   </>
