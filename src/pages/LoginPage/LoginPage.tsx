@@ -50,9 +50,9 @@ export function LoginPage() {
           let isTargetUser = false;
           // console.log(carts);
           carts.forEach((cart) => {
-            console.log('cart.customerId', cart.customerId, 'body.customer.id', body.customer.id);
+            //console.log('cart.customerId', cart.customerId, 'body.customer.id', body.customer.id);
             if (anonymousCartId === null && cart.customerId === body.customer.id) {
-              console.log('anonymousCartId === null', anonymousCartId);
+              //console.log('anonymousCartId === null', anonymousCartId);
               user.userId = cart.customerId;
               user.cartId = cart.id;
               localStorage.setItem('user', JSON.stringify(user));
@@ -60,13 +60,13 @@ export function LoginPage() {
             } else if (anonymousCartId !== null && cart.customerId === body.customer.id) {
               getCart(anonymousCartId).then((resp) => {
                 user.userId = body.customer.id;
-                console.log('anonymousCartId !== null', anonymousCartId);
+                //console.log('anonymousCartId !== null', anonymousCartId);
                 console.log(resp.body); // тут надо объединить данные корзин или что-то еще
               });
             }
           });
           if (!isTargetUser) {
-            console.log('!isTargetUser', !isTargetUser);
+            //console.log('!isTargetUser', !isTargetUser);
             createCart().then((resp) => {
               const responce = resp.body;
               user.userId = body.customer.id;

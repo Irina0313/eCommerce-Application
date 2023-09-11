@@ -27,7 +27,7 @@ export function BasketPage() {
       try {
         getCart(cartId).then((resp) => {
           const responce = resp.body; /// это данные корзины для отрисовки
-          //console.log(responce);
+          console.log(responce);
         });
       } catch (error) {
         console.error(error);
