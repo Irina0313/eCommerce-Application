@@ -59,6 +59,7 @@ export function LoginPage() {
               isTargetUser = true;
             } else if (anonymousCartId !== null && cart.customerId === body.customer.id) {
               getCart(anonymousCartId).then((resp) => {
+                user.userId = body.customer.id;
                 console.log('anonymousCartId !== null', anonymousCartId);
                 console.log(resp.body); // тут надо объединить данные корзин или что-то еще
               });
@@ -68,6 +69,7 @@ export function LoginPage() {
             console.log('!isTargetUser', !isTargetUser);
             createCart().then((resp) => {
               const responce = resp.body;
+              user.userId = body.customer.id;
               user.cartId = responce.id;
               localStorage.setItem('user', JSON.stringify(user));
             });
