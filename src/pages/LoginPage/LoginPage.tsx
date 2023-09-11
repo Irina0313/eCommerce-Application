@@ -59,11 +59,13 @@ export function LoginPage() {
               isTargetUser = true;
             } else if (anonymousCartId !== null && cart.customerId === body.customer.id) {
               getCart(anonymousCartId).then((resp) => {
+                console.log('anonymousCartId !== null', anonymousCartId);
                 console.log(resp.body); // тут надо объединить данные корзин или что-то еще
               });
             }
           });
           if (!isTargetUser) {
+            console.log('!isTargetUser', !isTargetUser);
             createCart().then((resp) => {
               const responce = resp.body;
               user.cartId = responce.id;

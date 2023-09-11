@@ -2,33 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { Box, CircularProgress, Typography, Button } from '@mui/material';
 import { Container } from '@mui/system';
 import { Link } from 'react-router-dom';
-import { getCart, getCustomerInfo, getOrders, createCart, getCarts } from '../../api/Client';
-import { Customer } from '@commercetools/platform-sdk';
-import { store } from '../../store/store';
+import { getCart, createCart } from '../../api/Client';
 
 export function BasketPage() {
   const [list, setList] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [customerInfo, setCustomerInfo] = useState<Customer>();
-  const [cartId, setCartId] = useState('');
-
-  /*   async function createNewCart() {
-    try {
-      createCart().then((resp) => {
-        //console.log(resp.body.id);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }  */
 
   useEffect(() => {
     const userFromLocaleStorage = localStorage.getItem('user');
     if (userFromLocaleStorage) {
       const userIds = JSON.parse(userFromLocaleStorage);
-      setCartId(userIds.cartId);
-      getCustomerCart();
+
+      getCustomerCart(userIds.cartId);
     } else {
       createCart().then((resp) => {
         const responce = resp.body;
@@ -37,10 +23,10 @@ export function BasketPage() {
       });
     }
 
-    async function getCustomerCart() {
+    async function getCustomerCart(cartId: string) {
       try {
         getCart(cartId).then((resp) => {
-          const responce = resp.body;
+          const responce = resp.body; /// это данные корзины для отрисовки
           //console.log(responce);
         });
       } catch (error) {
@@ -48,10 +34,6 @@ export function BasketPage() {
       }
     }
   }, []);
-
-  /*getOrders(userId).then((resp) => {
-    console.log(resp.body);
-  }); */
 
   useEffect(() => {
     setLoading(true);
