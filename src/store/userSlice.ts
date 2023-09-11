@@ -3,9 +3,9 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 export interface UserState {
   id: string;
 }
-
+const userFromLocalStorage = localStorage.getItem('user');
 const initialState: UserState = {
-  id: '',
+  id: userFromLocalStorage !== null ? JSON.parse(userFromLocalStorage).userId : '',
 };
 
 export const userSlice = createSlice({

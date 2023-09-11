@@ -3,7 +3,7 @@ import { LoginForm } from '../../components/UI-components/Forms/LoginForm';
 import { useForm } from 'react-hook-form';
 import { MessageModal } from '../../components/UI-components/Modals/MessageModal';
 import { useNavigate } from 'react-router-dom';
-import { userLogin } from '../../api/Client';
+import { userLogin, getCart, getCarts } from '../../api/Client';
 import { setId } from '../../store/userSlice';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -34,6 +34,12 @@ export function LoginPage() {
       userLogin(data.email, data.password)
         .then(({ body }) => {
           setUserId(body.customer.id);
+          const user = { userId: body.customer.id };
+          localStorage.setItem('user', JSON.stringify(user));
+          getCart(body.customer.id).then((resp) => {
+            console.log(resp.body);
+          });
+
           setApiResponse(true);
           setMessage('Logged in successfully!');
           setShowModal(true);

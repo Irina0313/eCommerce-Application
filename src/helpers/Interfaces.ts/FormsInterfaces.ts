@@ -32,6 +32,11 @@ export interface IUserPasswordChange {
   newPassword: string;
 }
 
+export interface ICurrentUser {
+  userID?: string;
+  cartID?: string;
+}
+
 export interface IInputProps {
   control: Control<IUserInfoFormInput>;
   register: UseFormRegister<IUserInfoFormInput>;

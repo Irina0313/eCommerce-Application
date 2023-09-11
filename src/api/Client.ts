@@ -45,6 +45,23 @@ export const getProducts = (category?: string, searchQuery = '', filterQuery = '
   return apiRoot.productProjections().search().get({ queryArgs }).execute();
 };
 
+export const getCart = (cartId: string) => {
+  return apiRoot.carts().withId({ ID: cartId }).get().execute();
+};
+export const getCarts = () => {
+  return apiRoot.carts().get().execute();
+};
+
+export const getOrders = (id: string) => {
+  return apiRoot.orders().withId({ ID: id }).get().execute();
+};
+export const createCart = () => {
+  return apiRoot
+    .carts()
+    .post({ body: { currency: 'USD' } })
+    .execute();
+};
+
 export function testApi() {
   console.log('start test API');
   // Retrieve Project information and output the result to the log

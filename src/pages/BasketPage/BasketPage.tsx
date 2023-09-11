@@ -2,12 +2,54 @@ import React, { useEffect, useState } from 'react';
 import { Box, CircularProgress, Typography, Button } from '@mui/material';
 import { Container } from '@mui/system';
 import { Link } from 'react-router-dom';
+import { getCart, getCustomerInfo, getOrders, createCart } from '../../api/Client';
+import { Customer } from '@commercetools/platform-sdk';
+import { store } from '../../store/store';
 
 export function BasketPage() {
   const [list, setList] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [customerInfo, setCustomerInfo] = useState<Customer>();
+  const [cartId, setCartId] = useState('');
 
+  async function createNewCart() {
+    try {
+      createCart().then((resp) => {
+        console.log(resp.body.id);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    //setloading(true);
+    const storeState = store.getState();
+    const userId = storeState.userReducer.id;
+
+    async function fetchCustomerInfo() {
+      try {
+        const apiResponse = await getCustomerInfo(userId);
+        const responce = apiResponse.body;
+        responce.id ? setCustomerInfo(responce) : createNewCart();
+        //setloading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchCustomerInfo();
+  }, []);
+
+  const storeState = store.getState();
+  const userId = storeState.userReducer.id;
+  //const userId = 'LVGRElUkuiKZNWoY7K0Nqo8q';
+  /* getCart(userId).then((resp) => {
+    console.log(resp.body);
+  });
+  getOrders(userId).then((resp) => {
+    console.log(resp.body);
+  }); */
   useEffect(() => {
     setLoading(true);
     new Promise<string[]>((resolve) => {

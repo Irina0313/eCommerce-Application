@@ -20,6 +20,7 @@ export default function LoginBtn() {
         navigate('/profile');
         break;
       case 'logout':
+        localStorage.removeItem('user');
         navigate('/');
         dispatch(setId(''));
         break;
