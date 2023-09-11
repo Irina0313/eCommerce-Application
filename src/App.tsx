@@ -21,6 +21,7 @@ function App() {
           <Route path='login' element={<pages.LoginPage />} />
           <Route path='registration' element={<pages.RegistrationPage />} />
           <Route path='profile' element={<pages.ProfilePage />} />
+          <Route path='basket' element={<pages.BasketPage />} />
           <Route path='product/:productKey' element={<pages.ProductPage />} />
           <Route path='catalog' element={<pages.CategoryPage />} />
           <Route path='catalog/:id' element={<pages.CategoryPage />} />
