@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, CircularProgress, Grid, Rating, TextField, Typography } from '@mui/material';
+import { CircularProgress, Grid, Rating, TextField, Typography } from '@mui/material';
 import { Lightbox } from 'yet-another-react-lightbox';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { returnProductByKey } from '../../api/Product';
 import { ProductData } from '@commercetools/platform-sdk';
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -17,6 +16,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import GoHomeBth from '../../components/GoHomeBtn/GoHomeBth';
 import { ImgCarousel } from '../../components/UI-components/ImgCarousel/ImgCarousel';
 import AddToCartBtn from '../../components/UI-components/AddToCartBtn/AddToCartBtn';
+import RemoveFromCartBtn from '../../components/UI-components/RemoveFromCartBtn/RemoveFromCartBtn';
 
 export function ProductPage() {
   const prodTemplate = useAppSelector((state) => state.productReducer);
@@ -29,6 +29,7 @@ export function ProductPage() {
 
   const [prodData, setProdData] = useState<ProductData>(prodTemplate);
   const [isError, setIsError] = useState<boolean>(false);
+  const [isProdInCart, setIsProdInCart] = useState<boolean>(false);
 
   const { productKey } = useParams();
 
@@ -167,7 +168,7 @@ export function ProductPage() {
                         />
                       </Grid>
                       <Grid item xs={10}>
-                        {prodData.masterVariant.key === '...123abc' ? <AddToCartBtn handleClick={() => console.log(amount)} disabled={true} /> : <AddToCartBtn handleClick={() => console.log(amount)} />}
+                        {isProdInCart ? <RemoveFromCartBtn handleClick={() => setIsProdInCart(false)} /> : prodData.masterVariant.key === '...123abc' ? <AddToCartBtn handleClick={() => console.log(amount)} disabled={true} /> : <AddToCartBtn handleClick={() => setIsProdInCart(true)} />}
                       </Grid>
                     </Grid>
                   </>
