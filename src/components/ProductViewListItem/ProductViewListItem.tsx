@@ -4,6 +4,8 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import { useNavigate } from 'react-router-dom';
 import { siteLocale } from '../../api/BuildClient';
 import PriceView from '../PriceView/PriceView';
+import { ImgCarousel } from '../UI-components/ImgCarousel/ImgCarousel';
+import AddToCartBtn from '../UI-components/AddToCartBtn/AddToCartBtn';
 
 interface IProductViewListItemProps {
   item: ProductProjection;
@@ -34,12 +36,18 @@ export default function ProductViewListItem({ item }: IProductViewListItemProps)
           {item.name[siteLocale]}
         </Typography>
 
-        <Container sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: '3rem', paddingBottom: '2rem' }}>
-          {item.masterVariant.images && item.masterVariant.images.length > 0 && <img src={item.masterVariant.images[0].url} alt={item.name[siteLocale]} width={200} height='auto' />}
+        <Container sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: '3rem', paddingBottom: '2rem', alignItems: 'center' }}>
+          {item.masterVariant.images && item.masterVariant.images.length > 0 && <ImgCarousel imgUrls={[...item.masterVariant.images.map((image) => image.url)]} />}
 
           <Container sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', paddingBottom: '2rem' }}>
             <PriceView prices={item.masterVariant.prices} />
             {item.description && item.description[siteLocale]}
+            <AddToCartBtn
+              handleClick={(e) => {
+                e.stopPropagation();
+                console.log(1);
+              }}
+            />
           </Container>
         </Container>
       </Container>

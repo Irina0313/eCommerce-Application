@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, CircularProgress, Grid, Rating, TextField, Typography } from '@mui/material';
+import { CircularProgress, Grid, Rating, TextField, Typography } from '@mui/material';
 import { Lightbox } from 'yet-another-react-lightbox';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { Carousel } from 'react-responsive-carousel';
 import { returnProductByKey } from '../../api/Product';
 import { ProductData } from '@commercetools/platform-sdk';
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -14,9 +12,11 @@ import { setProd } from '../../store/productSlice';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import './style.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import GoHomeBth from '../../components/GoHomeBtn/GoHomeBth';
+import { ImgCarousel } from '../../components/UI-components/ImgCarousel/ImgCarousel';
+import AddToCartBtn from '../../components/UI-components/AddToCartBtn/AddToCartBtn';
+import RemoveFromCartBtn from '../../components/UI-components/RemoveFromCartBtn/RemoveFromCartBtn';
 
 export function ProductPage() {
   const prodTemplate = useAppSelector((state) => state.productReducer);
@@ -29,6 +29,7 @@ export function ProductPage() {
 
   const [prodData, setProdData] = useState<ProductData>(prodTemplate);
   const [isError, setIsError] = useState<boolean>(false);
+  const [isProdInCart, setIsProdInCart] = useState<boolean>(false);
 
   const { productKey } = useParams();
 
@@ -54,6 +55,13 @@ export function ProductPage() {
     });
     return arr;
   };
+  const imageUrlsArr = () => {
+    const arr: Array<string> = [];
+    prodData.masterVariant.images?.forEach((image) => {
+      arr.push(image.url);
+    });
+    return arr;
+  };
 
   return (
     <Grid container spacing={2} justifyContent={'center'} data-testid={'catalog'}>
@@ -76,34 +84,30 @@ export function ProductPage() {
                 </Typography>
               </Grid>
 
-              <Grid item md={6} xs={12} sx={{ height: '60vh', justifyContent: 'center', justifyItems: 'center', position: 'relative', marginBottom: '10vh' }}>
-                <ZoomInIcon sx={{ position: 'absolute', top: '0', right: '15%' }} onClick={() => setOpen(true)} />
-                <Carousel data-testid='carousel' showArrows={false} dynamicHeight={false} showStatus={false}>
-                  {prodData.masterVariant.images?.map((image) => (
-                    <div key={image.url}>
-                      <img src={image.url}></img>
-                    </div>
-                  ))}
-                </Carousel>
-                <Lightbox
-                  open={open}
-                  close={() => setOpen(false)}
-                  carousel={{ preload: 3 }}
-                  render={
-                    prodData.masterVariant.images
-                      ? prodData.masterVariant.images.length <= 1
-                        ? {
-                            buttonPrev: () => null,
-                            buttonNext: () => null,
-                          }
+              <ImgCarousel
+                imgUrls={imageUrlsArr()}
+                zoomIcon={<ZoomInIcon sx={{ position: 'absolute', top: '0', right: '15%' }} onClick={() => setOpen(true)} />}
+                lightBox={
+                  <Lightbox
+                    open={open}
+                    close={() => setOpen(false)}
+                    carousel={{ preload: 3 }}
+                    render={
+                      prodData.masterVariant.images
+                        ? prodData.masterVariant.images.length <= 1
+                          ? {
+                              buttonPrev: () => null,
+                              buttonNext: () => null,
+                            }
+                          : undefined
                         : undefined
-                      : undefined
-                  }
-                  slides={imageSrcArr()}
-                  plugins={[Zoom, Thumbnails]}
-                  data-testid='lightBox'
-                />
-              </Grid>
+                    }
+                    slides={imageSrcArr()}
+                    plugins={[Zoom, Thumbnails]}
+                    data-testid='lightBox'
+                  />
+                }
+              ></ImgCarousel>
 
               <Grid item md={6} xs={12}>
                 <Grid item xs={12} sx={{ height: 'max-content' }} data-testid='prices'>
@@ -164,16 +168,18 @@ export function ProductPage() {
                         />
                       </Grid>
                       <Grid item xs={10}>
-                        {prodData.masterVariant.key === '...123abc' ? (
-                          <Button onClick={() => console.log(amount)} disabled variant='contained' sx={{ margin: ' 1rem 0' }} data-testid='addToCart'>
-                            <AddShoppingCartIcon></AddShoppingCartIcon>
-                            Add to cart
-                          </Button>
+                        {isProdInCart ? (
+                          <>
+                            <AddToCartBtn handleClick={() => console.log(amount)} disabled={true} />
+                            <span style={{ marginRight: '1rem' }}></span>
+                            <RemoveFromCartBtn handleClick={() => setIsProdInCart(false)} />
+                          </>
                         ) : (
-                          <Button onClick={() => console.log(amount)} variant='contained' sx={{ margin: ' 1rem 0' }} data-testid='addToCart'>
-                            <AddShoppingCartIcon></AddShoppingCartIcon>
-                            Add to cart
-                          </Button>
+                          <>
+                            <AddToCartBtn handleClick={() => setIsProdInCart(true)} />
+                            <span style={{ marginRight: '1rem' }}></span>
+                            <RemoveFromCartBtn handleClick={() => setIsProdInCart(false)} disabled={true} />
+                          </>
                         )}
                       </Grid>
                     </Grid>
