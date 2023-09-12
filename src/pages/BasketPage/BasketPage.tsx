@@ -1,31 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, CircularProgress, Typography, Button } from '@mui/material';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import { Container } from '@mui/system';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { siteLocale } from '../../api/BuildClient';
 
 export function BasketPage() {
-  const [list, setList] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    setLoading(true);
-    new Promise<string[]>((resolve) => {
-      //   throw Error('test error');
-      // setTimeout(() => resolve(['1', '2', '3']), 1000);
-      setTimeout(() => resolve([]), 1000);
-    })
-      .then((body: string[]) => {
-        setLoading(false);
-        setError('');
-        setList(body);
-      })
-      .catch((e) => {
-        setLoading(false);
-        setError(e.message);
-        setList([]);
-      });
-  }, []);
+  const { cart, error, loading } = useAppSelector((state) => state.cartReducer);
 
   return (
     <Container maxWidth='xl' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -44,8 +28,14 @@ export function BasketPage() {
       )}
 
       {!loading && !error ? (
-        list.length > 0 ? (
-          <Typography> : {list.join()}</Typography>
+        cart?.lineItems && cart.lineItems.length > 0 ? (
+          <List>
+            {cart.lineItems.map((item) => (
+              <ListItem key={item.id}>
+                <ListItemText primary={item.name[siteLocale]} />
+              </ListItem>
+            ))}
+          </List>
         ) : (
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 3 }}>
             <Typography variant='h3' sx={{ margin: '3rem 0 0 0' }}>

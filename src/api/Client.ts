@@ -1,9 +1,10 @@
 import { ctpClient, siteLocale } from './BuildClient';
-import { CustomerChangePassword, CustomerUpdate, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { Cart, CustomerChangePassword, CustomerUpdate, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { APIKeys } from './BuildClient';
 import { IUserInfoFormInput } from '../helpers/Interfaces.ts/FormsInterfaces';
 import { AppDispatch } from '../hooks/useAppDispatch';
 import { categoriesFetching, categoriesFetchingError, categoriesFetchingSuccess } from '../store/categoriesSlice';
+import { cartFetching, cartFetchingError, cartFetchingSuccess } from '../store/cartSlice';
 
 // Create apiRoot from the imported ClientBuilder and include your Project key
 const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: APIKeys.projectKey });
@@ -106,4 +107,49 @@ export const fetchCategories = (limit = 100) => {
       dispatch(categoriesFetchingError((e as Error).message));
     }
   };
+};
+
+export const fetchCart = (cartId: string) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(cartFetching());
+      console.log('cart - start fetching');
+
+      const response = await apiRoot.carts().withId({ ID: cartId }).get().execute();
+      console.log('cart - ', response.body);
+
+      dispatch(cartFetchingSuccess(response.body));
+    } catch (e) {
+      console.warn('cart - Eror fetching');
+      dispatch(cartFetchingError((e as Error).message));
+    }
+  };
+};
+
+export const createCart = () => {
+  return apiRoot
+    .carts()
+    .post({ body: { currency: 'USD' } })
+    .execute();
+};
+
+export const addProductToCart = async (cart: Cart | undefined, productId: string, quantity = 1) => {
+  if (!cart) cart = (await createCart()).body;
+
+  return apiRoot
+    .carts()
+    .withId({ ID: cart.id })
+    .post({
+      body: {
+        version: cart.version,
+        actions: [
+          {
+            action: 'addLineItem',
+            productId,
+            quantity,
+          },
+        ],
+      },
+    })
+    .execute();
 };

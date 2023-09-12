@@ -3,13 +3,17 @@ import { Route, Routes } from 'react-router-dom';
 import * as pages from './pages';
 import { Layout } from './components';
 import { useAppDispatch } from './hooks/useAppDispatch';
-import { fetchCategories } from './api/Client';
+import { fetchCart, fetchCategories } from './api/Client';
 
 function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchCategories());
+    if (!localStorage.getItem('IKKShop_userId')) {
+      const cartId = localStorage.getItem('IKKShop_cartId') || '';
+      if (cartId) dispatch(fetchCart(cartId));
+    }
   }, []);
 
   return (

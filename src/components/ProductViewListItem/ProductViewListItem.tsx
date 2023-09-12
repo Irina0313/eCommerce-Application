@@ -6,6 +6,10 @@ import { siteLocale } from '../../api/BuildClient';
 import PriceView from '../PriceView/PriceView';
 import { ImgCarousel } from '../UI-components/ImgCarousel/ImgCarousel';
 import AddToCartBtn from '../UI-components/AddToCartBtn/AddToCartBtn';
+import { addProductToCart } from '../../api/Client';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { cartFetchingSuccess } from '../../store/cartSlice';
 
 interface IProductViewListItemProps {
   item: ProductProjection;
@@ -13,9 +17,24 @@ interface IProductViewListItemProps {
 
 export default function ProductViewListItem({ item }: IProductViewListItemProps) {
   const navigate = useNavigate();
+  const { cart } = useAppSelector((state) => state.cartReducer);
+  const userId = useAppSelector((state) => state.userReducer.id);
+  const dispatch = useAppDispatch();
 
   const onClick = (key: string) => {
     navigate(`/product/${key}`);
+  };
+
+  const onAddProductClick = async () => {
+    addProductToCart(cart, item.id)
+      .then((res) => {
+        console.log('addProductToCart : ', res);
+        dispatch(cartFetchingSuccess(res.body));
+        if (!userId) localStorage.setItem('IKKShop_cartId', res.body.id); // TODO think about this ...
+      })
+      .catch((e) => {
+        console.log(e); // TODO
+      });
   };
 
   return (
@@ -43,9 +62,10 @@ export default function ProductViewListItem({ item }: IProductViewListItemProps)
             <PriceView prices={item.masterVariant.prices} />
             {item.description && item.description[siteLocale]}
             <AddToCartBtn
+              disabled={cart?.lineItems && cart.lineItems.findIndex((lineItem) => lineItem.productId === item.id) !== -1}
               handleClick={(e) => {
                 e.stopPropagation();
-                console.log(1);
+                onAddProductClick();
               }}
             />
           </Container>
