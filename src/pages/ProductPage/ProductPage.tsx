@@ -13,7 +13,7 @@ import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { useNavigate, useParams } from 'react-router-dom';
-import GoHomeBth from '../../components/GoHomeBtn/GoHomeBth';
+import GoHomeBth from '../../components/UI-components/GoHomeBtn/GoHomeBth';
 import { ImgCarousel } from '../../components/UI-components/ImgCarousel/ImgCarousel';
 import AddToCartBtn from '../../components/UI-components/AddToCartBtn/AddToCartBtn';
 import RemoveFromCartBtn from '../../components/UI-components/RemoveFromCartBtn/RemoveFromCartBtn';
