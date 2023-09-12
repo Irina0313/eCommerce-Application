@@ -5,7 +5,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  id: '',
+  id: localStorage.getItem('IKKShop_userId') || '',
 };
 
 export const userSlice = createSlice({
@@ -14,6 +14,7 @@ export const userSlice = createSlice({
   reducers: {
     setId: (state, action: PayloadAction<string>) => {
       state.id = action.payload;
+      localStorage.setItem('IKKShop_userId', action.payload);
     },
   },
 });
