@@ -1,5 +1,5 @@
 import { ctpClient, siteLocale } from './BuildClient';
-import { Cart, CustomerChangePassword, CustomerUpdate, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { Cart, CartUpdateAction, CustomerChangePassword, CustomerUpdate, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { APIKeys } from './BuildClient';
 import { IUserInfoFormInput } from '../helpers/Interfaces.ts/FormsInterfaces';
 import { AppDispatch } from '../hooks/useAppDispatch';
@@ -113,7 +113,7 @@ export const fetchCart = (cartId: string) => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch(cartFetching());
-      console.log('cart - start fetching');
+      console.log('cart - start fetching ', cartId);
 
       const response = await apiRoot.carts().withId({ ID: cartId }).get().execute();
       console.log('cart - ', response.body);
@@ -126,6 +126,68 @@ export const fetchCart = (cartId: string) => {
   };
 };
 
+export const fetchCartForUser = (customerId: string, cart?: Cart) => {
+  return async (dispatch: AppDispatch) => {
+    // collect data from anonymous card if present
+    let actions: CartUpdateAction[] = [];
+    if (cart?.lineItems?.length) {
+      actions = cart.lineItems.map((item) => {
+        return {
+          action: 'addLineItem',
+          productId: item.productId,
+          quantity: item.quantity,
+        };
+      });
+    }
+
+    try {
+      dispatch(cartFetching());
+      console.log('cart - start fetching cart for user ', customerId, cart, actions);
+
+      let response = await apiRoot.carts().withCustomerId({ customerId: customerId }).get().execute();
+      console.log('cart - ', response.body, response.body.lineItems.length);
+
+      // merge with anonymous card
+      if (cart && actions.length) {
+        response = await apiRoot
+          .carts()
+          .withId({ ID: response.body.id })
+          .post({ body: { version: response.body.version, actions } })
+          .execute();
+      }
+      console.log('cart after merge - ', response.body, response.body.lineItems.length);
+
+      dispatch(cartFetchingSuccess(response.body));
+    } catch (e) {
+      console.warn('cart - Eror fetching ', (e as Error).name, e);
+      if ((e as Error).name === 'NotFound') {
+        // we don't have a cart for this customer yet, so try to create one
+        try {
+          console.log('try to create new cart');
+          let response = await apiRoot
+            .carts()
+            .post({ body: { currency: 'USD', customerId } })
+            .execute();
+
+          // merge with anonymous card
+          if (cart && actions.length) {
+            response = await apiRoot
+              .carts()
+              .withId({ ID: response.body.id })
+              .post({ body: { version: response.body.version, actions } })
+              .execute();
+          }
+
+          console.log('new cart created and merged - ', response.body);
+          dispatch(cartFetchingSuccess(response.body));
+        } catch (e) {
+          dispatch(cartFetchingError((e as Error).message));
+        }
+      } else dispatch(cartFetchingError((e as Error).message));
+    }
+  };
+};
+
 export const createCart = () => {
   return apiRoot
     .carts()
@@ -134,7 +196,10 @@ export const createCart = () => {
 };
 
 export const addProductToCart = async (cart: Cart | undefined, productId: string, quantity = 1) => {
-  if (!cart) cart = (await createCart()).body;
+  if (!cart) {
+    cart = (await createCart()).body;
+    localStorage.setItem('IKKShop_cartId', cart.id);
+  }
 
   return apiRoot
     .carts()

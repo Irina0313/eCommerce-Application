@@ -21,7 +21,7 @@ export const cartSlice = createSlice({
       state.error = '';
       state.cart = undefined;
     },
-    cartFetchingSuccess(state, action: PayloadAction<Cart>) {
+    cartFetchingSuccess(state, action: PayloadAction<Cart | undefined>) {
       state.loading = false;
       state.cart = action.payload;
     },

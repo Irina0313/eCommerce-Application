@@ -3,7 +3,7 @@ import { LoginForm } from '../../components/UI-components/Forms/LoginForm';
 import { useForm } from 'react-hook-form';
 import { MessageModal } from '../../components/UI-components/Modals/MessageModal';
 import { useNavigate } from 'react-router-dom';
-import { userLogin } from '../../api/Client';
+import { fetchCartForUser, userLogin } from '../../api/Client';
 import { setId } from '../../store/userSlice';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -27,6 +27,7 @@ export function LoginPage() {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { cart } = useAppSelector((state) => state.cartReducer);
 
   const onSubmit = (data: IFormInput) => {
     if (Object.keys(errors).length === 0 && data.email && data.password) {
@@ -52,6 +53,8 @@ export function LoginPage() {
       setShowModal(false);
       if (apiResponse) {
         dispatch(setId(userId));
+        dispatch(fetchCartForUser(userId, cart));
+        localStorage.removeItem('IKKShop_cartId');
         navigate('/');
       }
     }

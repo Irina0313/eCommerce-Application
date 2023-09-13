@@ -18,7 +18,6 @@ interface IProductViewListItemProps {
 export default function ProductViewListItem({ item }: IProductViewListItemProps) {
   const navigate = useNavigate();
   const { cart } = useAppSelector((state) => state.cartReducer);
-  const userId = useAppSelector((state) => state.userReducer.id);
   const dispatch = useAppDispatch();
 
   const onClick = (key: string) => {
@@ -30,10 +29,9 @@ export default function ProductViewListItem({ item }: IProductViewListItemProps)
       .then((res) => {
         console.log('addProductToCart : ', res);
         dispatch(cartFetchingSuccess(res.body));
-        if (!userId) localStorage.setItem('IKKShop_cartId', res.body.id); // TODO think about this ...
       })
       .catch((e) => {
-        console.log(e); // TODO
+        console.warn(e); // TODO
       });
   };
 
