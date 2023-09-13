@@ -7,9 +7,10 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 export function Header() {
-  const basketLength = 3;
+  const { cart } = useAppSelector((state) => state.cartReducer);
 
   return (
     <AppBar position='static' data-testid={'header'}>
@@ -46,7 +47,7 @@ export function Header() {
 
           <Link to={'/basket'} style={{ textDecoration: 'none', color: 'white' }}>
             <IconButton color='inherit' sx={{ mr: 1, padding: '0 3rem' }}>
-              <Badge badgeContent={basketLength} color='secondary'>
+              <Badge badgeContent={cart?.lineItems.length || 0} color='secondary'>
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

@@ -17,9 +17,12 @@ import GoHomeBth from '../../components/GoHomeBtn/GoHomeBth';
 import { ImgCarousel } from '../../components/UI-components/ImgCarousel/ImgCarousel';
 import AddToCartBtn from '../../components/UI-components/AddToCartBtn/AddToCartBtn';
 import RemoveFromCartBtn from '../../components/UI-components/RemoveFromCartBtn/RemoveFromCartBtn';
+import { addProductToCart, changeLineItemQuantity } from '../../api/Client';
+import { cartFetchingSuccess } from '../../store/cartSlice';
 
 export function ProductPage() {
   const prodTemplate = useAppSelector((state) => state.productReducer);
+  const { cart } = useAppSelector((state) => state.cartReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -28,15 +31,21 @@ export function ProductPage() {
   const [amount, setAmount] = React.useState<number | null>(1);
 
   const [prodData, setProdData] = useState<ProductData>(prodTemplate);
+  const [prodId, setprodId] = useState('');
   const [isError, setIsError] = useState<boolean>(false);
-  const [isProdInCart, setIsProdInCart] = useState<boolean>(false);
-
+  const isProdInCart = cart?.lineItems && cart.lineItems.findIndex((lineItem) => lineItem.productId === prodId) !== -1;
   const { productKey } = useParams();
 
   useEffect(() => {
-    returnProductByKey(productKey ? productKey : '1')
+    if (!productKey) {
+      navigate('/not-found-product');
+      return;
+    }
+
+    returnProductByKey(productKey)
       .then(({ body }) => {
         setProdData(body.masterData.current);
+        setprodId(body.id);
         dispatch(setProd(body.masterData.current));
       })
       .catch((e) => {
@@ -55,12 +64,38 @@ export function ProductPage() {
     });
     return arr;
   };
+
   const imageUrlsArr = () => {
     const arr: Array<string> = [];
     prodData.masterVariant.images?.forEach((image) => {
       arr.push(image.url);
     });
     return arr;
+  };
+
+  const onAddProductClick = async () => {
+    addProductToCart(cart, prodId, amount || 1)
+      .then((res) => {
+        console.log('addProductToCart : ', amount, prodId, res);
+        dispatch(cartFetchingSuccess(res.body));
+      })
+      .catch((e) => {
+        console.warn(e); // TODO
+      });
+  };
+
+  const onRemoveProductClick = async () => {
+    const lineId = cart?.lineItems.find((item) => item.productId === prodId)?.id;
+    if (!lineId) return console.log('onDeleteProductClick: lineId not found');
+
+    changeLineItemQuantity(cart, lineId, 0)
+      .then((res) => {
+        console.log('delete product from cart : ', lineId, res);
+        dispatch(cartFetchingSuccess(res.body));
+      })
+      .catch((e) => {
+        console.warn(e); // TODO
+      });
   };
 
   return (
@@ -168,19 +203,21 @@ export function ProductPage() {
                         />
                       </Grid>
                       <Grid item xs={10}>
-                        {isProdInCart ? (
-                          <>
-                            <AddToCartBtn handleClick={() => console.log(amount)} disabled={true} />
-                            <span style={{ marginRight: '1rem' }}></span>
-                            <RemoveFromCartBtn handleClick={() => setIsProdInCart(false)} />
-                          </>
-                        ) : (
-                          <>
-                            <AddToCartBtn handleClick={() => setIsProdInCart(true)} />
-                            <span style={{ marginRight: '1rem' }}></span>
-                            <RemoveFromCartBtn handleClick={() => setIsProdInCart(false)} disabled={true} />
-                          </>
-                        )}
+                        <AddToCartBtn
+                          disabled={isProdInCart}
+                          handleClick={() => {
+                            onAddProductClick();
+                          }}
+                        />
+
+                        <span style={{ marginRight: '1rem' }}></span>
+
+                        <RemoveFromCartBtn
+                          disabled={!isProdInCart}
+                          handleClick={() => {
+                            onRemoveProductClick();
+                          }}
+                        />
                       </Grid>
                     </Grid>
                   </>

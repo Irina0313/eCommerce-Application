@@ -32,7 +32,7 @@ export function BasketPage() {
           <List>
             {cart.lineItems.map((item) => (
               <ListItem key={item.id}>
-                <ListItemText primary={item.name[siteLocale]} />
+                <ListItemText primary={item.name[siteLocale] + ' -  ' + item.quantity} />
               </ListItem>
             ))}
           </List>
