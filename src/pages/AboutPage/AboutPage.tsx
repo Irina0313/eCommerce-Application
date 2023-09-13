@@ -1,18 +1,19 @@
 import React from 'react';
 import { Grid } from '@mui/material';
 import TeamMemberCard from '../../components/TeamMemberCard/TeamMemberCard';
+import { IraContr, KolyaBio, KolyaContr, TNickContr } from './memberData';
 
 export function AboutPage() {
   return (
-    <Grid container justifyContent={'center'} alignItems={'center'} textAlign={'center'}>
-      <Grid item lg={4}>
-        <TeamMemberCard name='Irina' imgSrc='' role='Team Lead' bio=' well meaning and kindly.' gitHubLink='https://github.com/Irina0313' />
+    <Grid container justifyContent={'center'} alignItems={'center'} textAlign={'center'} spacing={3}>
+      <Grid item lg={4} sm={12} xs={12}>
+        <TeamMemberCard name='Irina' imgSrc='/images/1.png' role='Team Lead' bio=' ' contr={IraContr} gitHubLink='https://github.com/Irina0313' />
       </Grid>
-      <Grid item lg={4}>
-        <TeamMemberCard name='Nikolai' imgSrc='' role='API master' bio=' well meaning and kindly.' gitHubLink='https://github.com/TNikolay' />
+      <Grid item lg={4} sm={12} xs={12}>
+        <TeamMemberCard name='Nikolai' imgSrc='/images/2.png' role='API master' bio=' well meaning and kindly.' contr={TNickContr} gitHubLink='https://github.com/TNikolay' />
       </Grid>
-      <Grid item lg={4}>
-        <TeamMemberCard name='Nikolai' imgSrc='' role='GUI master' bio=' well meaning and kindly.' gitHubLink='https://github.com/KolyaVol' />
+      <Grid item lg={4} sm={12} xs={12}>
+        <TeamMemberCard name='Kolya' imgSrc='/images/3.png' role='GUI master' bio={KolyaBio} contr={KolyaContr} gitHubLink='https://github.com/KolyaVol' />
       </Grid>
     </Grid>
   );
