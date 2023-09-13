@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Container } from '@mui/material';
+import { CircularProgress, Typography, Container } from '@mui/material';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { useNavigate } from 'react-router-dom';
 import { siteLocale } from '../../api/BuildClient';
@@ -19,12 +19,14 @@ export default function ProductViewListItem({ item }: IProductViewListItemProps)
   const navigate = useNavigate();
   const { cart } = useAppSelector((state) => state.cartReducer);
   const dispatch = useAppDispatch();
+  const [showApiLoader, setShowApiLoader] = React.useState(false);
 
   const onClick = (key: string) => {
     navigate(`/product/${key}`);
   };
 
   const onAddProductClick = async () => {
+    setShowApiLoader(true);
     addProductToCart(cart, item.id)
       .then((res) => {
         console.log('addProductToCart : ', res);
@@ -32,6 +34,9 @@ export default function ProductViewListItem({ item }: IProductViewListItemProps)
       })
       .catch((e) => {
         console.warn(e); // TODO
+      })
+      .finally(() => {
+        setShowApiLoader(false);
       });
   };
 
@@ -66,6 +71,7 @@ export default function ProductViewListItem({ item }: IProductViewListItemProps)
                 onAddProductClick();
               }}
             />
+            {showApiLoader && <CircularProgress size={24} sx={{ color: 'red', alignSelf: 'center' }} />}
           </Container>
         </Container>
       </Container>

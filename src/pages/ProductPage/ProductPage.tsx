@@ -29,6 +29,7 @@ export function ProductPage() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<number | null>(4);
   const [amount, setAmount] = React.useState<number | null>(1);
+  const [showApiLoader, setShowApiLoader] = React.useState(false);
 
   const [prodData, setProdData] = useState<ProductData>(prodTemplate);
   const [prodId, setprodId] = useState('');
@@ -74,6 +75,7 @@ export function ProductPage() {
   };
 
   const onAddProductClick = async () => {
+    setShowApiLoader(true);
     addProductToCart(cart, prodId, amount || 1)
       .then((res) => {
         console.log('addProductToCart : ', amount, prodId, res);
@@ -81,6 +83,9 @@ export function ProductPage() {
       })
       .catch((e) => {
         console.warn(e); // TODO
+      })
+      .finally(() => {
+        setShowApiLoader(false);
       });
   };
 
@@ -88,6 +93,7 @@ export function ProductPage() {
     const lineId = cart?.lineItems.find((item) => item.productId === prodId)?.id;
     if (!lineId) return console.log('onDeleteProductClick: lineId not found');
 
+    setShowApiLoader(true);
     changeLineItemQuantity(cart, lineId, 0)
       .then((res) => {
         console.log('delete product from cart : ', lineId, res);
@@ -95,6 +101,9 @@ export function ProductPage() {
       })
       .catch((e) => {
         console.warn(e); // TODO
+      })
+      .finally(() => {
+        setShowApiLoader(false);
       });
   };
 
@@ -209,7 +218,6 @@ export function ProductPage() {
                             onAddProductClick();
                           }}
                         />
-
                         <span style={{ marginRight: '1rem' }}></span>
 
                         <RemoveFromCartBtn
@@ -218,6 +226,8 @@ export function ProductPage() {
                             onRemoveProductClick();
                           }}
                         />
+
+                        {showApiLoader && <CircularProgress size={24} sx={{ color: 'red' }} />}
                       </Grid>
                     </Grid>
                   </>
