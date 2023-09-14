@@ -11,14 +11,25 @@ import { clearCart } from '../../api/Client';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import { cartFetchingSuccess } from '../../store/cartSlice';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export function BasketPage() {
   const [showApiLoader, setShowApiLoader] = React.useState(false);
+  const [isAlertOpen, setIsAlertOpen] = React.useState(false);
+
   const { cart, error, loading } = useAppSelector((state) => state.cartReducer);
   const dispatch = useAppDispatch();
 
+  const onCloseAlert = () => setIsAlertOpen(false);
+
   const onClearBasketClick = () => {
+    onCloseAlert();
     if (!cart) return;
+
     setShowApiLoader(true);
     clearCart(cart)
       .then((res) => {
@@ -59,7 +70,7 @@ export function BasketPage() {
               ))}
             </List>
 
-            <Button variant='contained' size='large' onClick={onClearBasketClick}>
+            <Button variant='contained' size='large' onClick={() => setIsAlertOpen(true)}>
               Clear Basket
               <RemoveShoppingCartIcon sx={{ ml: 2 }} />
             </Button>
@@ -79,6 +90,19 @@ export function BasketPage() {
           </Box>
         )
       ) : null}
+
+      <Dialog open={isAlertOpen} onClose={onCloseAlert}>
+        <DialogTitle>{'Are you sure?'}</DialogTitle>
+        <DialogContent dividers>
+          <DialogContentText>Delete all items form basket, really?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onCloseAlert}>Cancel</Button>
+          <Button onClick={onClearBasketClick} autoFocus>
+            Clear all
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
