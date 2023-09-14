@@ -7,9 +7,30 @@ import { Container } from '@mui/system';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { siteLocale } from '../../api/BuildClient';
+import { clearCart } from '../../api/Client';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+import { cartFetchingSuccess } from '../../store/cartSlice';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 
 export function BasketPage() {
+  const [showApiLoader, setShowApiLoader] = React.useState(false);
   const { cart, error, loading } = useAppSelector((state) => state.cartReducer);
+  const dispatch = useAppDispatch();
+
+  const onClearBasketClick = () => {
+    if (!cart) return;
+    setShowApiLoader(true);
+    clearCart(cart)
+      .then((res) => {
+        dispatch(cartFetchingSuccess(res.body));
+      })
+      .catch((e) => {
+        console.warn(e); // TODO
+      })
+      .finally(() => {
+        setShowApiLoader(false);
+      });
+  };
 
   return (
     <Container maxWidth='xl' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -29,13 +50,21 @@ export function BasketPage() {
 
       {!loading && !error ? (
         cart?.lineItems && cart.lineItems.length > 0 ? (
-          <List>
-            {cart.lineItems.map((item) => (
-              <ListItem key={item.id}>
-                <ListItemText primary={item.name[siteLocale] + ' -  ' + item.quantity} />
-              </ListItem>
-            ))}
-          </List>
+          <>
+            <List>
+              {cart.lineItems.map((item) => (
+                <ListItem key={item.id}>
+                  <ListItemText primary={item.name[siteLocale] + ' -  ' + item.quantity} />
+                </ListItem>
+              ))}
+            </List>
+
+            <Button variant='contained' size='large' onClick={onClearBasketClick}>
+              Clear Basket
+              <RemoveShoppingCartIcon sx={{ ml: 2 }} />
+            </Button>
+            {showApiLoader && <CircularProgress size={24} sx={{ color: 'red', alignSelf: 'center' }} />}
+          </>
         ) : (
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 3 }}>
             <Typography variant='h3' sx={{ margin: '3rem 0 0 0' }}>

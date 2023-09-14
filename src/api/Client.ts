@@ -5,7 +5,6 @@ import { IUserInfoFormInput } from '../helpers/Interfaces.ts/FormsInterfaces';
 import { AppDispatch } from '../hooks/useAppDispatch';
 import { categoriesFetching, categoriesFetchingError, categoriesFetchingSuccess } from '../store/categoriesSlice';
 import { cartFetching, cartFetchingError, cartFetchingSuccess } from '../store/cartSlice';
-import { error } from 'console';
 
 // Create apiRoot from the imported ClientBuilder and include your Project key
 const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: APIKeys.projectKey });
@@ -235,6 +234,32 @@ export const changeLineItemQuantity = async (cart: Cart | undefined, lineItemId:
             quantity,
           },
         ],
+      },
+    })
+    .execute();
+};
+
+export const clearCart = async (cart: Cart) => {
+  if (!cart || !cart.lineItems.length) throw Error('clearCard cart is undefined or empty');
+
+  let actions: CartUpdateAction[] = [];
+  if (cart.lineItems.length) {
+    actions = cart.lineItems.map((item) => {
+      return {
+        action: 'changeLineItemQuantity',
+        lineItemId: item.id,
+        quantity: 0,
+      };
+    });
+  }
+
+  return apiRoot
+    .carts()
+    .withId({ ID: cart.id })
+    .post({
+      body: {
+        version: cart.version,
+        actions,
       },
     })
     .execute();
