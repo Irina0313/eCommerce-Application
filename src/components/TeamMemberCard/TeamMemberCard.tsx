@@ -3,11 +3,10 @@ import { Avatar, Card, CardActions, CardContent, Grid, Typography, Accordion, Ac
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { Link } from 'react-router-dom';
 import Lightbox from 'yet-another-react-lightbox';
-import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 interface CardProps {
   name: string;
-  imgSrc: string;
+  imgSrc: Array<string>;
   role: string;
   bio: string;
   contr: Array<Array<string>>;
@@ -21,21 +20,10 @@ export default function TeamMemberCard({ name, imgSrc, role, bio, contr, gitHubL
       <CardContent>
         <Grid container alignItems={'center'} direction={'column'}>
           <div onClick={() => setOpen(true)} style={{ cursor: 'pointer' }}>
-            <Avatar alt='Irina' src={imgSrc} sx={{ width: 64, height: 64 }} />
+            <Avatar alt='Irina' src={imgSrc[0]} sx={{ width: 64, height: 64 }} />
           </div>
 
-          <Lightbox
-            open={open}
-            close={() => setOpen(false)}
-            carousel={{ preload: 3 }}
-            render={{
-              buttonPrev: () => null,
-              buttonNext: () => null,
-            }}
-            slides={[{ src: imgSrc }]}
-            plugins={[Zoom]}
-            data-testid='lightBox'
-          />
+          <Lightbox open={open} close={() => setOpen(false)} carousel={{ preload: 3 }} slides={[{ src: imgSrc[0] }, { src: imgSrc[1] }]} data-testid='lightBox' />
           <Typography variant='h4' width={'max-content'}>
             {name}
           </Typography>
@@ -83,7 +71,7 @@ export default function TeamMemberCard({ name, imgSrc, role, bio, contr, gitHubL
       </CardContent>
       <CardActions sx={{ justifyContent: 'center' }}>
         <Link to={gitHubLink} target='blank' key={gitHubLink}>
-          <GitHubIcon sx={{ fill: 'black' }} />
+          <GitHubIcon sx={{ fill: 'black', width: '32px', height: '32px' }} />
         </Link>
       </CardActions>
     </Card>
