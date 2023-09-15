@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer data-testid={'footer'}>
       {' '}
-      <Link to='https://rs.school/' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', textDecoration: 'none', color: 'white' }}>
+      <Link to='https://rs.school/' target='blank' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', textDecoration: 'none', color: 'white' }}>
         <svg style={{ fill: 'white', width: '64px', height: '64px' }} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 552.85 198.67'>
           <title>rs_school</title>
           <g data-name='Layer 2'>

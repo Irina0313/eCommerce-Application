@@ -37,7 +37,9 @@ export default function TeamMemberCard({ name, imgSrc, role, bio, contr, gitHubL
             <Typography variant='h5'>Biography</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>{bio}</Typography>
+            <Typography variant='h6' textAlign={'left'}>
+              {bio}
+            </Typography>
           </AccordionDetails>
         </Accordion>
         <Accordion>

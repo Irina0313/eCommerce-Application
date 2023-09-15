@@ -21,7 +21,7 @@ export const IraContr: Array<Array<string>> = [
   ],
   ['Implemented Login and Registration Page', 'Added Tests'],
   ['Implemented User Profile Page', 'Added Tests'],
-  [''],
+  ['Implemented Apply Promo Code and Display Updated Prices'],
 ];
 
 export const TNickBio = '';
@@ -35,22 +35,31 @@ export const TNickContr: Array<Array<string>> = [
   ],
   ['Implemented integration forms with CommerceTools', 'Implemented routing'],
   ['Implemented Catalog Page'],
-  [''],
+  [
+    'Integrated the Catalog Product page with commercetools to enable users to add products to their shopping cart directly from the product list',
+    'Implemented Display Basket Items',
+    'Add opportunity to Modify Product Quantity',
+    'Implemented Remove Product from Cart',
+    'Implemented Recalculate Total Cost',
+    'Display Empty Cart Message and Link to Catalog',
+    'Implemented Clear Shopping Cart option',
+  ],
 ];
 
-export const KolyaBio = 'sdfs<br/>sfsf';
+export const KolyaBio =
+  'Hello! I live in Minsk, Im 25 years old. I graduated from the Belarusian State Technological University with a degree in engineering technology. After graduation, I became a designer through job placement, served in the army, and started studying JavaScript. Currently, I have been studying it for almost 1.5 years.';
 export const KolyaContr: Array<Array<string>> = [
   [
     'Set up and configure Webpack for the project, supporting both development and production build modes.',
     'Configure TypeScript',
     'Set up ESLint',
     'Configure Prettier',
-    ' Install and configure Jest as the testing framework for the project',
+    'Install and configure Jest as the testing framework for the project',
     'Create a script for running ESLint across the codebase',
     'Create a script for running Prettier',
     'Create a script for running Jest tests',
   ],
   ['Implemented Main Page Enhancements and state management'],
   ['Implemented Detailed Product Page'],
-  [''],
+  ['Included an "Add to Cart" button on each product card', ' Implemented lazy loading', 'Implement Add or Remove Product from Cart buttons', 'Implemented About Us Page'],
 ];
