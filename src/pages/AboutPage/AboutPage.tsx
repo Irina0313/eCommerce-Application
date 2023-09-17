@@ -10,7 +10,7 @@ export function AboutPage() {
         <>
           <Grid container justifyContent={'center'} alignItems={'top'} textAlign={'center'} spacing={3}>
             <Grid item lg={4} sm={12} xs={12}>
-              <TeamMemberCard name='Irina' imgSrc={['/assets/1.png']} role='Team Lead' bio={IraBio} contr={IraContr} gitHubLink='https://github.com/Irina0313' />
+              <TeamMemberCard name='Irina' imgSrc={['/assets/Irina.jpg', '/assets/1.png']} role='Team Lead' bio={IraBio} contr={IraContr} gitHubLink='https://github.com/Irina0313' />
             </Grid>
             <Grid item lg={4} sm={12} xs={12}>
               <TeamMemberCard name='Nikolai' imgSrc={['/assets/Nikolai.jpg', '/assets/2.png']} role='API master' bio={TNickBio} contr={TNickContr} gitHubLink='https://github.com/TNikolay' />
@@ -29,19 +29,20 @@ export function AboutPage() {
           <Grid container alignItems={'center'}>
             <Grid item xs={11}>
               <Typography variant='h5' textAlign={'center'} marginTop={'2rem'}>
-                На протяжении всего проекта наша команда из 3 разработчиков и ментора активно взаимодействовала между собой, что позволило создать рабочую версию магазина с использованием готового API, но как проходил рабочий процесс? Сейчас мы расскажем вам об этом подробнее... Ещё до начала
-                первого спринта была организована видеоконференция, на которой команда познакомилась, каждый член команды выссказал свои идеи по видению процесса разработки и свои сильные и слабые стороны, а так же коротко рассказал о своём опыте. После знакомства и совещания ментор высказал свои
-                пожелания и дал пару напутствующих слов.
+                Throughout the entire project, our team of 3 developers and a mentor actively interacted with each other, which allowed us to create a working version of the store using an existing API. But how did the working process go? Now we will tell you more about it...
                 <br />
-                В процессе первого спринта были созданны репозиторий для совместной работы, группа в дискорде и Agile доска в Jira. Каждый день велась переписка, где каждый член команды рассказывал о своем прогрессе и, если была необходимость, просил совета у команды. Ближе к концу спринта всегда
-                проводились проверки и тесты работы коллег, после чего Team Lead команды приступала к деплою. Затем команда очередной раз проверяла уже задеплоеный проект на наличие ошибок и сабмитила задание ментору/на кросс-чек.
+                Even before the start of the first sprint, a video conference was organized where the team got acquainted. Each team member shared their ideas about the development process and their strengths and weaknesses, as well as briefly talked about their experience. After the introduction
+                and meeting, the mentor expressed their wishes and gave some encouraging words.
                 <br />
-                Начиная со второго спринта ментор проверял наш код, после чего высказывал команде своё мнение и, если все были согласны, ставил оценку. В начале спринта команда распределяла задачи, заполняла Agile доску и, при наличии кросс чека, приступала к проверке чужих работ. Каждый член
-                команды проверял все работы, выставлял свои баллы и записывал комментарии, после чего команда совещалась и выносила коллективное решение, которое донносил до чужой команды Team Lead.
+                During the first sprint, a repository for collaboration, a Discord group, and an Agile board in Jira were created. There was daily correspondence where each team member shared their progress and, if necessary, asked for advice from the team. Towards the end of the sprint, colleagues
+                conducted checks and tests of each others work, after which the team lead deployed the project. Then the team rechecked the deployed project for errors and submitted the task to the mentor or for cross-checking.
+                <br />
+                Starting from the second sprint, the mentor reviewed our code and provided their feedback. If everyone agreed, they would also give an evaluation. At the beginning of the sprint, the team would distribute tasks, fill in the Agile board, and, if there was a cross-check, start
+                reviewing each others work. Each team member reviewed all the work, gave their ratings, and wrote comments. Then the team would discuss and make a collective decision, which would be communicated to the other teams.
               </Typography>
             </Grid>
             <Grid item xs={1} display={'flex'} justifyContent={'center'}>
-              <video src='/assets/gitGraph.mkv' autoPlay loop height={'300px'}></video>
+              <video src='/assets/gitGraph.mkv' autoPlay loop style={{ marginLeft: '2rem', width: '100%', height: '100%', maxHeight: '400px', objectFit: 'contain' }}></video>
             </Grid>
           </Grid>
         </>
