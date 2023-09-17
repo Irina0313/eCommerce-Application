@@ -46,6 +46,10 @@ export const getProducts = (category?: string, searchQuery = '', filterQuery = '
   return apiRoot.productProjections().search().get({ queryArgs }).execute();
 };
 
+export const getDiscounts = () => {
+  return apiRoot.discountCodes().get().execute();
+};
+
 export function testApi() {
   console.log('start test API');
   // Retrieve Project information and output the result to the log

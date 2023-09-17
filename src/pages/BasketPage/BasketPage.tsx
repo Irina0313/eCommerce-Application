@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, CircularProgress, Typography, Button } from '@mui/material';
+import { Box, CircularProgress, Typography, Button, TextField } from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -7,7 +7,7 @@ import { Container } from '@mui/system';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { siteLocale } from '../../api/BuildClient';
-import { clearCart } from '../../api/Client';
+import { clearCart, getDiscounts } from '../../api/Client';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import { cartFetchingSuccess } from '../../store/cartSlice';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
@@ -42,6 +42,12 @@ export function BasketPage() {
         setShowApiLoader(false);
       });
   };
+  function handleSubmit() {
+    console.log('55');
+    getDiscounts().then((resp) => {
+      console.log(resp.body);
+    });
+  }
 
   return (
     <Container maxWidth='xl' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -69,7 +75,13 @@ export function BasketPage() {
                 </ListItem>
               ))}
             </List>
-
+            {/*  <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1, mb: 2, display: 'flex', columnGap: '10px', alignItems: 'center' }}>
+              <TextField size='small' label='Promo Code' sx={{ flexShrink: '1' }}></TextField>
+              
+            </Box> */}
+            <Button type='submit' fullWidth variant='contained' sx={{ flexShrink: '6' }} onClick={() => handleSubmit()}>
+              Apply promo
+            </Button>
             <Button variant='contained' size='large' onClick={() => setIsAlertOpen(true)}>
               Clear Basket
               <RemoveShoppingCartIcon sx={{ ml: 2 }} />
