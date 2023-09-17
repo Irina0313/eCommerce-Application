@@ -24,7 +24,8 @@ export const IraContr: Array<Array<string>> = [
   ['Implemented Apply Promo Code and Display Updated Prices'],
 ];
 
-export const TNickBio = '';
+export const TNickBio =
+  'My name is Nikolay Tiushkov, and I am future web developer. Whether as a frontend specialist, backend expert, or even a full stack guru, I am excited to explore all the possibilities. Once upon a time, when computers were big, monitors were small, and floppy disks were still around, I made the decision to become a programmer. Ive always been interested in creating something new and programming is ideal place for this.  I graduated from the Kharkov Aviation Institute (KHAI) nearly 20 years ago, where I studied computer science. After graduation, I worked as an independent software developer, creating and selling desktop software as shareware products. I primarily used C++ and various UI libraries such as MFC, QT, and wxWidgets. Throughout the product lifecycle, I handled everything from finding ideas, researching the market, programming, marketing, customer support and so on. However, times are changing, and so must I. I have decided to transition into web development, I hope its not too late for this:)I began my web development path by learning JavaScript. I studied from resources like learn.javascript.ru and practiced on platforms like codewars.com and leetcode.com. Fortunately, I came across Rolling Scopes School, where I started from stage 0 and have now successfully completed stage 1. I have acquired knowledge in HTML, CSS, DOM API, and commit requirements.';
 export const TNickContr: Array<Array<string>> = [
   [
     ' Set up a clear and organized folder structure within the repository, ensuring a maintainable and scalable codebase.',

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { CircularProgress, Typography, Box, Container, Checkbox, FormGroup, FormControlLabel, TextField, InputAdornment } from '@mui/material';
+import { CircularProgress, Typography, Box, Container, Checkbox, FormGroup, FormControlLabel, TextField, InputAdornment, Pagination } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -23,6 +23,8 @@ export default function ProductListView({ category }: IProductListViewProps) {
   const [filterByPrice, setFilterByPrice] = React.useState(false);
   const [minPrice, setMinPrice] = React.useState(0);
   const [maxPrice, setMaxPrice] = React.useState(1000);
+  const [page, setPage] = React.useState(1);
+  const [offset, setOffset] = React.useState('0');
   const queryRef = useRef<HTMLInputElement>();
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export default function ProductListView({ category }: IProductListViewProps) {
 
   useEffect(() => {
     setLoading(true);
-    getProducts(category?.id, searchQuery, filterByPriceQuery, sortByValue)
+    getProducts(category?.id, searchQuery, filterByPriceQuery, sortByValue, '3', offset)
       .then(({ body }) => {
         // console.log('ProductListView result: ', body.results);
         setLoading(false);
@@ -44,7 +46,7 @@ export default function ProductListView({ category }: IProductListViewProps) {
         setError(e.message);
         setList([]);
       });
-  }, [category, searchQuery, sortByValue, filterByPriceQuery]);
+  }, [category, searchQuery, sortByValue, filterByPriceQuery, page]);
 
   const onSearchClick = (query: string): void => {
     if (query !== searchQuery) setSearchQuery(query);
@@ -139,8 +141,16 @@ export default function ProductListView({ category }: IProductListViewProps) {
           {error}
         </Typography>
       )}
-
       {!loading && !error && list.length > 0 && list.map((item) => <ProductViewListItem item={item} key={item.id} />)}
+      <Pagination
+        sx={{ margin: 'auto' }}
+        count={7}
+        page={page}
+        onChange={(_, num) => {
+          setPage(num);
+          setOffset(`${(num - 1) * 3}`);
+        }}
+      ></Pagination>
     </>
   );
 }

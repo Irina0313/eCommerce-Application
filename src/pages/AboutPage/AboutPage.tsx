@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Typography } from '@mui/material';
 import TeamMemberCard from '../../components/TeamMemberCard/TeamMemberCard';
-import { IraContr, KolyaBio, KolyaContr, TNickContr } from './memberData';
+import { IraBio, IraContr, KolyaBio, KolyaContr, TNickBio, TNickContr } from './memberData';
 
 export function AboutPage() {
   return (
@@ -10,10 +10,10 @@ export function AboutPage() {
         <>
           <Grid container justifyContent={'center'} alignItems={'top'} textAlign={'center'} spacing={3}>
             <Grid item lg={4} sm={12} xs={12}>
-              <TeamMemberCard name='Irina' imgSrc={['/assets/1.png']} role='Team Lead' bio=' ' contr={IraContr} gitHubLink='https://github.com/Irina0313' />
+              <TeamMemberCard name='Irina' imgSrc={['/assets/1.png']} role='Team Lead' bio={IraBio} contr={IraContr} gitHubLink='https://github.com/Irina0313' />
             </Grid>
             <Grid item lg={4} sm={12} xs={12}>
-              <TeamMemberCard name='Nikolai' imgSrc={['/assets/Nikolai.jpg', '/assets/2.png']} role='API master' bio=' well meaning and kindly.' contr={TNickContr} gitHubLink='https://github.com/TNikolay' />
+              <TeamMemberCard name='Nikolai' imgSrc={['/assets/Nikolai.jpg', '/assets/2.png']} role='API master' bio={TNickBio} contr={TNickContr} gitHubLink='https://github.com/TNikolay' />
             </Grid>
             <Grid item lg={4} sm={12} xs={12}>
               <TeamMemberCard name='Kolya' imgSrc={['/assets/Kolya.png', '/assets/3.png']} role='GUI master' bio={KolyaBio} contr={KolyaContr} gitHubLink='https://github.com/KolyaVol' />
