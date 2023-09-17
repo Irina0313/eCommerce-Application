@@ -5,7 +5,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  id: localStorage.getItem('IKKShop_userId') || '',
+  id: localStorage.getItem('IKKShop_userId') ?? '',
 };
 
 export const userSlice = createSlice({

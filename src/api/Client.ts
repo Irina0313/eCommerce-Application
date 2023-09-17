@@ -1,10 +1,9 @@
-import { ctpClient, siteLocale } from './BuildClient';
-import { Cart, CartUpdateAction, CustomerChangePassword, CustomerUpdate, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
-import { APIKeys } from './BuildClient';
+import { Cart, CartUpdate, CartUpdateAction, CustomerChangePassword, CustomerUpdate, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { IUserInfoFormInput } from '../helpers/Interfaces.ts/FormsInterfaces';
 import { AppDispatch } from '../hooks/useAppDispatch';
-import { categoriesFetching, categoriesFetchingError, categoriesFetchingSuccess } from '../store/categoriesSlice';
 import { cartFetching, cartFetchingError, cartFetchingSuccess } from '../store/cartSlice';
+import { categoriesFetching, categoriesFetchingError, categoriesFetchingSuccess } from '../store/categoriesSlice';
+import { APIKeys, ctpClient, siteLocale } from './BuildClient';
 
 // Create apiRoot from the imported ClientBuilder and include your Project key
 const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: APIKeys.projectKey });
@@ -46,8 +45,11 @@ export const getProducts = (category?: string, searchQuery = '', filterQuery = '
   return apiRoot.productProjections().search().get({ queryArgs }).execute();
 };
 
-export const getDiscounts = () => {
-  return apiRoot.discountCodes().get().execute();
+export const handlePromoCode = (id: string, data: CartUpdate) => {
+  return apiRoot.carts().withId({ ID: id }).post({ body: data }).execute();
+};
+export const getPromoCode = (id: string) => {
+  return apiRoot.discountCodes().withId({ ID: id }).get().execute();
 };
 
 export function testApi() {
@@ -244,7 +246,7 @@ export const changeLineItemQuantity = async (cart: Cart | undefined, lineItemId:
 };
 
 export const clearCart = async (cart: Cart) => {
-  if (!cart || !cart.lineItems.length) throw Error('clearCard cart is undefined or empty');
+  if (!cart?.lineItems?.length) throw Error('clearCard cart is undefined or empty');
 
   let actions: CartUpdateAction[] = [];
   if (cart.lineItems.length) {

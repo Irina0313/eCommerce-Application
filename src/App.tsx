@@ -11,11 +11,11 @@ function App() {
   useEffect(() => {
     dispatch(fetchCategories());
 
-    const userId = localStorage.getItem('IKKShop_userId') || '';
+    const userId = localStorage.getItem('IKKShop_userId') ?? '';
     if (userId) {
       dispatch(fetchCartForUser(userId));
     } else {
-      const cartId = localStorage.getItem('IKKShop_cartId') || '';
+      const cartId = localStorage.getItem('IKKShop_cartId') ?? '';
       if (cartId) dispatch(fetchCart(cartId));
     }
   }, []);
