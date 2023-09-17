@@ -25,6 +25,7 @@ export default function ProductListView({ category }: IProductListViewProps) {
   const [maxPrice, setMaxPrice] = React.useState(1000);
   const [page, setPage] = React.useState(1);
   const [offset, setOffset] = React.useState('0');
+  const [count, setCount] = React.useState(0);
   const queryRef = useRef<HTMLInputElement>();
 
   useEffect(() => {
@@ -47,6 +48,19 @@ export default function ProductListView({ category }: IProductListViewProps) {
         setList([]);
       });
   }, [category, searchQuery, sortByValue, filterByPriceQuery, page]);
+
+  useEffect(() => {
+    setLoading(true);
+    getProducts(category?.id, searchQuery, filterByPriceQuery, sortByValue, '100')
+      .then(({ body }) => {
+        setCount(Math.ceil(body.results.length / 3));
+      })
+      .catch((e) => {
+        setLoading(false);
+        setError(e.message);
+        setList([]);
+      });
+  }, [category, searchQuery, sortByValue, filterByPriceQuery]);
 
   const onSearchClick = (query: string): void => {
     if (query !== searchQuery) setSearchQuery(query);
@@ -144,7 +158,7 @@ export default function ProductListView({ category }: IProductListViewProps) {
       {!loading && !error && list.length > 0 && list.map((item) => <ProductViewListItem item={item} key={item.id} />)}
       <Pagination
         sx={{ margin: 'auto' }}
-        count={7}
+        count={count}
         page={page}
         onChange={(_, num) => {
           setPage(num);
