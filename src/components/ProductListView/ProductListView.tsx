@@ -40,6 +40,8 @@ export default function ProductListView({ category }: IProductListViewProps) {
         // console.log('ProductListView result: ', body.results);
         setLoading(false);
         setError('');
+        setOffset('0');
+        setPage(1);
         setList(body.results);
       })
       .catch((e) => {
