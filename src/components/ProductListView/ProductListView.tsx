@@ -156,15 +156,19 @@ export default function ProductListView({ category }: IProductListViewProps) {
         </Typography>
       )}
       {!loading && !error && list.length > 0 && list.map((item) => <ProductViewListItem item={item} key={item.id} />)}
-      <Pagination
-        sx={{ margin: 'auto' }}
-        count={count}
-        page={page}
-        onChange={(_, num) => {
-          setPage(num);
-          setOffset(`${(num - 1) * 3}`);
-        }}
-      ></Pagination>
+      {count <= 1 ? (
+        ''
+      ) : (
+        <Pagination
+          sx={{ margin: 'auto' }}
+          count={count}
+          page={page}
+          onChange={(_, num) => {
+            setPage(num);
+            setOffset(`${(num - 1) * 3}`);
+          }}
+        ></Pagination>
+      )}
     </>
   );
 }
