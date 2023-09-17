@@ -1,13 +1,10 @@
 import React from 'react';
-import { Box, CircularProgress, Typography, Button } from '@mui/material';
+import { Box, CircularProgress, Typography, Button, Divider } from '@mui/material';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import { Container } from '@mui/system';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { siteLocale } from '../../api/BuildClient';
-import { clearCart } from '../../api/Client';
+import { changeLineItemQuantity, clearCart } from '../../api/Client';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import { cartFetchingSuccess } from '../../store/cartSlice';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
@@ -16,6 +13,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import BasketListItem from '../../components/BasketListItem/BasketListItem';
 
 export function BasketPage() {
   const [showApiLoader, setShowApiLoader] = React.useState(false);
@@ -32,6 +30,22 @@ export function BasketPage() {
 
     setShowApiLoader(true);
     clearCart(cart)
+      .then((res) => {
+        dispatch(cartFetchingSuccess(res.body));
+      })
+      .catch((e) => {
+        console.warn(e); // TODO
+      })
+      .finally(() => {
+        setShowApiLoader(false);
+      });
+  };
+
+  const onQuantityChange = (lineItemId: string, quantity: number): void => {
+    if (!cart) return;
+
+    setShowApiLoader(true);
+    changeLineItemQuantity(cart, lineItemId, quantity)
       .then((res) => {
         dispatch(cartFetchingSuccess(res.body));
       })
@@ -60,23 +74,25 @@ export function BasketPage() {
       )}
 
       {!loading && !error ? (
+        /* Draw basket items */
         cart?.lineItems && cart.lineItems.length > 0 ? (
           <>
             <List>
               {cart.lineItems.map((item) => (
-                <ListItem key={item.id}>
-                  <ListItemText primary={item.name[siteLocale] + ' -  ' + item.quantity} />
-                </ListItem>
+                <BasketListItem item={item} onQuantityChange={onQuantityChange} key={item.id} />
               ))}
+              <Divider />
             </List>
 
             <Button variant='contained' size='large' onClick={() => setIsAlertOpen(true)}>
               Clear Basket
               <RemoveShoppingCartIcon sx={{ ml: 2 }} />
             </Button>
-            {showApiLoader && <CircularProgress size={24} sx={{ color: 'red', alignSelf: 'center' }} />}
+
+            {showApiLoader && <CircularProgress size={48} sx={{ color: 'red', alignSelf: 'center' }} />}
           </>
         ) : (
+          /* Empty basket*/
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 3 }}>
             <Typography variant='h3' sx={{ margin: '3rem 0 0 0' }}>
               Sorry freind:(

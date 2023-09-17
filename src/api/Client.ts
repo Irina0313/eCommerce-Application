@@ -1,10 +1,9 @@
-import { ctpClient, siteLocale } from './BuildClient';
 import { Cart, CartUpdateAction, CustomerChangePassword, CustomerUpdate, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
-import { APIKeys } from './BuildClient';
 import { IUserInfoFormInput } from '../helpers/Interfaces.ts/FormsInterfaces';
 import { AppDispatch } from '../hooks/useAppDispatch';
-import { categoriesFetching, categoriesFetchingError, categoriesFetchingSuccess } from '../store/categoriesSlice';
 import { cartFetching, cartFetchingError, cartFetchingSuccess } from '../store/cartSlice';
+import { categoriesFetching, categoriesFetchingError, categoriesFetchingSuccess } from '../store/categoriesSlice';
+import { APIKeys, ctpClient, siteLocale } from './BuildClient';
 
 // Create apiRoot from the imported ClientBuilder and include your Project key
 const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: APIKeys.projectKey });
@@ -45,52 +44,6 @@ export const getProducts = (category?: string, searchQuery = '', filterQuery = '
 
   return apiRoot.productProjections().search().get({ queryArgs }).execute();
 };
-
-export function testApi() {
-  console.log('start test API');
-  // Retrieve Project information and output the result to the log
-  //getProject().then(console.log).catch(console.error);
-
-  // userRegister('1@1.com', 'Mypa$ssword11231e1')
-  //   .then(({ body }) => {
-  //     console.log('userRegister body: ', body);
-  //   })
-  //   .catch(console.error);
-
-  // userLogin('1@1.com', 'Mypa$ssword11231e1')
-  //   .then(({ body }) => {
-  //     console.log('userlogin body: ', body);
-  //   })
-  //   .catch(console.error);
-
-  // getCustomerInfo('0db3a463-b11c-45f0-8df7-754c41fa1301')
-  //   .then(({ body }) => {
-  //     console.log('getCustomerInfo body: ', body);
-  //   })
-  //   .catch(console.error);
-
-  // // Query the Customer and output the Customer's email address
-  // apiRoot
-  //   .customers()
-  //   .get()
-  //   .execute()
-  //   .then(({ body }) => {
-  //     console.log('Query the Customers body: ', body);
-  //   })
-  //   .catch(console.error);
-
-  // getCategories()
-  //   .then(({ body }) => {
-  //     console.log('getCategories body: ', body);
-  //   })
-  //   .catch(console.error);
-
-  // getProducts()
-  //   .then(({ body }) => {
-  //     console.log('getProducts body: ', body);
-  //   })
-  //   .catch(console.error);
-}
 
 export const fetchCategories = (limit = 100) => {
   return async (dispatch: AppDispatch) => {
@@ -240,7 +193,7 @@ export const changeLineItemQuantity = async (cart: Cart | undefined, lineItemId:
 };
 
 export const clearCart = async (cart: Cart) => {
-  if (!cart || !cart.lineItems.length) throw Error('clearCard cart is undefined or empty');
+  if (!cart?.lineItems?.length) throw Error('clearCard cart is undefined or empty');
 
   let actions: CartUpdateAction[] = [];
   if (cart.lineItems.length) {
