@@ -1,13 +1,10 @@
 import React from 'react';
-import { Box, CircularProgress, Typography, Button, TextField, Divider } from '@mui/material';
-import List from '@mui/material/List';
+import { Box, CircularProgress, Typography, Button, TextField, Divider, Stack } from '@mui/material';
 import { Container } from '@mui/system';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { changeLineItemQuantity, clearCart, handlePromoCode, getPromoCode } from '../../api/Client';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
-import { cartFetchingSuccess } from '../../store/cartSlice';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -15,6 +12,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import BasketListItem from '../../components/BasketListItem/BasketListItem';
 import { CartUpdate } from '@commercetools/platform-sdk';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { cartFetchingSuccess } from '../../store/cartSlice';
 
 export function BasketPage() {
   const [showApiLoader, setShowApiLoader] = React.useState(false);
@@ -61,8 +60,6 @@ export function BasketPage() {
   }, [cart]);
 
   function handleSubmit() {
-    // console.log(cart?.id);
-
     if (cart) {
       const promoData: CartUpdate = {
         version: cart?.version,
@@ -77,10 +74,6 @@ export function BasketPage() {
                     id: cart.discountCodes[0].discountCode.id,
                   },
                 },
-                /* {
-                  action: 'recalculate',
-                  updateProductData: true,
-                }, */
               ]
             : [
                 {
@@ -119,18 +112,23 @@ export function BasketPage() {
         setShowApiLoader(false);
       });
   };
+
+  const totalPrice = (cart?.lineItems?.reduce((acc, item) => acc + item.totalPrice.centAmount, 0) ?? 0) / 100;
+
   return (
     <Container maxWidth='xl' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Typography variant='h1'>Busket page</Typography>
+      <Typography variant='h1' mb={3}>
+        Busket page
+      </Typography>
 
       {loading && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <CircularProgress size={48} sx={{ color: 'grey' }} />
         </Box>
       )}
 
       {error && (
-        <Typography color={'error'} mt={3} textAlign={'center'}>
+        <Typography color={'error'} textAlign={'center'}>
           {error}
         </Typography>
       )}
@@ -139,14 +137,14 @@ export function BasketPage() {
         /* Draw basket items */
         cart?.lineItems && cart.lineItems.length > 0 ? (
           <>
-            <List>
+            <Stack>
+              <Divider />
               {cart.lineItems.map((item) => (
                 <BasketListItem item={item} onQuantityChange={onQuantityChange} key={item.id} />
               ))}
+
               <Divider />
-            </List>
-            {
-              <Box /* component='form' onSubmit={handleSubmit}  noValidate */ sx={{ mt: 1, mb: 2, display: 'flex', columnGap: '10px' /* alignItems: 'center' */ }}>
+              <Box sx={{ mt: 1, mb: 2, display: 'flex', columnGap: '10px' }}>
                 <TextField
                   id={promoCode}
                   size='small'
@@ -161,11 +159,14 @@ export function BasketPage() {
                   error={promoInputError}
                   helperText={promoInputErrorText}
                 ></TextField>
-                <Button /* type='submit'  */ fullWidth variant='contained' sx={{ flexShrink: '6', maxHeight: '40px' }} onClick={() => handleSubmit()}>
+                <Button fullWidth variant='contained' sx={{ flexShrink: '6', maxHeight: '40px' }} onClick={() => handleSubmit()}>
                   {promoCodeBtnText} promo code
                 </Button>
               </Box>
-            }
+              <Typography my={5} variant='h5'>
+                Total price: {totalPrice}
+              </Typography>
+            </Stack>
 
             <Button variant='contained' size='large' onClick={() => setIsAlertOpen(true)}>
               Clear Basket
@@ -193,7 +194,7 @@ export function BasketPage() {
       <Dialog open={isAlertOpen} onClose={onCloseAlert}>
         <DialogTitle>{'Are you sure?'}</DialogTitle>
         <DialogContent dividers>
-          <DialogContentText>Delete all items form basket, really?</DialogContentText>
+          <DialogContentText>Remove all items form basket, really?</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={onCloseAlert}>Cancel</Button>
