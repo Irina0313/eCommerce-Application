@@ -16,6 +16,8 @@ import AddToCartBtn from '../../components/UI-components/AddToCartBtn/AddToCartB
 import RemoveFromCartBtn from '../../components/UI-components/RemoveFromCartBtn/RemoveFromCartBtn';
 import { addProductToCart, changeLineItemQuantity } from '../../api/Client';
 import { cartFetchingSuccess } from '../../store/cartSlice';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 
 export function ProductPage() {
   const { cart } = useAppSelector((state) => state.cartReducer);
@@ -28,7 +30,7 @@ export function ProductPage() {
   const [amount, setAmount] = React.useState<number | null>(1);
   const [showApiLoader, setShowApiLoader] = React.useState(false);
 
-  const [prodData, setProdData] = useState<ProductData>(prodTemplate);
+  const [prodData, setProdData] = useState<ProductData>();
   const [prodId, setprodId] = useState('');
   const [isError, setIsError] = useState<boolean>(false);
   const isProdInCart = cart?.lineItems && cart.lineItems.findIndex((lineItem) => lineItem.productId === prodId) !== -1;
