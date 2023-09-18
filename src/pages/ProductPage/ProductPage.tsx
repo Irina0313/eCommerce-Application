@@ -6,28 +6,24 @@ import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import { returnProductByKey } from '../../api/Product';
 import { ProductData } from '@commercetools/platform-sdk';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { setProd } from '../../store/productSlice';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { useNavigate, useParams } from 'react-router-dom';
-import GoHomeBth from '../../components/GoHomeBtn/GoHomeBth';
+import GoHomeBth from '../../components/UI-components/GoHomeBtn/GoHomeBth';
 import { ImgCarousel } from '../../components/UI-components/ImgCarousel/ImgCarousel';
 import AddToCartBtn from '../../components/UI-components/AddToCartBtn/AddToCartBtn';
 import RemoveFromCartBtn from '../../components/UI-components/RemoveFromCartBtn/RemoveFromCartBtn';
 
 export function ProductPage() {
-  const prodTemplate = useAppSelector((state) => state.productReducer);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
+  const [isLoad, setIsLoad] = React.useState(true);
   const [value, setValue] = React.useState<number | null>(4);
   const [amount, setAmount] = React.useState<number | null>(1);
 
-  const [prodData, setProdData] = useState<ProductData>(prodTemplate);
+  const [prodData, setProdData] = useState<ProductData>();
   const [isError, setIsError] = useState<boolean>(false);
   const [isProdInCart, setIsProdInCart] = useState<boolean>(false);
 
@@ -36,8 +32,8 @@ export function ProductPage() {
   useEffect(() => {
     returnProductByKey(productKey ? productKey : '1')
       .then(({ body }) => {
+        setIsLoad(false);
         setProdData(body.masterData.current);
-        dispatch(setProd(body.masterData.current));
       })
       .catch((e) => {
         e.code === 404 ? navigate('/not-found-product') : setIsError(true);
@@ -50,14 +46,14 @@ export function ProductPage() {
 
   const imageSrcArr = () => {
     const arr: Array<{ src: string }> = [];
-    prodData.masterVariant.images?.forEach((image) => {
+    prodData?.masterVariant.images?.forEach((image) => {
       arr.push({ src: image.url });
     });
     return arr;
   };
   const imageUrlsArr = () => {
     const arr: Array<string> = [];
-    prodData.masterVariant.images?.forEach((image) => {
+    prodData?.masterVariant.images?.forEach((image) => {
       arr.push(image.url);
     });
     return arr;
@@ -74,13 +70,13 @@ export function ProductPage() {
         </Grid>
       ) : (
         <>
-          {prodData.masterVariant.key === '...123abc' ? (
+          {isLoad ? (
             <CircularProgress />
           ) : (
             <>
               <Grid sx={{ textAlign: 'center' }} item xs={12}>
                 <Typography data-testid='prodName' variant='h4'>
-                  {Object.values(prodData.name)[0]}
+                  {Object.values(prodData ? prodData.name : [])[0]}
                 </Typography>
               </Grid>
 
@@ -93,8 +89,8 @@ export function ProductPage() {
                     close={() => setOpen(false)}
                     carousel={{ preload: 3 }}
                     render={
-                      prodData.masterVariant.images
-                        ? prodData.masterVariant.images.length <= 1
+                      prodData?.masterVariant.images
+                        ? prodData?.masterVariant.images.length <= 1
                           ? {
                               buttonPrev: () => null,
                               buttonNext: () => null,
@@ -113,8 +109,8 @@ export function ProductPage() {
                 <Grid item xs={12} sx={{ height: 'max-content' }} data-testid='prices'>
                   <>
                     <Grid container justifyContent={'space-between'}>
-                      {prodData.masterVariant.prices ? (
-                        prodData.masterVariant.prices[0].discounted ? (
+                      {prodData?.masterVariant.prices ? (
+                        prodData?.masterVariant.prices[0].discounted ? (
                           <Grid item xs={2}>
                             <Typography sx={{ color: 'red' }} variant='h5'>
                               {'$' + prodData.masterVariant.prices[0].discounted?.value.centAmount / 100}
@@ -124,10 +120,10 @@ export function ProductPage() {
                       ) : null}
 
                       <Grid item xs={2}>
-                        {prodData.masterVariant.prices ? (
-                          prodData.masterVariant.prices[0].discounted ? (
+                        {prodData?.masterVariant.prices ? (
+                          prodData?.masterVariant.prices[0].discounted ? (
                             <Typography sx={{ color: 'grey', textDecoration: 'line-through' }} variant='h5'>
-                              {prodData.masterVariant.prices ? '$' + prodData.masterVariant.prices[0].value.centAmount / 100 : null}
+                              {prodData?.masterVariant.prices ? '$' + prodData.masterVariant.prices[0].value.centAmount / 100 : null}
                             </Typography>
                           ) : (
                             <Typography variant='h5'>{prodData.masterVariant.prices ? prodData.masterVariant.prices[0].value.centAmount / 100 + '$' : null}</Typography>
@@ -189,7 +185,7 @@ export function ProductPage() {
                 <Grid item xs={12} sx={{ height: '20vh', marginTop: '1rem' }}>
                   <Typography variant='h5'>Description</Typography>
                   <Typography variant='h6' data-testid='description'>
-                    {prodData.description ? Object.values(prodData.description) : '1231'}
+                    {prodData?.description ? Object.values(prodData.description) : '1231'}
                   </Typography>
                 </Grid>
               </Grid>

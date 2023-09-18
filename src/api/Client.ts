@@ -34,11 +34,11 @@ export const changeCustomerPassword = (id: string, data: CustomerChangePassword)
   return apiRoot.customers().password().post({ body: data }).execute();
 };
 
-export const getProducts = (category?: string, searchQuery = '', filterQuery = '', sort = `name.${siteLocale} asc`, limit = '100') => {
+export const getProducts = (category?: string, searchQuery = '', filterQuery = '', sort = `name.${siteLocale} asc`, limit = '3', offset = '0') => {
   const filter: string[] = [];
   if (filterQuery) filter.push(filterQuery);
 
-  const queryArgs: Record<string, string | string[]> = { limit, sort, filter };
+  const queryArgs: Record<string, string | string[]> = { limit, sort, filter, offset };
   if (searchQuery) queryArgs['text.' + siteLocale] = searchQuery;
   else if (category) filter.push(`categories.id: subtree("${category}")`);
 
