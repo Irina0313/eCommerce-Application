@@ -42,7 +42,6 @@ export default function BasketListItem({ item, onQuantityChange }: IBasketListIt
     onQuantityChange(item.id, 0);
   };
 
-  // console.log(item);
   return (
     <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'center' }, my: 3 }}>
       {item.variant.images?.length && <Avatar alt={item.name[siteLocale]} src={item.variant.images[0].url} sx={{ display: 'block', width: 80, height: 80, mr: 7 }} />}
@@ -57,6 +56,15 @@ export default function BasketListItem({ item, onQuantityChange }: IBasketListIt
               <>
                 <Typography sx={{ color: 'green' }} variant='h5' component={'p'}>
                   {`$${item.price.discounted.value.centAmount / 100}`}
+                </Typography>
+                <Typography sx={{ color: 'grey', textDecoration: 'line-through' }} variant='h6' component={'span'}>
+                  {`$${item.price.value.centAmount / 100}`}
+                </Typography>
+              </>
+            ) : item.discountedPricePerQuantity[0] && item.discountedPricePerQuantity[0].discountedPrice.value.centAmount < item.price.value.centAmount ? (
+              <>
+                <Typography sx={{ color: 'orange' }} variant='h5' component={'p'}>
+                  {`$${item.discountedPricePerQuantity[0].discountedPrice.value.centAmount / 100}`}
                 </Typography>
                 <Typography sx={{ color: 'grey', textDecoration: 'line-through' }} variant='h6' component={'span'}>
                   {`$${item.price.value.centAmount / 100}`}

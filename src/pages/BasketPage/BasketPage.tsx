@@ -1,17 +1,18 @@
+import React from 'react';
+import { Box, CircularProgress, Typography, Button, TextField, Divider, Stack } from '@mui/material';
+import { Container } from '@mui/system';
+import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { changeLineItemQuantity, clearCart, handlePromoCode, getPromoCode } from '../../api/Client';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
-import { Box, Button, CircularProgress, Divider, Stack, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Container } from '@mui/system';
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { changeLineItemQuantity, clearCart } from '../../api/Client';
 import BasketListItem from '../../components/BasketListItem/BasketListItem';
+import { CartUpdate } from '@commercetools/platform-sdk';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useAppSelector } from '../../hooks/useAppSelector';
 import { cartFetchingSuccess } from '../../store/cartSlice';
 
 export function BasketPage() {
@@ -39,6 +40,62 @@ export function BasketPage() {
         setShowApiLoader(false);
       });
   };
+
+  const [promoCode, setPromoCode] = React.useState('');
+  const [promoCodeBtnText, setPromoCodeBtnText] = React.useState(promoCode ? 'delete' : 'apply');
+  const [promoInputError, setPromoInputError] = React.useState(false);
+  const [promoInputErrorText, setPromoInputErrorText] = React.useState('');
+
+  React.useEffect(() => {
+    if (cart?.discountCodes[0]) {
+      getPromoCode(cart?.discountCodes[0].discountCode.id)
+        .then((resp) => {
+          setPromoCode(resp.body.code);
+          setPromoCodeBtnText(resp.body.code ? 'delete' : 'apply');
+        })
+        .catch((e) => {
+          console.error(e.body.message);
+        });
+    }
+  }, [cart]);
+
+  function handleSubmit() {
+    if (cart) {
+      const promoData: CartUpdate = {
+        version: cart?.version,
+
+        actions:
+          promoCodeBtnText === 'delete'
+            ? [
+                {
+                  action: 'removeDiscountCode',
+                  discountCode: {
+                    typeId: 'discount-code',
+                    id: cart.discountCodes[0].discountCode.id,
+                  },
+                },
+              ]
+            : [
+                {
+                  action: 'addDiscountCode',
+                  code: promoCode,
+                },
+              ],
+      };
+      handlePromoCode(cart.id, promoData)
+        .then((resp) => {
+          dispatch(cartFetchingSuccess(resp.body));
+          if (promoCodeBtnText === 'delete') {
+            setPromoCode('');
+            setPromoCodeBtnText('apply');
+          }
+        })
+        .catch(() => {
+          setPromoInputError(true);
+          setPromoInputErrorText('Invalid Promo Code');
+        });
+    }
+  }
 
   const onQuantityChange = (lineItemId: string, quantity: number): void => {
     if (!cart) return;
@@ -87,6 +144,25 @@ export function BasketPage() {
               ))}
 
               <Divider />
+              <Box sx={{ mt: 1, mb: 2, display: 'flex', columnGap: '10px' }}>
+                <TextField
+                  id={promoCode}
+                  size='small'
+                  label='Promo Code'
+                  sx={{ flexShrink: '1' }}
+                  value={promoCode}
+                  onChange={(e) => {
+                    setPromoCode(e.target.value);
+                    setPromoInputError(false);
+                    setPromoInputErrorText('');
+                  }}
+                  error={promoInputError}
+                  helperText={promoInputErrorText}
+                ></TextField>
+                <Button fullWidth variant='contained' sx={{ flexShrink: '6', maxHeight: '40px' }} onClick={() => handleSubmit()}>
+                  {promoCodeBtnText} promo code
+                </Button>
+              </Box>
               <Typography my={5} variant='h5'>
                 Total price: {totalPrice}
               </Typography>

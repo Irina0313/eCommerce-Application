@@ -1,4 +1,4 @@
-import { Cart, CartUpdateAction, CustomerChangePassword, CustomerUpdate, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { Cart, CartUpdate, CartUpdateAction, CustomerChangePassword, CustomerUpdate, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { IUserInfoFormInput } from '../helpers/Interfaces.ts/FormsInterfaces';
 import { AppDispatch } from '../hooks/useAppDispatch';
 import { cartFetching, cartFetchingError, cartFetchingSuccess } from '../store/cartSlice';
@@ -44,6 +44,62 @@ export const getProducts = (category?: string, searchQuery = '', filterQuery = '
 
   return apiRoot.productProjections().search().get({ queryArgs }).execute();
 };
+
+export const handlePromoCode = (id: string, data: CartUpdate) => {
+  return apiRoot.carts().withId({ ID: id }).post({ body: data }).execute();
+};
+export const getPromoCode = (id: string) => {
+  return apiRoot.discountCodes().withId({ ID: id }).get().execute();
+};
+export const getPromoCodes = () => {
+  return apiRoot.discountCodes().get().execute();
+};
+
+export function testApi() {
+  console.log('start test API');
+  // Retrieve Project information and output the result to the log
+  //getProject().then(console.log).catch(console.error);
+
+  // userRegister('1@1.com', 'Mypa$ssword11231e1')
+  //   .then(({ body }) => {
+  //     console.log('userRegister body: ', body);
+  //   })
+  //   .catch(console.error);
+
+  // userLogin('1@1.com', 'Mypa$ssword11231e1')
+  //   .then(({ body }) => {
+  //     console.log('userlogin body: ', body);
+  //   })
+  //   .catch(console.error);
+
+  // getCustomerInfo('0db3a463-b11c-45f0-8df7-754c41fa1301')
+  //   .then(({ body }) => {
+  //     console.log('getCustomerInfo body: ', body);
+  //   })
+  //   .catch(console.error);
+
+  // // Query the Customer and output the Customer's email address
+  // apiRoot
+  //   .customers()
+  //   .get()
+  //   .execute()
+  //   .then(({ body }) => {
+  //     console.log('Query the Customers body: ', body);
+  //   })
+  //   .catch(console.error);
+
+  // getCategories()
+  //   .then(({ body }) => {
+  //     console.log('getCategories body: ', body);
+  //   })
+  //   .catch(console.error);
+
+  // getProducts()
+  //   .then(({ body }) => {
+  //     console.log('getProducts body: ', body);
+  //   })
+  //   .catch(console.error);
+}
 
 export const fetchCategories = (limit = 100) => {
   return async (dispatch: AppDispatch) => {
