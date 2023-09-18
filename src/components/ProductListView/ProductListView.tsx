@@ -40,8 +40,7 @@ export default function ProductListView({ category }: IProductListViewProps) {
         // console.log('ProductListView result: ', body.results);
         setLoading(false);
         setError('');
-        setOffset('0');
-        setPage(1);
+
         setList(body.results);
       })
       .catch((e) => {
@@ -55,6 +54,8 @@ export default function ProductListView({ category }: IProductListViewProps) {
     setLoading(true);
     getProducts(category?.id, searchQuery, filterByPriceQuery, sortByValue, '100')
       .then(({ body }) => {
+        setOffset('0');
+        setPage(1);
         setCount(Math.ceil(body.results.length / 3));
       })
       .catch((e) => {
