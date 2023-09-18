@@ -2,7 +2,7 @@ import React from 'react';
 import WebAssetOffIcon from '@mui/icons-material/WebAssetOff';
 import { Typography, Grid } from '@mui/material';
 import './style.css';
-import GoHomeBth from '../../components/GoHomeBtn/GoHomeBth';
+import GoHomeBth from '../../components/UI-components/GoHomeBtn/GoHomeBth';
 
 export function NotFoundPage() {
   return (

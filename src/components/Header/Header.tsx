@@ -8,9 +8,32 @@ import Container from '@mui/material/Container';
 import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useAppSelector } from '../../hooks/useAppSelector';
-
+import BurgerMenu from '../UI-components/BurgerMenu/BurgerMenu';
+import { styled } from '@mui/material/styles';
+        
 export function Header() {
   const { cart } = useAppSelector((state) => state.cartReducer);
+  const [open, setOpen] = React.useState(false);
+
+  const Nav = styled('div')(({ theme }) => ({
+    padding: theme.spacing(1),
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+    [theme.breakpoints.up('sm')]: {
+      display: 'flex',
+    },
+  }));
+
+  const Basket = styled('div')(({ theme }) => ({
+    padding: theme.spacing(1),
+    [theme.breakpoints.down('sm')]: {
+      pading: 0,
+    },
+    [theme.breakpoints.up('sm')]: {
+      pading: '3rem',
+    },
+  }));
 
   return (
     <AppBar position='static' data-testid={'header'}>
@@ -32,29 +55,44 @@ export function Header() {
               IKK SHOP
             </Typography>
           </Link>
+          <Nav>
+            <Link to={'/catalog'} style={{ textDecoration: 'none', flexGrow: 1, margin: '0 5rem' }}>
+              <Typography variant='h6' aria-label='Catalog' sx={{ color: 'wheat' }}>
+                Catalog
+              </Typography>
+            </Link>
 
-          <Link to={'/catalog'} style={{ textDecoration: 'none', flexGrow: 1, margin: '0 5rem' }}>
-            <Typography variant='h6' aria-label='Catalog' sx={{ color: 'wheat' }}>
-              Catalog
-            </Typography>
-          </Link>
-
-          <Link to={'/about'} style={{ textDecoration: 'none' }}>
-            <Typography variant='h6' aria-label='about us' sx={{ color: 'wheat' }}>
-              About us
-            </Typography>
-          </Link>
+            <Link to={'/about'} style={{ textDecoration: 'none' }}>
+              <Typography variant='h6' aria-label='about us' sx={{ color: 'wheat' }}>
+                About us
+              </Typography>
+            </Link>
+          </Nav>
 
           <Link to={'/basket'} style={{ textDecoration: 'none', color: 'white' }}>
-            <IconButton color='inherit' sx={{ mr: 1, padding: '0 3rem' }}>
-              <Badge badgeContent={cart?.lineItems.length || 0} color='secondary'>
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-          </Link>
 
-          <Box sx={{ mt: 1 }}>
-            <LoginBtn />
+            <IconButton color='inherit' sx={{ mr: 1, padding: '0 3rem' }}>
+            <Badge badgeContent={cart?.lineItems.length || 0} color='secondary'>
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+
+        </Link>
+          <LoginBtn />
+          <Box>
+            <BurgerMenu open={open} setOpen={setOpen}>
+              <Link to={'/catalog'} onClick={() => setOpen(false)} style={{ textDecoration: 'none', margin: '0 5rem' }}>
+                <Typography variant='h6' aria-label='Catalog' sx={{ color: 'wheat', height: 'max-content' }}>
+                  Catalog
+                </Typography>
+              </Link>
+
+              <Link to={'/about'} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>
+                <Typography variant='h6' aria-label='about us' sx={{ color: 'wheat' }}>
+                  About us
+                </Typography>
+              </Link>
+            </BurgerMenu>
           </Box>
         </Toolbar>
       </Container>
