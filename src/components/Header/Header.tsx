@@ -35,7 +35,7 @@ export function Header() {
   }));
 
   return (
-    <AppBar position='static' data-testid={'header'}>
+    <AppBar position='fixed' data-testid={'header'}>
       <Container maxWidth='md'>
         <Toolbar disableGutters>
           <EmojiEmotionsOutlinedIcon fontSize='large' sx={{ color: 'wheat' }} />
