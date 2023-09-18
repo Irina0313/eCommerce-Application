@@ -51,6 +51,9 @@ export const handlePromoCode = (id: string, data: CartUpdate) => {
 export const getPromoCode = (id: string) => {
   return apiRoot.discountCodes().withId({ ID: id }).get().execute();
 };
+export const getPromoCodes = () => {
+  return apiRoot.discountCodes().get().execute();
+};
 
 export function testApi() {
   console.log('start test API');

@@ -77,10 +77,10 @@ export function BasketPage() {
                     id: cart.discountCodes[0].discountCode.id,
                   },
                 },
-                {
+                /* {
                   action: 'recalculate',
                   updateProductData: true,
-                },
+                }, */
               ]
             : [
                 {

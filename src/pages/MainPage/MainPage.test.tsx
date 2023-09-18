@@ -11,6 +11,6 @@ describe('Main Page', () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText(/This is our Main Page/i)).toBeInTheDocument();
+    expect(screen.getByText(/Welcome to IKK SHOP/i)).toBeInTheDocument();
   });
 });

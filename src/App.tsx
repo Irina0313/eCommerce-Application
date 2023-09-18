@@ -5,6 +5,16 @@ import { Layout } from './components';
 import { useAppDispatch } from './hooks/useAppDispatch';
 import { fetchCart, fetchCartForUser, fetchCategories } from './api/Client';
 
+/* import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#8F8985',
+    },
+  },
+});
+ */
 function App() {
   const dispatch = useAppDispatch();
 
@@ -22,6 +32,7 @@ function App() {
 
   return (
     <>
+      {/* //<ThemeProvider theme={theme}> */}
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<pages.MainPage />} />
@@ -36,6 +47,7 @@ function App() {
           <Route path='*' element={<pages.NotFoundPage />} />
         </Route>
       </Routes>
+      {/* </ThemeProvider> */};
     </>
   );
 }
