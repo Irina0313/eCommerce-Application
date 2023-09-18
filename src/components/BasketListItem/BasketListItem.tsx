@@ -44,7 +44,7 @@ export default function BasketListItem({ item, onQuantityChange }: IBasketListIt
               {`$${item.price.value.centAmount / 100}`}
             </Typography>
           </>
-        ) : item.discountedPricePerQuantity[0] ? (
+        ) : item.discountedPricePerQuantity[0] && item.discountedPricePerQuantity[0].discountedPrice.value.centAmount < item.price.value.centAmount ? (
           <>
             <Typography sx={{ color: 'orange' }} variant='h4' component={'p'}>
               {`$${item.discountedPricePerQuantity[0].discountedPrice.value.centAmount / 100}`}
