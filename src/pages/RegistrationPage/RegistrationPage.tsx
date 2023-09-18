@@ -4,7 +4,7 @@ import { MessageModal } from '../../components/UI-components/Modals/MessageModal
 import { useNavigate } from 'react-router-dom';
 import { RegistrationForm } from '../../components/UI-components/Forms/RegistrationForm';
 import { IUserInfoFormInput } from '../../helpers/Interfaces.ts/FormsInterfaces';
-import { userRegister } from '../../api/Client';
+import { fetchCartForUser, userRegister } from '../../api/Client';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { setId } from '../../store/userSlice';
@@ -23,6 +23,7 @@ export function RegistrationPage() {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { cart } = useAppSelector((state) => state.cartReducer);
 
   const onSubmit = (data: IUserInfoFormInput) => {
     if (Object.keys(errors).length === 0) {
@@ -50,6 +51,8 @@ export function RegistrationPage() {
       setShowModal(false);
       if (apiResponse) {
         dispatch(setId(userId));
+        dispatch(fetchCartForUser(userId, cart));
+        localStorage.removeItem('IKKShop_cartId');
         navigate('/');
       }
     }

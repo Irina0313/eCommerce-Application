@@ -6,6 +6,7 @@ import { setId } from '../../store/userSlice';
 import { Avatar, Divider, ListItemIcon, Menu, MenuItem, IconButton } from '@mui/material';
 import Logout from '@mui/icons-material/Logout';
 import PersonPinIcon from '@mui/icons-material/PersonPin';
+import { cartFetchingSuccess } from '../../store/cartSlice';
 
 export default function LoginBtn() {
   const isLogin = useAppSelector((state) => state.userReducer.id);
@@ -20,8 +21,9 @@ export default function LoginBtn() {
         navigate('/profile');
         break;
       case 'logout':
-        navigate('/');
         dispatch(setId(''));
+        dispatch(cartFetchingSuccess(undefined));
+        navigate('/');
         break;
       case 'login':
         navigate('/login');

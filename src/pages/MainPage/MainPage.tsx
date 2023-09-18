@@ -2,12 +2,13 @@ import React from 'react';
 import { Button, Container, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { Link } from 'react-router-dom';
+import PromoCodeListView from '../../components/PromoCodes/PromoCodesListView';
 
 export function MainPage() {
   return (
     <>
       <Typography variant='h1' m={10}>
-        This is our Main Page
+        Welcome to IKK SHOP!!!
       </Typography>
       <Typography variant='h3'>Hi there!</Typography>
 
@@ -37,6 +38,7 @@ export function MainPage() {
           receive a gift
         </Button>
       </Container>
+      <PromoCodeListView />
     </>
   );
 }

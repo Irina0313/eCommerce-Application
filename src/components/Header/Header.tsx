@@ -7,12 +7,13 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useAppSelector } from '../../hooks/useAppSelector';
 import BurgerMenu from '../UI-components/BurgerMenu/BurgerMenu';
 import { styled } from '@mui/material/styles';
-
+        
 export function Header() {
+  const { cart } = useAppSelector((state) => state.cartReducer);
   const [open, setOpen] = React.useState(false);
-  const basketLength = 3;
 
   const Nav = styled('div')(({ theme }) => ({
     padding: theme.spacing(1),
@@ -69,14 +70,14 @@ export function Header() {
           </Nav>
 
           <Link to={'/basket'} style={{ textDecoration: 'none', color: 'white' }}>
-            <Basket>
-              <IconButton color='inherit'>
-                <Badge badgeContent={basketLength} color='secondary'>
-                  <ShoppingCartIcon />
-                </Badge>
-              </IconButton>
-            </Basket>
-          </Link>
+
+            <IconButton color='inherit' sx={{ mr: 1, padding: '0 3rem' }}>
+            <Badge badgeContent={cart?.lineItems.length || 0} color='secondary'>
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+
+        </Link>
           <LoginBtn />
           <Box>
             <BurgerMenu open={open} setOpen={setOpen}>

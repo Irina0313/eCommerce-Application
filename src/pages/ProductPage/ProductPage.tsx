@@ -14,26 +14,37 @@ import GoHomeBth from '../../components/UI-components/GoHomeBtn/GoHomeBth';
 import { ImgCarousel } from '../../components/UI-components/ImgCarousel/ImgCarousel';
 import AddToCartBtn from '../../components/UI-components/AddToCartBtn/AddToCartBtn';
 import RemoveFromCartBtn from '../../components/UI-components/RemoveFromCartBtn/RemoveFromCartBtn';
+import { addProductToCart, changeLineItemQuantity } from '../../api/Client';
+import { cartFetchingSuccess } from '../../store/cartSlice';
 
 export function ProductPage() {
+  const { cart } = useAppSelector((state) => state.cartReducer);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
   const [isLoad, setIsLoad] = React.useState(true);
   const [value, setValue] = React.useState<number | null>(4);
   const [amount, setAmount] = React.useState<number | null>(1);
+  const [showApiLoader, setShowApiLoader] = React.useState(false);
 
-  const [prodData, setProdData] = useState<ProductData>();
+  const [prodData, setProdData] = useState<ProductData>(prodTemplate);
+  const [prodId, setprodId] = useState('');
   const [isError, setIsError] = useState<boolean>(false);
-  const [isProdInCart, setIsProdInCart] = useState<boolean>(false);
-
+  const isProdInCart = cart?.lineItems && cart.lineItems.findIndex((lineItem) => lineItem.productId === prodId) !== -1;
   const { productKey } = useParams();
 
   useEffect(() => {
-    returnProductByKey(productKey ? productKey : '1')
+    if (!productKey) {
+      navigate('/not-found-product');
+      return;
+    }
+
+    returnProductByKey(productKey)
       .then(({ body }) => {
         setIsLoad(false);
         setProdData(body.masterData.current);
+        setprodId(body.id);
       })
       .catch((e) => {
         e.code === 404 ? navigate('/not-found-product') : setIsError(true);
@@ -51,12 +62,46 @@ export function ProductPage() {
     });
     return arr;
   };
+
   const imageUrlsArr = () => {
     const arr: Array<string> = [];
     prodData?.masterVariant.images?.forEach((image) => {
       arr.push(image.url);
     });
     return arr;
+  };
+
+  const onAddProductClick = async () => {
+    setShowApiLoader(true);
+    addProductToCart(cart, prodId, amount || 1)
+      .then((res) => {
+        console.log('addProductToCart : ', amount, prodId, res);
+        dispatch(cartFetchingSuccess(res.body));
+      })
+      .catch((e) => {
+        console.warn(e); // TODO
+      })
+      .finally(() => {
+        setShowApiLoader(false);
+      });
+  };
+
+  const onRemoveProductClick = async () => {
+    const lineId = cart?.lineItems.find((item) => item.productId === prodId)?.id;
+    if (!lineId) return console.log('onDeleteProductClick: lineId not found');
+
+    setShowApiLoader(true);
+    changeLineItemQuantity(cart, lineId, 0)
+      .then((res) => {
+        console.log('delete product from cart : ', lineId, res);
+        dispatch(cartFetchingSuccess(res.body));
+      })
+      .catch((e) => {
+        console.warn(e); // TODO
+      })
+      .finally(() => {
+        setShowApiLoader(false);
+      });
   };
 
   return (
@@ -164,19 +209,22 @@ export function ProductPage() {
                         />
                       </Grid>
                       <Grid item xs={10}>
-                        {isProdInCart ? (
-                          <>
-                            <AddToCartBtn handleClick={() => console.log(amount)} disabled={true} />
-                            <span style={{ marginRight: '1rem' }}></span>
-                            <RemoveFromCartBtn handleClick={() => setIsProdInCart(false)} />
-                          </>
-                        ) : (
-                          <>
-                            <AddToCartBtn handleClick={() => setIsProdInCart(true)} />
-                            <span style={{ marginRight: '1rem' }}></span>
-                            <RemoveFromCartBtn handleClick={() => setIsProdInCart(false)} disabled={true} />
-                          </>
-                        )}
+                        <AddToCartBtn
+                          disabled={isProdInCart}
+                          handleClick={() => {
+                            onAddProductClick();
+                          }}
+                        />
+                        <span style={{ marginRight: '1rem' }}></span>
+
+                        <RemoveFromCartBtn
+                          disabled={!isProdInCart}
+                          handleClick={() => {
+                            onRemoveProductClick();
+                          }}
+                        />
+
+                        {showApiLoader && <CircularProgress size={24} sx={{ color: 'red' }} />}
                       </Grid>
                     </Grid>
                   </>

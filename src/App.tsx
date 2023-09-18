@@ -3,17 +3,36 @@ import { Route, Routes } from 'react-router-dom';
 import * as pages from './pages';
 import { Layout } from './components';
 import { useAppDispatch } from './hooks/useAppDispatch';
-import { fetchCategories } from './api/Client';
+import { fetchCart, fetchCartForUser, fetchCategories } from './api/Client';
 
+/* import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#8F8985',
+    },
+  },
+});
+ */
 function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchCategories());
+
+    const userId = localStorage.getItem('IKKShop_userId') ?? '';
+    if (userId) {
+      dispatch(fetchCartForUser(userId));
+    } else {
+      const cartId = localStorage.getItem('IKKShop_cartId') ?? '';
+      if (cartId) dispatch(fetchCart(cartId));
+    }
   }, []);
 
   return (
     <>
+      {/* //<ThemeProvider theme={theme}> */}
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<pages.MainPage />} />
@@ -28,6 +47,7 @@ function App() {
           <Route path='*' element={<pages.NotFoundPage />} />
         </Route>
       </Routes>
+      {/* </ThemeProvider> */};
     </>
   );
 }
