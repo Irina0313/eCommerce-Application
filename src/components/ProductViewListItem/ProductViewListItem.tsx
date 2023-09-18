@@ -29,11 +29,11 @@ export default function ProductViewListItem({ item }: IProductViewListItemProps)
     setShowApiLoader(true);
     addProductToCart(cart, item.id)
       .then((res) => {
-        console.log('addProductToCart : ', res);
+        //console.log('addProductToCart : ', res);
         dispatch(cartFetchingSuccess(res.body));
       })
-      .catch((e) => {
-        console.warn(e); // TODO
+      .catch(() => {
+        // console.warn(e); // TODO
       })
       .finally(() => {
         setShowApiLoader(false);

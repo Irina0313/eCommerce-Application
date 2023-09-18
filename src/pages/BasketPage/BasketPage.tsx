@@ -33,8 +33,8 @@ export function BasketPage() {
       .then((res) => {
         dispatch(cartFetchingSuccess(res.body));
       })
-      .catch((e) => {
-        console.warn(e); // TODO
+      .catch(() => {
+        // console.warn(e); // TODO
       })
       .finally(() => {
         setShowApiLoader(false);
@@ -105,8 +105,8 @@ export function BasketPage() {
       .then((res) => {
         dispatch(cartFetchingSuccess(res.body));
       })
-      .catch((e) => {
-        console.warn(e); // TODO
+      .catch(() => {
+        // console.warn(e); // TODO
       })
       .finally(() => {
         setShowApiLoader(false);

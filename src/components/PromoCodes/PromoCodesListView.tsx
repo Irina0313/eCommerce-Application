@@ -14,8 +14,8 @@ export default function PromoCodeListView() {
         setPromoCodes(results);
         setLoading(false);
       })
-      .catch((e) => {
-        console.error(e);
+      .catch(() => {
+        // console.error(e);
         setLoading(false);
       });
   }, []);

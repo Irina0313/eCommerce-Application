@@ -55,52 +55,6 @@ export const getPromoCodes = () => {
   return apiRoot.discountCodes().get().execute();
 };
 
-export function testApi() {
-  console.log('start test API');
-  // Retrieve Project information and output the result to the log
-  //getProject().then(console.log).catch(console.error);
-
-  // userRegister('1@1.com', 'Mypa$ssword11231e1')
-  //   .then(({ body }) => {
-  //     console.log('userRegister body: ', body);
-  //   })
-  //   .catch(console.error);
-
-  // userLogin('1@1.com', 'Mypa$ssword11231e1')
-  //   .then(({ body }) => {
-  //     console.log('userlogin body: ', body);
-  //   })
-  //   .catch(console.error);
-
-  // getCustomerInfo('0db3a463-b11c-45f0-8df7-754c41fa1301')
-  //   .then(({ body }) => {
-  //     console.log('getCustomerInfo body: ', body);
-  //   })
-  //   .catch(console.error);
-
-  // // Query the Customer and output the Customer's email address
-  // apiRoot
-  //   .customers()
-  //   .get()
-  //   .execute()
-  //   .then(({ body }) => {
-  //     console.log('Query the Customers body: ', body);
-  //   })
-  //   .catch(console.error);
-
-  // getCategories()
-  //   .then(({ body }) => {
-  //     console.log('getCategories body: ', body);
-  //   })
-  //   .catch(console.error);
-
-  // getProducts()
-  //   .then(({ body }) => {
-  //     console.log('getProducts body: ', body);
-  //   })
-  //   .catch(console.error);
-}
-
 export const fetchCategories = (limit = 100) => {
   return async (dispatch: AppDispatch) => {
     try {
@@ -122,14 +76,14 @@ export const fetchCart = (cartId: string) => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch(cartFetching());
-      console.log('cart - start fetching ', cartId);
+      //console.log('cart - start fetching ', cartId);
 
       const response = await apiRoot.carts().withId({ ID: cartId }).get().execute();
-      console.log('cart - ', response.body);
+      // console.log('cart - ', response.body);
 
       dispatch(cartFetchingSuccess(response.body));
     } catch (e) {
-      console.warn('cart - Eror fetching');
+      //console.warn('cart - Eror fetching');
       dispatch(cartFetchingError((e as Error).message));
     }
   };
@@ -168,11 +122,11 @@ export const fetchCartForUser = (customerId: string, cart?: Cart) => {
 
       dispatch(cartFetchingSuccess(response.body));
     } catch (e) {
-      console.warn('cart - Eror fetching ', (e as Error).name, e);
+      //console.warn('cart - Eror fetching ', (e as Error).name, e);
       if ((e as Error).name === 'NotFound') {
         // we don't have a cart for this customer yet, so try to create one
         try {
-          console.log('try to create new cart');
+          //console.log('try to create new cart');
           let response = await apiRoot
             .carts()
             .post({ body: { currency: 'USD', customerId } })
@@ -187,7 +141,7 @@ export const fetchCartForUser = (customerId: string, cart?: Cart) => {
               .execute();
           }
 
-          console.log('new cart created and merged - ', response.body);
+          // console.log('new cart created and merged - ', response.body);
           dispatch(cartFetchingSuccess(response.body));
         } catch (e) {
           dispatch(cartFetchingError((e as Error).message));
