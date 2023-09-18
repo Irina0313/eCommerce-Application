@@ -1,5 +1,11 @@
 import { LineItem } from '@commercetools/platform-sdk';
-import { Avatar, ListItemAvatar, TextField, Typography, Box } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Avatar, Box, Button, Container, IconButton, ListItemAvatar, TextField, Typography } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import React, { useRef } from 'react';
@@ -12,6 +18,8 @@ interface IBasketListItemProps {
 
 export default function BasketListItem({ item, onQuantityChange }: IBasketListItemProps) {
   const quantityRef = useRef<HTMLInputElement>();
+  const [isAlertOpen, setIsAlertOpen] = React.useState(false);
+  const onCloseAlert = () => setIsAlertOpen(false);
 
   const onQuantityChangeLocal = () => {
     if (!quantityRef.current) return;
@@ -25,9 +33,14 @@ export default function BasketListItem({ item, onQuantityChange }: IBasketListIt
     onQuantityChange(item.id, +quantityRef.current.value);
   };
 
+  const onDeleteItemClick = () => {
+    onCloseAlert();
+    onQuantityChange(item.id, 0);
+  };
+
   // console.log(item);
   return (
-    <ListItem>
+    <ListItem sx={{ my: 3 }}>
       {item.variant.images?.length && (
         <ListItemAvatar>
           <Avatar alt={item.name[siteLocale]} src={item.variant.images[0].url} sx={{ width: 80, height: 80, mr: 7 }} />
@@ -65,11 +78,27 @@ export default function BasketListItem({ item, onQuantityChange }: IBasketListIt
         }}
       />
 
-      <Typography variant='h4' component={'span'} sx={{ width: '150px' }}>
+      <Typography variant='h4' component={'span'} sx={{ width: '120px' }}>
         {`$${item.totalPrice.centAmount / 100}`}
       </Typography>
 
+      <IconButton aria-label='delete' sx={{ mr: 2 }} onClick={() => setIsAlertOpen(true)}>
+        <DeleteIcon fontSize='large' />
+      </IconButton>
       <ListItemText primary={item.name[siteLocale]} />
+
+      <Dialog open={isAlertOpen} onClose={onCloseAlert}>
+        <DialogTitle>{'Are you sure?'}</DialogTitle>
+        <DialogContent dividers>
+          <DialogContentText>Remove item form basket, really?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onCloseAlert}>Cancel</Button>
+          <Button onClick={onDeleteItemClick} autoFocus>
+            Remove
+          </Button>
+        </DialogActions>
+      </Dialog>
     </ListItem>
   );
 }

@@ -57,6 +57,8 @@ export function BasketPage() {
       });
   };
 
+  const totalPrice = (cart?.lineItems?.reduce((acc, item) => acc + item.totalPrice.centAmount, 0) ?? 0) / 100;
+
   return (
     <Container maxWidth='xl' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Typography variant='h1'>Busket page</Typography>
@@ -84,6 +86,10 @@ export function BasketPage() {
               <Divider />
             </List>
 
+            <Typography my={5} variant='h5'>
+              Total price: {totalPrice}
+            </Typography>
+
             <Button variant='contained' size='large' onClick={() => setIsAlertOpen(true)}>
               Clear Basket
               <RemoveShoppingCartIcon sx={{ ml: 2 }} />
@@ -110,7 +116,7 @@ export function BasketPage() {
       <Dialog open={isAlertOpen} onClose={onCloseAlert}>
         <DialogTitle>{'Are you sure?'}</DialogTitle>
         <DialogContent dividers>
-          <DialogContentText>Delete all items form basket, really?</DialogContentText>
+          <DialogContentText>Remove all items form basket, really?</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={onCloseAlert}>Cancel</Button>
