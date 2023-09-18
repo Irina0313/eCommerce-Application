@@ -1,19 +1,18 @@
-import React from 'react';
-import { Box, CircularProgress, Typography, Button, Divider } from '@mui/material';
-import List from '@mui/material/List';
-import { Container } from '@mui/system';
-import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { changeLineItemQuantity, clearCart } from '../../api/Client';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
-import { cartFetchingSuccess } from '../../store/cartSlice';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { Box, Button, CircularProgress, Divider, Stack, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Container } from '@mui/system';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { changeLineItemQuantity, clearCart } from '../../api/Client';
 import BasketListItem from '../../components/BasketListItem/BasketListItem';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { cartFetchingSuccess } from '../../store/cartSlice';
 
 export function BasketPage() {
   const [showApiLoader, setShowApiLoader] = React.useState(false);
@@ -61,16 +60,18 @@ export function BasketPage() {
 
   return (
     <Container maxWidth='xl' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Typography variant='h1'>Busket page</Typography>
+      <Typography variant='h1' mb={3}>
+        Busket page
+      </Typography>
 
       {loading && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <CircularProgress size={48} sx={{ color: 'grey' }} />
         </Box>
       )}
 
       {error && (
-        <Typography color={'error'} mt={3} textAlign={'center'}>
+        <Typography color={'error'} textAlign={'center'}>
           {error}
         </Typography>
       )}
@@ -79,16 +80,17 @@ export function BasketPage() {
         /* Draw basket items */
         cart?.lineItems && cart.lineItems.length > 0 ? (
           <>
-            <List>
+            <Stack>
+              <Divider />
               {cart.lineItems.map((item) => (
                 <BasketListItem item={item} onQuantityChange={onQuantityChange} key={item.id} />
               ))}
-              <Divider />
-            </List>
 
-            <Typography my={5} variant='h5'>
-              Total price: {totalPrice}
-            </Typography>
+              <Divider />
+              <Typography my={5} variant='h5'>
+                Total price: {totalPrice}
+              </Typography>
+            </Stack>
 
             <Button variant='contained' size='large' onClick={() => setIsAlertOpen(true)}>
               Clear Basket
