@@ -6,8 +6,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import React, { useRef } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { siteLocale } from '../../api/BuildClient';
+import { useDebounce } from '../../hooks/useDebounce';
 
 interface IBasketListItemProps {
   item: LineItem;
@@ -15,20 +16,25 @@ interface IBasketListItemProps {
 }
 
 export default function BasketListItem({ item, onQuantityChange }: IBasketListItemProps) {
-  const quantityRef = useRef<HTMLInputElement>();
+  const [quantity, setQuantity] = useState(item.quantity);
+  const debouncedQuantity = useDebounce(quantity, 500);
   const [isAlertOpen, setIsAlertOpen] = React.useState(false);
   const onCloseAlert = () => setIsAlertOpen(false);
 
-  const onQuantityChangeLocal = () => {
-    if (!quantityRef.current) return;
+  useEffect(() => {
+    //console.log('debouncedValue  changes : ', debouncedValue);
+    if (debouncedQuantity !== item.quantity) onQuantityChange(item.id, debouncedQuantity);
+  }, [debouncedQuantity]);
 
-    if (+quantityRef.current.value < 1) quantityRef.current.value = '1';
-    else if (+quantityRef.current.value > 999) quantityRef.current.value = '999';
-
-    if (+quantityRef.current.value === item.quantity) return;
-
-    console.log(quantityRef.current.value);
-    onQuantityChange(item.id, +quantityRef.current.value);
+  const onQuantityChangeLocal = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let q = +event.target.value;
+    if (q < 1) {
+      q = 1;
+      setQuantity(q);
+    } else if (q > 999) {
+      q = 999;
+      setQuantity(q);
+    } else setQuantity(q);
   };
 
   const onDeleteItemClick = () => {
@@ -66,9 +72,8 @@ export default function BasketListItem({ item, onQuantityChange }: IBasketListIt
             sx={{ mr: 7 }}
             type='number'
             label='Quantity'
-            inputRef={quantityRef}
-            defaultValue={item.quantity}
-            onChange={() => onQuantityChangeLocal()}
+            value={quantity}
+            onChange={onQuantityChangeLocal}
             variant='standard'
             InputProps={{ inputProps: { min: 1, max: 999 } }}
             InputLabelProps={{
