@@ -10,7 +10,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import BurgerMenu from '../UI-components/BurgerMenu/BurgerMenu';
 import { styled } from '@mui/material/styles';
-        
+
 export function Header() {
   const { cart } = useAppSelector((state) => state.cartReducer);
   const [open, setOpen] = React.useState(false);
@@ -36,7 +36,7 @@ export function Header() {
   }));
 
   return (
-    <AppBar position='static' data-testid={'header'}>
+    <AppBar position='fixed' data-testid={'header'}>
       <Container maxWidth='md'>
         <Toolbar disableGutters>
           <EmojiEmotionsOutlinedIcon fontSize='large' sx={{ color: 'wheat' }} />
@@ -70,14 +70,12 @@ export function Header() {
           </Nav>
 
           <Link to={'/basket'} style={{ textDecoration: 'none', color: 'white' }}>
-
             <IconButton color='inherit' sx={{ mr: 1, padding: '0 3rem' }}>
-            <Badge badgeContent={cart?.lineItems.length || 0} color='secondary'>
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-
-        </Link>
+              <Badge badgeContent={cart?.lineItems.length || 0} color='secondary'>
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+          </Link>
           <LoginBtn />
           <Box>
             <BurgerMenu open={open} setOpen={setOpen}>
