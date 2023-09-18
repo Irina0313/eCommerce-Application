@@ -27,7 +27,10 @@ export function AboutPage() {
         </Typography>
         <>
           <Grid container alignItems={'center'}>
-            <Grid item xs={11}>
+            <Grid item xs={1} display={'flex'} justifyContent={'center'}>
+              <video src='/assets/jira.mkv' autoPlay loop style={{ marginRight: '2rem', width: '100%', height: '100%' }}></video>
+            </Grid>
+            <Grid item xs={10}>
               <Typography variant='h5' textAlign={'center'} marginTop={'2rem'}>
                 Throughout the entire project, our team of 3 developers and a mentor actively interacted with each other, which allowed us to create a working version of the store using an existing API. But how did the working process go? Now we will tell you more about it...
                 <br />
