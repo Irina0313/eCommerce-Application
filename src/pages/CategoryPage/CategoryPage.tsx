@@ -53,7 +53,7 @@ export function CategoryPage() {
 
   return (
     <>
-      <Container maxWidth='xl' sx={{ display: 'flex' }}>
+      <Container maxWidth='xl' sx={{ display: 'flex', padding: '4rem 0 0' }}>
         <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
           <CategoryList />
         </Box>

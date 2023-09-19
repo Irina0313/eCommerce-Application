@@ -116,7 +116,7 @@ export function BasketPage() {
   const totalPrice = (cart?.lineItems?.reduce((acc, item) => acc + item.totalPrice.centAmount, 0) ?? 0) / 100;
 
   return (
-    <Container maxWidth='xl' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Container maxWidth='xl' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '4rem 0 0' }}>
       <Typography variant='h1' mb={3}>
         Busket page
       </Typography>

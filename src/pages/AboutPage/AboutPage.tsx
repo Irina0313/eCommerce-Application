@@ -5,7 +5,7 @@ import { IraBio, IraContr, KolyaBio, KolyaContr, TNickBio, TNickContr } from './
 
 export function AboutPage() {
   return (
-    <Grid>
+    <Grid sx={{ padding: '8rem 0 0' }}>
       <Grid item>
         <>
           <Grid container justifyContent={'center'} alignItems={'top'} textAlign={'center'} spacing={3}>

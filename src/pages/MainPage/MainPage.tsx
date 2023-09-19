@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Container, Typography } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
 import { Link } from 'react-router-dom';
 import PromoCodeListView from '../../components/PromoCodes/PromoCodesListView';
 
@@ -34,9 +33,9 @@ export function MainPage() {
           <Button variant='outlined'>go to Registration page</Button>
         </Link>
 
-        <Button variant='contained' startIcon={<SendIcon />} onClick={() => alert('Surprised!')}>
+        {/* <Button variant='contained' startIcon={<SendIcon />} onClick={() => alert('Surprised!')}>
           receive a gift
-        </Button>
+        </Button> */}
       </Container>
       <PromoCodeListView />
     </>

@@ -4,7 +4,7 @@ import categoriesReducer from './categoriesSlice';
 import cartReducer from './cartSlice';
 
 export const store = configureStore({
-  reducer: { userReducer: userReducer, categoriesReducer: categoriesReducer, cartReducer: cartReducer},
+  reducer: { userReducer: userReducer, categoriesReducer: categoriesReducer, cartReducer: cartReducer },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

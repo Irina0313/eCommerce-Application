@@ -22,7 +22,7 @@ export default function BurgerMenu({ children, open, setOpen }: { children: Reac
         Open modal
       </MenuIcon>
       <Modal open={open} onClose={handleClose} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', paddingTop: '3rem', width: '50vw', height: '100vh', bgcolor: '#1976d2', left: '50vw', position: 'fixed' }}>{children}</Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', paddingTop: '3rem', width: '50vw', height: '100vh', bgcolor: 'white', color: '#424551', left: '50vw', position: 'fixed' }}>{children}</Box>
       </Modal>
     </Burger>
   );

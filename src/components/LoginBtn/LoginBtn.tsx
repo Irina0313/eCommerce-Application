@@ -41,7 +41,18 @@ export default function LoginBtn() {
   return (
     <React.Fragment>
       <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)} size='small' aria-controls={open ? 'account-menu' : undefined} aria-haspopup='true' aria-expanded={open ? 'true' : undefined} data-testid={'loginBtnIcon'}>
-        <PersonPinIcon sx={{ width: 36, height: 36, marginTop: '-9px', color: 'wheat', borderRadius: '50%' }}></PersonPinIcon>
+        <PersonPinIcon
+          sx={{
+            width: 36,
+            height: 36,
+            //marginTop: '-9px',
+            color: '#FFFFFF',
+            borderRadius: '50%',
+            '&:hover': {
+              color: '#FF4242',
+            },
+          }}
+        ></PersonPinIcon>
       </IconButton>
       <Menu
         anchorEl={anchorEl}
