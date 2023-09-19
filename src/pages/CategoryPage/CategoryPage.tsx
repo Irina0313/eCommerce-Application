@@ -36,7 +36,7 @@ export function CategoryPage() {
         maxWidth={false}
         sx={{
           width: '20rem',
-          border: { xs: 'none', lg: '2px solid #000' },
+          border: { xs: 'none', lg: '2px solid #03CEA4' },
           borderRadius: '30px',
         }}
       >

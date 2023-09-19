@@ -13,7 +13,7 @@ export function AboutPage() {
               <TeamMemberCard name='Irina' imgSrc={['/assets/Irina.jpg', '/assets/1.png']} role='Team Lead' bio={IraBio} contr={IraContr} gitHubLink='https://github.com/Irina0313' />
             </Grid>
             <Grid item lg={4} sm={12} xs={12}>
-              <TeamMemberCard name='Nikolai' imgSrc={['/assets/Nikolai.jpg', '/assets/2.png']} role='API master' bio={TNickBio} contr={TNickContr} gitHubLink='https://github.com/TNikolay' />
+              <TeamMemberCard name='Nikolay' imgSrc={['/assets/Nikolai.jpg', '/assets/2.png']} role='API master' bio={TNickBio} contr={TNickContr} gitHubLink='https://github.com/TNikolay' />
             </Grid>
             <Grid item lg={4} sm={12} xs={12}>
               <TeamMemberCard name='Kolya' imgSrc={['/assets/Kolya.png', '/assets/3.png']} role='GUI master' bio={KolyaBio} contr={KolyaContr} gitHubLink='https://github.com/KolyaVol' />
