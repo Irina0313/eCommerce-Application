@@ -24,16 +24,6 @@ export function Header() {
     },
   }));
 
-  /* const Basket = styled('div')(({ theme }) => ({
-    padding: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
-      pading: 0,
-    },
-    [theme.breakpoints.up('sm')]: {
-      pading: '3rem',
-    },
-  })); */
-
   return (
     <>
       <AppBar sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -213,7 +203,16 @@ export function Header() {
             </Toolbar>
           </Container>
         </AppBar>
-        <AppBar sx={{ backgroundColor: '#17696A', height: '34px', marginTop: '108px' }} />
+        <AppBar
+          sx={{
+            backgroundColor: '#17696A',
+            height: '34px',
+            marginTop: '108px',
+            '@media (max-width: 1200px)': {
+              marginTop: '100px',
+            },
+          }}
+        />
       </AppBar>
     </>
   );

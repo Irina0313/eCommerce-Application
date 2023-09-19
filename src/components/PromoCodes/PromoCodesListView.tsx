@@ -29,8 +29,10 @@ export default function PromoCodeListView() {
       ) : (
         promoCodes.map((promoCode, index) =>
           promoCode.isActive ? (
-            <Box key={index} sx={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
-              <Typography variant='h5'>{promoCode.code}</Typography>
+            <Box key={index} sx={{ display: 'flex', columnGap: '10px', alignItems: 'center', margin: '15px 0' }}>
+              <Typography variant='h4' sx={{ color: '#FF4242', margin: '0 20px 0 0' }}>
+                {promoCode.code}
+              </Typography>
               <Typography>{promoCode.description?.['en-US']}</Typography>
             </Box>
           ) : null

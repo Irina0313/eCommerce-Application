@@ -8,7 +8,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { TitleInput, FirstNameInput, LastNameInput } from '../Inputs/NameInputs';
 import { IUserInfoFormInput } from '../../../helpers/Interfaces.ts/FormsInterfaces';
@@ -22,7 +21,6 @@ import Checkbox from '@mui/material/Checkbox';
 import { Countries } from '../../../hooks/usePostalCodeValidation';
 import { Link as LinkNav } from 'react-router-dom';
 
-const defaultTheme = createTheme();
 interface RegistrationFormProps {
   onSubmit: (data: IUserInfoFormInput) => void;
 }

@@ -6,15 +6,12 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import Grid from '@mui/material/Grid';
 import { EmailInput } from '../Inputs/EmailInput';
 import { PasswordInput } from '../Inputs/PasswordInput';
 import { IUserInfoFormInput } from '../../../helpers/Interfaces.ts/FormsInterfaces';
 import { Link as LinkNav } from 'react-router-dom';
-
-const defaultTheme = createTheme();
 
 interface LoginFormProps {
   onSubmit: (data: IUserInfoFormInput) => void;
