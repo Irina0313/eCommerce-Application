@@ -43,15 +43,47 @@ export default function BasketListItem({ item, onQuantityChange }: IBasketListIt
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'center' }, my: 3 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', sm: 'row' },
+        alignItems: 'center',
+        justifyContent: 'center',
+        my: 3,
+      }}
+    >
       {item.variant.images?.length && <Avatar alt={item.name[siteLocale]} src={item.variant.images[0].url} sx={{ display: 'block', width: 80, height: 80, mr: 7 }} />}
 
-      <Box>
-        <Typography variant='h4' component={'p'} sx={{ mb: 3 }}>
+      <Box
+        sx={{
+          width: '100%',
+        }}
+      >
+        <Typography
+          variant='h4'
+          component={'p'}
+          sx={{
+            mb: 3,
+          }}
+        >
           {item.name[siteLocale]}
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Box sx={{ width: '150px', display: 'inline-block' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Box
+            sx={{
+              width: '150px',
+              display: 'inline-block',
+              '@media (max-width: 350px)': {
+                width: '50px',
+              },
+            }}
+          >
             {item.price.discounted ? (
               <>
                 <Typography sx={{ color: 'green' }} variant='h5' component={'p'}>
@@ -77,7 +109,7 @@ export default function BasketListItem({ item, onQuantityChange }: IBasketListIt
             )}
           </Box>
           <TextField
-            sx={{ mr: 7 }}
+            sx={{ mr: 5 }}
             type='number'
             label='Quantity'
             value={quantity}
@@ -88,7 +120,18 @@ export default function BasketListItem({ item, onQuantityChange }: IBasketListIt
               shrink: true,
             }}
           />
-          <Typography variant='h5' component={'p'} sx={{ display: 'inline-block', width: '120px' }}>
+          <Typography
+            variant='h5'
+            component={'p'}
+            sx={{
+              display: 'inline-block',
+              width: '120px',
+              '@media (max-width: 350px)': {
+                width: '50px',
+              },
+              textAlign: 'center',
+            }}
+          >
             {`$${item.totalPrice.centAmount / 100}`}
           </Typography>
 

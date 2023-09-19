@@ -14,7 +14,24 @@ interface PropsType {
 
 export function ImgCarousel({ imgUrls, zoomIcon, lightBox }: PropsType) {
   return (
-    <Grid item md={6} xs={12} sx={{ height: zoomIcon ? '60vh' : '200px', width: zoomIcon ? '' : '200px', justifyContent: 'center', justifyItems: 'center', position: 'relative', marginBottom: zoomIcon ? '10vh' : '0' }} onClick={(e) => e.stopPropagation()}>
+    <Grid
+      item
+      md={6}
+      xs={12}
+      sx={{
+        height: zoomIcon ? '60vh' : '200px',
+        width: zoomIcon ? '' : '200px',
+        justifyContent: 'center',
+        justifyItems: 'center',
+        position: 'relative',
+        marginBottom: zoomIcon ? '10vh' : '0',
+        '@media (max-width: 1200px)': {
+          marginBottom: zoomIcon ? '1vh' : '0',
+          height: zoomIcon ? '40vh' : '200px',
+        },
+      }}
+      onClick={(e) => e.stopPropagation()}
+    >
       {zoomIcon}
       <Carousel data-testid='carousel' showArrows={false} dynamicHeight={false} showStatus={false} showThumbs={zoomIcon ? true : false} className={zoomIcon ? '' : 'aa'}>
         {imgUrls?.map((image) => (

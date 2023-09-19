@@ -116,7 +116,33 @@ export function BasketPage() {
   const totalPrice = (cart?.lineItems?.reduce((acc, item) => acc + item.totalPrice.centAmount, 0) ?? 0) / 100;
 
   return (
-    <Container maxWidth='xl' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '4rem 0 0' }}>
+    <Container
+      maxWidth='xl'
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '4rem 0 0',
+        '@media (max-width: 1200px)': {
+          maxWidth: '1000px',
+        },
+        '@media (max-width: 1030px)': {
+          maxWidth: '700px',
+        },
+        '@media (max-width: 730px)': {
+          marginTop: '2rem',
+          maxWidth: '400px',
+        },
+        '@media (max-width: 500px)': {
+          marginTop: '3rem',
+          maxWidth: '350px',
+        },
+        '@media (max-width: 400px)': {
+          marginTop: '3rem',
+          maxWidth: '300px',
+        },
+      }}
+    >
       <Typography variant='h1' mb={3}>
         Busket page
       </Typography>
@@ -144,12 +170,28 @@ export function BasketPage() {
               ))}
 
               <Divider />
-              <Box sx={{ mt: 1, mb: 2, display: 'flex', columnGap: '10px' }}>
+              <Box
+                sx={{
+                  mt: 1,
+                  mb: 2,
+                  display: 'flex',
+                  columnGap: '10px',
+                  gap: '0.8rem',
+                  '@media (max-width: 400px)': {
+                    flexWrap: 'wrap',
+                  },
+                }}
+              >
                 <TextField
                   id={promoCode}
                   size='small'
                   label='Promo Code'
-                  sx={{ flexShrink: '1' }}
+                  sx={{
+                    flexShrink: '1',
+                    '@media (max-width: 400px)': {
+                      width: '100%',
+                    },
+                  }}
                   value={promoCode}
                   onChange={(e) => {
                     setPromoCode(e.target.value);
@@ -158,12 +200,12 @@ export function BasketPage() {
                   }}
                   error={promoInputError}
                   helperText={promoInputErrorText}
-                ></TextField>
-                <Button fullWidth variant='contained' sx={{ flexShrink: '6', maxHeight: '40px' }} onClick={() => handleSubmit()}>
+                />
+                <Button fullWidth variant='contained' sx={{ flexShrink: '4', maxHeight: '40px' }} onClick={() => handleSubmit()}>
                   {promoCodeBtnText} promo code
                 </Button>
               </Box>
-              <Typography my={5} variant='h5'>
+              <Typography my={5} variant='h4'>
                 Total price: {totalPrice}
               </Typography>
             </Stack>

@@ -27,8 +27,28 @@ export function Header() {
   return (
     <>
       <AppBar sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <AppBar component='div' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', maxWidth: '100%', height: '44px', backgroundColor: '#1E212C' }}>
-          <Container maxWidth='md' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <AppBar component='div' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', /* maxWidth: '100%',  */ height: '44px', backgroundColor: '#1E212C' }}>
+          <Container
+            sx={{
+              boxSizing: 'border-box',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              maxWidth: '900px',
+              '@media (max-width: 1200px)': {
+                maxWidth: '700px',
+              },
+              '@media (max-width: 800px)': {
+                maxWidth: '600px',
+              },
+              '@media (max-width: 630px)': {
+                maxWidth: '400px',
+              },
+              '@media (max-width: 430px)': {
+                maxWidth: '250px',
+              },
+            }}
+          >
             <Link to={'tel:+555555555'} style={{ textDecoration: 'none' }}>
               <Typography
                 variant='h6'
@@ -107,8 +127,26 @@ export function Header() {
             </BurgerMenu>
           </Container>
         </AppBar>
-        <AppBar component='div' position='fixed' data-testid={'header'} sx={{ marginTop: '44px', backgroundColor: '#FFFFFF' }}>
-          <Container maxWidth='md' sx={{ width: '100%' }}>
+        <AppBar component='div' position='fixed' data-testid={'header'} sx={{ marginTop: '44px', backgroundColor: '#FFFFFF', display: 'flex', justifyContent: 'center' }}>
+          <Container
+            sx={{
+              width: '100%',
+              margin: '0 auto',
+              maxWidth: '900px',
+              '@media (max-width: 1200px)': {
+                maxWidth: '700px',
+              },
+              '@media (max-width: 800px)': {
+                maxWidth: '600px',
+              },
+              '@media (max-width: 630px)': {
+                maxWidth: '400px',
+              },
+              '@media (max-width: 430px)': {
+                maxWidth: '250px',
+              },
+            }}
+          >
             <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <EmojiEmotionsOutlinedIcon
@@ -123,7 +161,7 @@ export function Header() {
                     noWrap
                     aria-label='Logotype'
                     sx={{
-                      m: 2,
+                      marginLeft: '1rem',
                       fontFamily: 'monospace',
                       fontWeight: 700,
                       color: '#424551',
@@ -136,7 +174,7 @@ export function Header() {
                   </Typography>
                 </Link>
               </Box>
-              <Container sx={{ display: 'flex', justifyContent: 'space-around' }}>
+              <Container sx={{ display: 'flex', justifyContent: 'space-around', columnGap: '0.5rem' }}>
                 <Link to={'/catalog/men'} style={{ textDecoration: 'none' }}>
                   <Typography
                     variant='h6'
@@ -210,6 +248,9 @@ export function Header() {
             marginTop: '108px',
             '@media (max-width: 1200px)': {
               marginTop: '100px',
+            },
+            '@media (max-width: 600px)': {
+              marginTop: '90px',
             },
           }}
         />

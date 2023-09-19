@@ -107,7 +107,22 @@ export function ProductPage() {
   };
 
   return (
-    <Grid container spacing={2} justifyContent={'center'} data-testid={'catalog'}>
+    <Grid
+      container
+      spacing={2}
+      justifyContent={'center'}
+      data-testid={'catalog'}
+      marginTop={'2rem'}
+      maxWidth={'1200px'}
+      sx={{
+        '@media (max-width: 700px)': {
+          marginTop: '4rem',
+        },
+        '@media (max-width: 500px)': {
+          marginTop: '7rem',
+        },
+      }}
+    >
       {isError ? (
         <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Typography sx={{ marginBottom: '1rem' }} variant='h2'>
@@ -122,7 +137,7 @@ export function ProductPage() {
           ) : (
             <>
               <Grid sx={{ textAlign: 'center' }} item xs={12}>
-                <Typography data-testid='prodName' variant='h4'>
+                <Typography data-testid='prodName' variant='h3' color={'#424551'}>
                   {Object.values(prodData ? prodData.name : [])[0]}
                 </Typography>
               </Grid>
@@ -193,7 +208,7 @@ export function ProductPage() {
                     </Grid>
                   </>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} marginTop={'1.5rem'}>
                   <>
                     <Grid container alignItems='center' justifyContent='center'>
                       <Grid item xs={2}>
@@ -233,8 +248,10 @@ export function ProductPage() {
                 </Grid>
 
                 <Grid item xs={12} sx={{ height: '20vh', marginTop: '1rem' }}>
-                  <Typography variant='h5'>Description</Typography>
-                  <Typography variant='h6' data-testid='description'>
+                  <Typography variant='h4' marginTop={'2rem'} color={'#1E212C'}>
+                    Description
+                  </Typography>
+                  <Typography variant='h6' data-testid='description' marginTop={'1rem'} color={'#424551'}>
                     {prodData?.description ? Object.values(prodData.description) : '1231'}
                   </Typography>
                 </Grid>

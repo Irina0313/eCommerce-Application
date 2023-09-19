@@ -46,12 +46,12 @@ export default function ProductViewListItem({ item }: IProductViewListItemProps)
         onClick={() => onClick(item.key ? item.key : '404')}
         sx={{
           marginBottom: '2rem',
-          border: '2px solid #03CEA4',
+          border: '2px solid #17696A',
           borderRadius: '15px',
           ':hover': {
             cursor: 'pointer',
-            background: '#8cf707',
-            transform: 'scale(1.04)',
+            background: '#F4F5F6',
+            transform: 'scale(1.02)',
             transition: 'transform 0.3s',
           },
         }}

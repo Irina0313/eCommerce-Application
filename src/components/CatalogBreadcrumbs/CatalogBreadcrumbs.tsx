@@ -14,22 +14,44 @@ export default function CatalogBreadcrumbs({ categories, category }: ICatalogBre
     const res = categories.find((item) => item.id === c.id);
     return (
       res && (
-        <Link to={`/catalog/${res.slug[siteLocale]}`} style={{ textDecoration: 'none' }} color='inherit' key='{c.id}'>
-          {res.name[siteLocale]}
+        <Link to={`/catalog/${res.slug[siteLocale]}`} style={{ textDecoration: 'none', color: '#424551' }} key='{c.id}'>
+          <Typography
+            sx={{
+              '&:hover': {
+                color: '#FF4242',
+              },
+            }}
+          >
+            {res.name[siteLocale]}
+          </Typography>
         </Link>
       )
     );
   });
 
   return (
-    <Breadcrumbs aria-label='breadcrumb' sx={{ ml: 2, mb: 2 }}>
-      <Link to={'/catalog'} style={{ textDecoration: 'none' }} color='inherit'>
-        Catalog
+    <Breadcrumbs
+      aria-label='breadcrumb'
+      sx={{
+        ml: 2,
+        mb: 2,
+      }}
+    >
+      <Link to={'/catalog'} style={{ textDecoration: 'none', color: '#424551', transition: 'color 0.3s' }}>
+        <Typography
+          sx={{
+            '&:hover': {
+              color: '#FF4242',
+            },
+          }}
+        >
+          Catalog
+        </Typography>
       </Link>
 
       {paths}
 
-      <Typography color='text.primary'>{category.name[siteLocale]}</Typography>
+      <Typography color='#424551'>{category.name[siteLocale]}</Typography>
     </Breadcrumbs>
   );
 }
