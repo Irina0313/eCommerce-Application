@@ -34,7 +34,7 @@ export function MainPage() {
           flexWrap: 'wrap',
           justifyContent: 'center',
           gap: '2rem',
-          margin: '4rem',
+          marginTop: '4rem',
           '@media (max-width: 1200px)': {
             flexDirection: 'column',
           },
@@ -63,7 +63,7 @@ export function MainPage() {
           sx={{
             width: '60%',
             '@media (max-width: 1200px)': {
-              width: '80vw',
+              width: '70vw',
             },
           }}
         >
