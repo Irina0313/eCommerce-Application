@@ -137,7 +137,7 @@ export function ProductPage() {
           ) : (
             <>
               <Grid sx={{ textAlign: 'center' }} item xs={12}>
-                <Typography data-testid='prodName' variant='h3' color={'#424551'}>
+                <Typography data-testid='prodName' variant='h3' color={'#424551'} my={3}>
                   {Object.values(prodData ? prodData.name : [])[0]}
                 </Typography>
               </Grid>
@@ -175,7 +175,7 @@ export function ProductPage() {
                         prodData?.masterVariant.prices[0].discounted ? (
                           <Grid item xs={2}>
                             <Typography sx={{ color: 'red' }} variant='h5'>
-                              {'$' + prodData.masterVariant.prices[0].discounted?.value.centAmount / 100}
+                              {'$' + (prodData.masterVariant.prices[0].discounted?.value.centAmount / 100).toFixed(2)}
                             </Typography>
                           </Grid>
                         ) : null
@@ -185,10 +185,10 @@ export function ProductPage() {
                         {prodData?.masterVariant.prices ? (
                           prodData?.masterVariant.prices[0].discounted ? (
                             <Typography sx={{ color: 'grey', textDecoration: 'line-through' }} variant='h5'>
-                              {prodData?.masterVariant.prices ? '$' + prodData.masterVariant.prices[0].value.centAmount / 100 : null}
+                              {prodData?.masterVariant.prices ? '$' + (prodData.masterVariant.prices[0].value.centAmount / 100).toFixed(2) : null}
                             </Typography>
                           ) : (
-                            <Typography variant='h5'>{prodData.masterVariant.prices ? prodData.masterVariant.prices[0].value.centAmount / 100 + '$' : null}</Typography>
+                            <Typography variant='h5'>{prodData.masterVariant.prices ? '$' + (prodData.masterVariant.prices[0].value.centAmount / 100).toFixed(2) : null}</Typography>
                           )
                         ) : (
                           ''

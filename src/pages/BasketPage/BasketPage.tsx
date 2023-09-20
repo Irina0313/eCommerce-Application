@@ -113,7 +113,7 @@ export function BasketPage() {
       });
   };
 
-  const totalPrice = (cart?.lineItems?.reduce((acc, item) => acc + item.totalPrice.centAmount, 0) ?? 0) / 100;
+  const totalPrice = ((cart?.lineItems?.reduce((acc, item) => acc + item.totalPrice.centAmount, 0) ?? 0) / 100).toFixed(2);
 
   return (
     <Container
