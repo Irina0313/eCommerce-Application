@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import React, { useEffect, useState } from 'react';
 import { siteLocale } from '../../api/BuildClient';
 import { useDebounce } from '../../hooks/useDebounce';
+import { Link } from 'react-router-dom';
 
 interface IBasketListItemProps {
   item: LineItem;
@@ -59,15 +60,17 @@ export default function BasketListItem({ item, onQuantityChange }: IBasketListIt
           width: '100%',
         }}
       >
-        <Typography
-          variant='h4'
-          component={'p'}
-          sx={{
-            mb: 3,
-          }}
-        >
-          {item.name[siteLocale]}
-        </Typography>
+        <Link to={`/product/${item.productKey}`} style={{ textDecoration: 'none', color: '#000' }}>
+          <Typography
+            variant='h4'
+            component={'p'}
+            sx={{
+              mb: 3,
+            }}
+          >
+            {item.name[siteLocale]}
+          </Typography>
+        </Link>
         <Box
           sx={{
             display: 'flex',

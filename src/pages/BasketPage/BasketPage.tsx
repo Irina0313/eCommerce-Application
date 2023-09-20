@@ -172,7 +172,7 @@ export function BasketPage() {
               <Divider />
               <Box
                 sx={{
-                  mt: 1,
+                  mt: 3,
                   mb: 2,
                   display: 'flex',
                   columnGap: '10px',
