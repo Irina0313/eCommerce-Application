@@ -113,7 +113,7 @@ export function BasketPage() {
       });
   };
 
-  const totalPrice = (cart?.lineItems?.reduce((acc, item) => acc + item.totalPrice.centAmount, 0) ?? 0) / 100;
+  const totalPrice = ((cart?.lineItems?.reduce((acc, item) => acc + item.totalPrice.centAmount, 0) ?? 0) / 100).toFixed(2);
 
   return (
     <Container
@@ -172,7 +172,7 @@ export function BasketPage() {
               <Divider />
               <Box
                 sx={{
-                  mt: 1,
+                  mt: 3,
                   mb: 2,
                   display: 'flex',
                   columnGap: '10px',
