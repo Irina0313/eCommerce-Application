@@ -18,7 +18,21 @@ export default function CategoriesViewItem({ category, level }: ICategoriesViewI
 
   return (
     <>
-      <Button color='primary' variant='text' fullWidth sx={{ justifyContent: 'flex-start', paddingLeft: `${0.5 + level * 1.5}rem` }} onClick={() => onClick(category.slug[siteLocale])}>
+      <Button
+        variant='text'
+        fullWidth
+        sx={{
+          justifyContent: 'flex-start',
+          padding: ` 0 0 3px ${0.5 + level * 1.5}rem`,
+          color: '#424551',
+          textTransform: 'none',
+          fontSize: '1.1rem',
+          '&:hover': {
+            color: '#FF4242',
+          },
+        }}
+        onClick={() => onClick(category.slug[siteLocale])}
+      >
         {category.name[siteLocale]}
       </Button>
     </>

@@ -9,8 +9,8 @@ interface IPriceViewProps {
 export default function PriceView({ prices }: IPriceViewProps) {
   if (!prices || !prices.length) return null;
 
-  const price = prices[0].value?.centAmount ? prices[0].value?.centAmount / 100 : 99.99;
-  const discount = prices[0].discounted?.value.centAmount ? prices[0].discounted?.value.centAmount / 100 : 0;
+  const price = prices[0].value?.centAmount ? (prices[0].value?.centAmount / 100).toFixed(2) : 99.99;
+  const discount = prices[0].discounted?.value.centAmount ? (prices[0].discounted?.value.centAmount / 100).toFixed(2) : 0;
 
   return (
     <Container sx={{ display: 'flex', flexDirection: 'row' }}>

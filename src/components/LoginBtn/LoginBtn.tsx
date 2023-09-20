@@ -6,6 +6,7 @@ import { setId } from '../../store/userSlice';
 import { Avatar, Divider, ListItemIcon, Menu, MenuItem, IconButton } from '@mui/material';
 import Logout from '@mui/icons-material/Logout';
 import PersonPinIcon from '@mui/icons-material/PersonPin';
+import { cartFetchingSuccess } from '../../store/cartSlice';
 
 export default function LoginBtn() {
   const isLogin = useAppSelector((state) => state.userReducer.id);
@@ -20,8 +21,9 @@ export default function LoginBtn() {
         navigate('/profile');
         break;
       case 'logout':
-        navigate('/');
         dispatch(setId(''));
+        dispatch(cartFetchingSuccess(undefined));
+        navigate('/');
         break;
       case 'login':
         navigate('/login');
@@ -38,8 +40,19 @@ export default function LoginBtn() {
 
   return (
     <React.Fragment>
-      <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)} size='small' sx={{ ml: 2 }} aria-controls={open ? 'account-menu' : undefined} aria-haspopup='true' aria-expanded={open ? 'true' : undefined} data-testid={'loginBtnIcon'}>
-        <PersonPinIcon sx={{ width: 36, height: 36, marginTop: '-9px', color: 'wheat', borderRadius: '50%' }}></PersonPinIcon>
+      <IconButton onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)} size='small' aria-controls={open ? 'account-menu' : undefined} aria-haspopup='true' aria-expanded={open ? 'true' : undefined} data-testid={'loginBtnIcon'}>
+        <PersonPinIcon
+          sx={{
+            width: 36,
+            height: 36,
+            //marginTop: '-9px',
+            color: '#FFFFFF',
+            borderRadius: '50%',
+            '&:hover': {
+              color: '#FF4242',
+            },
+          }}
+        ></PersonPinIcon>
       </IconButton>
       <Menu
         anchorEl={anchorEl}

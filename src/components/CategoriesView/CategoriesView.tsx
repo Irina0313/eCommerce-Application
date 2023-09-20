@@ -25,7 +25,7 @@ export default function CategoriesView({ categories, parentCategory, error, load
 
   return (
     <>
-      <Typography variant='h5' m={3} textAlign={'center'}>
+      <Typography variant='h4' m={2} textAlign={'center'}>
         Categories
       </Typography>
 

@@ -36,15 +36,15 @@ export function CategoryPage() {
         maxWidth={false}
         sx={{
           width: '20rem',
-          border: { xs: 'none', lg: '2px solid #000' },
-          borderRadius: '30px',
+          border: { xs: 'none', lg: '2px solid #17696A' },
+          borderRadius: '20px',
         }}
       >
         {hasChild || isCatalogMain ? (
           <CategoriesView categories={categories} parentCategory={category} error={error} loading={loading} />
         ) : (
           <Typography variant='h5' sx={{ textAlign: 'center', padding: '10rem 3rem' }}>
-            Тут могла бы быть ваша реклама!
+            This could be your advertisement!
           </Typography>
         )}
       </Container>
@@ -53,12 +53,20 @@ export function CategoryPage() {
 
   return (
     <>
-      <Container maxWidth='xl' sx={{ display: 'flex' }}>
+      <Container maxWidth='xl' sx={{ display: 'flex', padding: '4rem 0 0' }}>
         <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
           <CategoryList />
         </Box>
 
-        <Container sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Container
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            '@media (max-width: 700px)': {
+              marginTop: '3rem',
+            },
+          }}
+        >
           <Container sx={{ display: { xs: 'block', lg: 'none' }, margin: '0 0 2rem' }}>
             <Button variant='contained' size='large' onClick={toggleDrawer(true)}>
               Show sub-categories

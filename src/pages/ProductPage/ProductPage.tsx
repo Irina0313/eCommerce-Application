@@ -1,42 +1,52 @@
 import React, { useEffect, useState } from 'react';
-import { Button, CircularProgress, Grid, Rating, TextField, Typography } from '@mui/material';
+import { CircularProgress, Grid, Rating, TextField, Typography } from '@mui/material';
 import { Lightbox } from 'yet-another-react-lightbox';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { Carousel } from 'react-responsive-carousel';
 import { returnProductByKey } from '../../api/Product';
 import { ProductData } from '@commercetools/platform-sdk';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { setProd } from '../../store/productSlice';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import './style.scss';
 import { useNavigate, useParams } from 'react-router-dom';
-import GoHomeBth from '../../components/GoHomeBtn/GoHomeBth';
+import GoHomeBth from '../../components/UI-components/GoHomeBtn/GoHomeBth';
+import { ImgCarousel } from '../../components/UI-components/ImgCarousel/ImgCarousel';
+import AddToCartBtn from '../../components/UI-components/AddToCartBtn/AddToCartBtn';
+import RemoveFromCartBtn from '../../components/UI-components/RemoveFromCartBtn/RemoveFromCartBtn';
+import { addProductToCart, changeLineItemQuantity } from '../../api/Client';
+import { cartFetchingSuccess } from '../../store/cartSlice';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 
 export function ProductPage() {
-  const prodTemplate = useAppSelector((state) => state.productReducer);
+  const { cart } = useAppSelector((state) => state.cartReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
+  const [isLoad, setIsLoad] = React.useState(true);
   const [value, setValue] = React.useState<number | null>(4);
   const [amount, setAmount] = React.useState<number | null>(1);
+  const [showApiLoader, setShowApiLoader] = React.useState(false);
 
-  const [prodData, setProdData] = useState<ProductData>(prodTemplate);
+  const [prodData, setProdData] = useState<ProductData>();
+  const [prodId, setprodId] = useState('');
   const [isError, setIsError] = useState<boolean>(false);
-
+  const isProdInCart = cart?.lineItems && cart.lineItems.findIndex((lineItem) => lineItem.productId === prodId) !== -1;
   const { productKey } = useParams();
 
   useEffect(() => {
-    returnProductByKey(productKey ? productKey : '1')
+    if (!productKey) {
+      navigate('/not-found-product');
+      return;
+    }
+
+    returnProductByKey(productKey)
       .then(({ body }) => {
+        setIsLoad(false);
         setProdData(body.masterData.current);
-        dispatch(setProd(body.masterData.current));
+        setprodId(body.id);
       })
       .catch((e) => {
         e.code === 404 ? navigate('/not-found-product') : setIsError(true);
@@ -49,14 +59,70 @@ export function ProductPage() {
 
   const imageSrcArr = () => {
     const arr: Array<{ src: string }> = [];
-    prodData.masterVariant.images?.forEach((image) => {
+    prodData?.masterVariant.images?.forEach((image) => {
       arr.push({ src: image.url });
     });
     return arr;
   };
 
+  const imageUrlsArr = () => {
+    const arr: Array<string> = [];
+    prodData?.masterVariant.images?.forEach((image) => {
+      arr.push(image.url);
+    });
+    return arr;
+  };
+
+  const onAddProductClick = async () => {
+    setShowApiLoader(true);
+    addProductToCart(cart, prodId, amount || 1)
+      .then((res) => {
+        console.log('addProductToCart : ', amount, prodId, res);
+        dispatch(cartFetchingSuccess(res.body));
+      })
+      .catch((e) => {
+        console.warn(e); // TODO
+      })
+      .finally(() => {
+        setShowApiLoader(false);
+      });
+  };
+
+  const onRemoveProductClick = async () => {
+    const lineId = cart?.lineItems.find((item) => item.productId === prodId)?.id;
+    if (!lineId) return console.log('onDeleteProductClick: lineId not found');
+
+    setShowApiLoader(true);
+    changeLineItemQuantity(cart, lineId, 0)
+      .then((res) => {
+        console.log('delete product from cart : ', lineId, res);
+        dispatch(cartFetchingSuccess(res.body));
+      })
+      .catch((e) => {
+        console.warn(e); // TODO
+      })
+      .finally(() => {
+        setShowApiLoader(false);
+      });
+  };
+
   return (
-    <Grid container spacing={2} justifyContent={'center'} data-testid={'catalog'}>
+    <Grid
+      container
+      spacing={2}
+      justifyContent={'center'}
+      data-testid={'catalog'}
+      marginTop={'2rem'}
+      maxWidth={'1200px'}
+      sx={{
+        '@media (max-width: 700px)': {
+          marginTop: '4rem',
+        },
+        '@media (max-width: 500px)': {
+          marginTop: '7rem',
+        },
+      }}
+    >
       {isError ? (
         <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Typography sx={{ marginBottom: '1rem' }} variant='h2'>
@@ -66,67 +132,63 @@ export function ProductPage() {
         </Grid>
       ) : (
         <>
-          {prodData.masterVariant.key === '...123abc' ? (
+          {isLoad ? (
             <CircularProgress />
           ) : (
             <>
               <Grid sx={{ textAlign: 'center' }} item xs={12}>
-                <Typography data-testid='prodName' variant='h4'>
-                  {Object.values(prodData.name)[0]}
+                <Typography data-testid='prodName' variant='h3' color={'#424551'} my={3}>
+                  {Object.values(prodData ? prodData.name : [])[0]}
                 </Typography>
               </Grid>
 
-              <Grid item md={6} xs={12} sx={{ height: '60vh', justifyContent: 'center', justifyItems: 'center', position: 'relative', marginBottom: '10vh' }}>
-                <ZoomInIcon sx={{ position: 'absolute', top: '0', right: '15%' }} onClick={() => setOpen(true)} />
-                <Carousel data-testid='carousel' showArrows={false} dynamicHeight={false} showStatus={false}>
-                  {prodData.masterVariant.images?.map((image) => (
-                    <div key={image.url}>
-                      <img src={image.url}></img>
-                    </div>
-                  ))}
-                </Carousel>
-                <Lightbox
-                  open={open}
-                  close={() => setOpen(false)}
-                  carousel={{ preload: 3 }}
-                  render={
-                    prodData.masterVariant.images
-                      ? prodData.masterVariant.images.length <= 1
-                        ? {
-                            buttonPrev: () => null,
-                            buttonNext: () => null,
-                          }
+              <ImgCarousel
+                imgUrls={imageUrlsArr()}
+                zoomIcon={<ZoomInIcon sx={{ position: 'absolute', top: '0', right: '15%' }} onClick={() => setOpen(true)} />}
+                lightBox={
+                  <Lightbox
+                    open={open}
+                    close={() => setOpen(false)}
+                    carousel={{ preload: 3 }}
+                    render={
+                      prodData?.masterVariant.images
+                        ? prodData?.masterVariant.images.length <= 1
+                          ? {
+                              buttonPrev: () => null,
+                              buttonNext: () => null,
+                            }
+                          : undefined
                         : undefined
-                      : undefined
-                  }
-                  slides={imageSrcArr()}
-                  plugins={[Zoom, Thumbnails]}
-                  data-testid='lightBox'
-                />
-              </Grid>
+                    }
+                    slides={imageSrcArr()}
+                    plugins={[Zoom, Thumbnails]}
+                    data-testid='lightBox'
+                  />
+                }
+              ></ImgCarousel>
 
               <Grid item md={6} xs={12}>
                 <Grid item xs={12} sx={{ height: 'max-content' }} data-testid='prices'>
                   <>
                     <Grid container justifyContent={'space-between'}>
-                      {prodData.masterVariant.prices ? (
-                        prodData.masterVariant.prices[0].discounted ? (
+                      {prodData?.masterVariant.prices ? (
+                        prodData?.masterVariant.prices[0].discounted ? (
                           <Grid item xs={2}>
                             <Typography sx={{ color: 'red' }} variant='h5'>
-                              {'$' + prodData.masterVariant.prices[0].discounted?.value.centAmount / 100}
+                              {'$' + (prodData.masterVariant.prices[0].discounted?.value.centAmount / 100).toFixed(2)}
                             </Typography>
                           </Grid>
                         ) : null
                       ) : null}
 
                       <Grid item xs={2}>
-                        {prodData.masterVariant.prices ? (
-                          prodData.masterVariant.prices[0].discounted ? (
+                        {prodData?.masterVariant.prices ? (
+                          prodData?.masterVariant.prices[0].discounted ? (
                             <Typography sx={{ color: 'grey', textDecoration: 'line-through' }} variant='h5'>
-                              {prodData.masterVariant.prices ? '$' + prodData.masterVariant.prices[0].value.centAmount / 100 : null}
+                              {prodData?.masterVariant.prices ? '$' + (prodData.masterVariant.prices[0].value.centAmount / 100).toFixed(2) : null}
                             </Typography>
                           ) : (
-                            <Typography variant='h5'>{prodData.masterVariant.prices ? prodData.masterVariant.prices[0].value.centAmount / 100 + '$' : null}</Typography>
+                            <Typography variant='h5'>{prodData.masterVariant.prices ? '$' + (prodData.masterVariant.prices[0].value.centAmount / 100).toFixed(2) : null}</Typography>
                           )
                         ) : (
                           ''
@@ -146,7 +208,7 @@ export function ProductPage() {
                     </Grid>
                   </>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} marginTop={'1.5rem'}>
                   <>
                     <Grid container alignItems='center' justifyContent='center'>
                       <Grid item xs={2}>
@@ -164,26 +226,33 @@ export function ProductPage() {
                         />
                       </Grid>
                       <Grid item xs={10}>
-                        {prodData.masterVariant.key === '...123abc' ? (
-                          <Button onClick={() => console.log(amount)} disabled variant='contained' sx={{ margin: ' 1rem 0' }} data-testid='addToCart'>
-                            <AddShoppingCartIcon></AddShoppingCartIcon>
-                            Add to cart
-                          </Button>
-                        ) : (
-                          <Button onClick={() => console.log(amount)} variant='contained' sx={{ margin: ' 1rem 0' }} data-testid='addToCart'>
-                            <AddShoppingCartIcon></AddShoppingCartIcon>
-                            Add to cart
-                          </Button>
-                        )}
+                        <AddToCartBtn
+                          disabled={isProdInCart}
+                          handleClick={() => {
+                            onAddProductClick();
+                          }}
+                        />
+                        <span style={{ marginRight: '1rem' }}></span>
+
+                        <RemoveFromCartBtn
+                          disabled={!isProdInCart}
+                          handleClick={() => {
+                            onRemoveProductClick();
+                          }}
+                        />
+
+                        {showApiLoader && <CircularProgress size={24} sx={{ color: 'red' }} />}
                       </Grid>
                     </Grid>
                   </>
                 </Grid>
 
                 <Grid item xs={12} sx={{ height: '20vh', marginTop: '1rem' }}>
-                  <Typography variant='h5'>Description</Typography>
-                  <Typography variant='h6' data-testid='description'>
-                    {prodData.description ? Object.values(prodData.description) : '1231'}
+                  <Typography variant='h4' marginTop={'2rem'} color={'#1E212C'}>
+                    Description
+                  </Typography>
+                  <Typography variant='h6' data-testid='description' marginTop={'1rem'} color={'#424551'}>
+                    {prodData?.description ? Object.values(prodData.description) : '1231'}
                   </Typography>
                 </Grid>
               </Grid>
